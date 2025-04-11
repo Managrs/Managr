@@ -20,6 +20,12 @@ The list the user gave:
 4. Payment Tracking
 5. Reporting
 6. AI-based job matching system
+7. Version Control Integration
+8. Feedback & Rating System
+9. Skill Tags & Portfolio Upload
+10. Task Chat/Messaging System
+11. Notification Center
+12. Dark Mode (UI)
 
 ## Create backlog
 
