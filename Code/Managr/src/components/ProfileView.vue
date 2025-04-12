@@ -10,7 +10,7 @@
         :job="profile.job"
         :bio="profile.bio"
       />
-    </div>
+    </section>
   </section>
 </template>
 
