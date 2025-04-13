@@ -18,12 +18,14 @@ defineProps<{ msg: string }>();
 
 <template>
   <h1> Welcome to login</h1>
-  <nav id="btnSec">
+  <section>
+  <nav id="links">
       <RouterLink to="/">Homepage</RouterLink>
       <RouterLink to="/admin">Admin</RouterLink>
       <RouterLink to="/client">Client</RouterLink>
       <RouterLink to="/freelancer">Freelancer</RouterLink>
     </nav>
+  </section>
   <section id="btnSec">
     <form>
         <h3>Type of User:</h3>
@@ -51,10 +53,6 @@ defineProps<{ msg: string }>();
 
 <style scoped>
 
-#btnSec{
-  display: flexbox;
-}
-
 button{
   margin: 1vw;
 }
@@ -67,6 +65,10 @@ form{
 h3{
   margin: 0;
   padding: 0;
+}
+#links{
+  display: flex;
+  justify-content: space-between;
 }
 
 </style>

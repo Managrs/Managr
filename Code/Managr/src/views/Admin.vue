@@ -18,7 +18,8 @@ defineProps<{ msg: string }>();
 <style scoped>
 
 #btnSec{
-  display: flexbox;
+  display: flex;
+  justify-content: space-between;
 }
 
 button{

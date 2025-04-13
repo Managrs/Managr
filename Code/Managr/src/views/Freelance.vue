@@ -7,18 +7,19 @@ defineProps<{ msg: string }>();
 
 <template>
   <h1> Welcome to Freelancer</h1>
-  <nav id="btnSec">
+  <nav id="links">
       <RouterLink to="/">Homepage</RouterLink>
       <RouterLink to="/admin">Admin</RouterLink>
       <RouterLink to="/client">Client</RouterLink>
       <RouterLink to="/freelancer">Freelancer</RouterLink>
-    </nav>
+  </nav>
 </template>
 
 <style scoped>
 
-#btnSec{
-  display: flexbox;
+#links{
+  display: flex;
+  justify-content: space-between;
 }
 
 button{

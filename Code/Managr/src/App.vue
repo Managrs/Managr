@@ -11,12 +11,12 @@ import { RouterLink } from 'vue-router';
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <nav id="btnSec">
+  <!--<nav id="btnSec">
       <RouterLink to="/">Homepage</RouterLink>
       <RouterLink to="/admin">Admin</RouterLink>
       <RouterLink to="/client">Client</RouterLink>
       <RouterLink to="/freelancer">Freelancer</RouterLink>
-    </nav>
+    </nav>-->
   <RouterView />
 </template>
 
@@ -37,4 +37,5 @@ import { RouterLink } from 'vue-router';
   display: flex;
   justify-content: space-between;
 }
+
 </style>

@@ -17,10 +17,6 @@ defineProps<{ msg: string }>();
 
 <style scoped>
 
-#btnSec{
-  display: flexbox;
-}
-
 button{
   margin: 1vw;
 }
@@ -34,5 +30,8 @@ h3{
   margin: 0;
   padding: 0;
 }
-
+#btnSec{
+  display: flex;
+  justify-content: space-between;
+}
 </style>
