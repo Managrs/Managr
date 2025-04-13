@@ -46,6 +46,7 @@ const router = createRouter({
   routes,
 });
 
+/*
 // Add a navigation guard to protect routes that require authentication
 router.beforeEach((to, from, next) => {
   const { isAuthenticated } = useAuth0();
@@ -57,5 +58,5 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
-
+*/
 export default router;
