@@ -1,5 +1,4 @@
 <template>
-  <section>
   <header class="header">
     <nav class="navigation">
       <router-link to="/" class="logo-link" aria-label="Home">
@@ -16,18 +15,29 @@
       </ul>
     </nav>
   </header>
-
+  <main>
     <section class="landing-content">
-      <section>
-        <video autoplay muted loop class="display-video">
-          <source src="/display.mp4" type="video/mp4" />
-        </video>
-        <h1 class="main-title">Welcome to Managr!</h1>
-        <p class="main-subtitle">Your platform for freelancers and clients to connect seamlessly.</p>
-        <router-link to="/dashboard" class="cta-button">Get Started</router-link>
-    </section>
-    </section>
-  </section>
+      <section class="hero-section">
+  <video autoplay muted loop class="display-video">
+    <source src="/display.mp4" type="video/mp4" />
+  </video>
+  <div class="overlay-content">
+    <h1 class="main-title">Welcome to Managr!</h1>
+    <p class="main-subtitle">Your platform for freelancers and clients to connect seamlessly.</p>
+    <router-link to="/dashboard" class="cta-button">Get Started</router-link>
+  </div>
+</section>
+    </section>    
+  </main>
+  <footer class="footer">
+  <p>&copy; 2025 Managr. All rights reserved.</p>
+  <nav class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Contact</a>
+  </nav>
+</footer>
+
 </template>
   
 <script lang="ts">
@@ -38,7 +48,6 @@
   
 <style scoped>
   /* Global Variables */
-
   
   /* Header Styling */
   .header {
@@ -46,9 +55,11 @@
     justify-content: center; /* Centers the content */
     align-items: center;
     position: relative;
+    z-index: 10;
+    background-color: white;
     height: 80px; /* Increased height for better spacing */
     padding: 0 30px; /* Increased padding */
-    background: var(--color-white);
+    background: white;
     border-bottom: 1px solid var(--color-border);
   }
   
@@ -111,10 +122,94 @@
     color: #ffffff;
   }
 
-  .landing-content {
-  margin-top: 100px;
-  color: #000000;
+  body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+  .hero-section {
+  position: relative;
+  width: 100vw; /* Full screen width */
+  height: 70vh;
+  overflow: hidden;
+}
+
+.display-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
-  }
+  color: white;
+  z-index: 1;
+}
+
+.main-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.main-subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  padding: 0.75rem 1.5rem;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #ddd;
+}
+.footer {
+  position: relative;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  margin: 0;
+  padding: 2rem 1rem;
+  background-color: #111;
+  color: #fff;
+  text-align: center;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.footer-links {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom 0.2s ease-in-out;
+}
+
+.footer-links a:hover {
+  border-bottom: 1px solid #fff;
+}
+
+
+  
 </style>
   

@@ -45,7 +45,6 @@
         </section>
       </nav>
     </header>
-    <section class="nav-divider"></section>
 </template>
   
 <script lang="ts">
