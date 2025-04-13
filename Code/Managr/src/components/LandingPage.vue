@@ -2,7 +2,7 @@
   <section>
   <header class="header">
     <nav class="navigation">
-      <router-link to="/" class="logo-link" aria-label="Home">
+      <router-link to="/Landing Page" class="logo-link" aria-label="Home">
         <img src="/brandlogo.png" alt="Logo" class="logo-image" width="120" height="40">
       </router-link>
       
