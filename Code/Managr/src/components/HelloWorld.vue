@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useAuth0 } from '@auth0/auth0-vue';
+
+const { loginWithRedirect } = useAuth0();
+const handleLogin = () => {
+  loginWithRedirect();
+};
 
 defineProps<{ msg: string }>()
 
@@ -9,13 +15,13 @@ const count = ref(0)
 <template>
   <h1>{{ msg }}</h1>
 
-  <div class="card">
+  <section class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR
     </p>
-  </div>
+  </section>
 
   <p>
     Check out
@@ -32,6 +38,9 @@ const count = ref(0)
     >.
   </p>
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+    <button @click="handleLogin">Log in</button>
+   
+
 </template>
 
 <style scoped>
