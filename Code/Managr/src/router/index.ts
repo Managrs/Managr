@@ -4,7 +4,7 @@ import LandingPage from '../components/LandingPage.vue'
 import DashboardLayout from '../views/DashboardLayout.vue'
 
 const routes = [
-  { path: '/LandingPage', name: 'LandingPage', component: LandingPage },
+  { path: '/', name: 'LandingPage', component: LandingPage },
 
   {path: '/dashboard',name: 'DashboardLayout',component: DashboardLayout}
 ]

@@ -22,7 +22,7 @@
         <!-- Right Side - Navigation Links -->
         <ul class="nav-links">
           <li>
-            <router-link :to="{ name: 'LandingPage' }" class="nav-link" active-class="active">Home</router-link>
+            <router-link to="/" class="nav-link">Home</router-link>
           </li>
           <li>
             <router-link to="/todo" class="nav-link">Earnings</router-link>

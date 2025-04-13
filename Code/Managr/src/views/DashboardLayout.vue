@@ -13,6 +13,4 @@
   import DashNavbar from '../components/DashNavbar.vue'
   import CategoryView from '../components/CategoryView.vue'
   import ProfileView from '../components/ProfileView.vue'
-
-  //export default {name: 'Dashboardlayout',components: { Dashboardlayout }}
   </script>
