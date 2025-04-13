@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink } from 'vue-router';
 </script>
 
 <template>
@@ -11,7 +11,13 @@ import HelloWorld from './components/HelloWorld.vue'
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld msg="Lebo + Lemo" />
+  <nav id="btnSec">
+      <RouterLink to="/">Homepage</RouterLink>
+      <RouterLink to="/admin">Admin</RouterLink>
+      <RouterLink to="/client">Client</RouterLink>
+      <RouterLink to="/freelancer">Freelancer</RouterLink>
+    </nav>
+  <RouterView />
 </template>
 
 <style scoped>
@@ -26,5 +32,9 @@ import HelloWorld from './components/HelloWorld.vue'
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+#btnSec{
+  display: flex;
+  justify-content: space-between;
 }
 </style>

@@ -1,9 +1,13 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
-import { createAuth0 } from '@auth0/auth0-vue'
+import { createAuth0 } from '@auth0/auth0-vue';
+import router from './router';
 
-createApp(App).use(
+
+const app = createApp(App);
+app.use(router);
+app.use(
     createAuth0({
       domain: "dev-7jtzu3jbzi1vm4qi.us.auth0.com",
       clientId: "tKIrxFqmYQtpYb47oSNBrz8XRDNNMoXc",
@@ -11,5 +15,6 @@ createApp(App).use(
         redirect_uri: window.location.origin
       }
     })
-  ).mount('#app');
+  );
+  app.mount('#app');
 
