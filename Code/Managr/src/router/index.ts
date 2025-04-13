@@ -1,15 +1,17 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../views/HomeP.vue';  // Example component
-import About from '../views/AboutP.vue';  // Example component
+import { createRouter, createWebHistory } from 'vue-router'
+
+import LandingPage from '../components/LandingPage.vue'
+import DashboardLayout from '../views/DashboardLayout.vue'
 
 const routes = [
-  { path: '/', component: Home },
-  { path: '/aboutP', component: About },
-];
+  { path: '/LandingPage', name: 'LandingPage', component: LandingPage },
+
+  {path: '/dashboard',name: 'DashboardLayout',component: DashboardLayout}
+]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
-});
+  history: createWebHistory(),
+  routes
+})
 
-export default router;
+export default router

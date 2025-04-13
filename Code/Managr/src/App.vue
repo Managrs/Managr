@@ -1,18 +1,15 @@
 <template>
-  <section class="dashboard">
-  <DashNavbar/>
-  <main class="dashboard-body">
-      <CategoryView />
-      <br />
-      <ProfileView />
-    </main>
-    <Footer/>
-  </section>
+  <main>
+    <router-view />
+  </main>
 </template>
 
-<script setup lang="ts">
-import DashNavbar from './components/DashNavbar.vue';
-import CategoryView from './components/CategoryView.vue';
-import ProfileView from './components/ProfileView.vue';
-
+<script>
+export default {
+  name: 'App'
+}
 </script>
+
+<style scoped>
+/* optional styling */
+</style>

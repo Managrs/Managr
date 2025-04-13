@@ -3,7 +3,7 @@
       <nav class="navigation">
         <!-- Left Side - Logo -->
   
-        <a href="https://www.fiverr.com/" class="logo-link" aria-label="Managr - Home">
+        <a href="#" class="logo-link" aria-label="Managr - Home">
           <img 
             src="/brandlogo.png" 
             alt="Managr" 
@@ -22,7 +22,7 @@
         <!-- Right Side - Navigation Links -->
         <ul class="nav-links">
           <li>
-            <router-link to="/Home" class="nav-link">Home</router-link>
+            <router-link :to="{ name: 'LandingPage' }" class="nav-link" active-class="active">Home</router-link>
           </li>
           <li>
             <router-link to="/todo" class="nav-link">Earnings</router-link>
@@ -54,7 +54,7 @@
   }
 </script>
   
-  <style scoped>
+<style scoped>
   /* Global Variables */
 
   
@@ -139,7 +139,7 @@
   .search-input {
     flex-grow: 1;
     font-size: 16px; /* Increased font size */
-    color: var(--color-dark-gray);
+    color: var(--color-white);
     padding: 8px 18px;
     border: 1px solid #000000;
     border-radius: 6px;
