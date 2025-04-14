@@ -75,7 +75,7 @@ defineProps<{ msg: string }>();
         </label>
     </form>
 
-    <button @click="loginWithRedirect">Log in</button>
+    <button @click="handleLogin">Log in</button>
 
     <button @click="handleLogout">Log out</button>
     <p>Selected User Type: {{ userType }}</p>
