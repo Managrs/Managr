@@ -20,7 +20,7 @@
       <section class="hero-section">
         <img src="/display.jpg" alt="Dark sky background on landing page">
   <section class="overlay-content">
-    <h1 class="main-title">Welcome to Managr!</h1>
+    <h1 class="main-title">Welcome to Managr</h1>
     <p class="main-subtitle">Your platform for freelancers and clients to connect seamlessly.</p>
     <router-link to="/dashboard" class="cta-button">Get Started</router-link>
   </section>
