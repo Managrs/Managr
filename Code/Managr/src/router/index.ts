@@ -3,12 +3,25 @@ import { createRouter, createWebHistory } from 'vue-router';
 //import { useAuth0 } from '@auth0/auth0-vue';
 import 'core-js/stable/promise';
 
+import LandingPage from '../components/LandingPage.vue'
+import DashboardLayout from '../views/DashboardLayout.vue'
+
 // Define the routes with type annotations
 const routes = [
   {
     path: '/',
     name: 'home',
     component: () => import('../components/HelloWorld.vue'),
+  },
+  {
+    path: '/landing',
+    name: 'land',
+    component: () => import('../components/LandingPage.vue'),
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: () => import('../components/Admin_Dash.vue'),
   },
   {
     path: '/sign',
@@ -18,12 +31,18 @@ const routes = [
   {
     path: '/client',
     name: 'client',
+    component: () => import('../components/dashboardclient.vue'),
+  },
+  /*
+  {
+    path: '/client',
+    name: 'client',
     component: () => import('../views/Client.vue'),
     meta: {
       requiresAuth: true, // Protect this route
     },
-  },
-
+  },*/
+/*
   {
     path: '/admin',
     name: 'admin',
@@ -31,7 +50,7 @@ const routes = [
     meta: {
       requiresAuth: true, // Protect this route
     },
-  },
+  },*/
 
   {
     path: '/freelance',
@@ -42,6 +61,8 @@ const routes = [
     },
 
   },
+  {path: '/dashboard',name: 'DashboardLayout',component: DashboardLayout},
+  { path: '/', name: 'LandingPage', component: LandingPage },
 
 ];
 
