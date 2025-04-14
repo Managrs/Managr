@@ -7,10 +7,12 @@
       
       <ul class="nav-links">
         <li>
-          <router-link to="/dashboard" class="nav-link">Login</router-link>
+          <!--<router-link to="/dashboard" class="nav-link">Login</router-link>-->
+          <button class="nav-link" @click="loginWithRedirect">Log in</button>
         </li>
         <li>
-          <router-link to="/dashboard" class="nav-link">Signup</router-link>
+          <!--<router-link to="/dashboard" class="nav-link">Signup</router-link>-->
+          <button class="nav-link" @click="handleLogout" >Log out</button>
         </li>
       </ul>
     </nav>
@@ -41,10 +43,19 @@
 
 </template>
   
-<script lang="ts">
-  export default {
-    name: "LandingPage"
-  }
+<script setup lang="ts">
+import { useAuth0 } from '@auth0/auth0-vue';
+import { RouterLink } from 'vue-router';
+
+const { loginWithRedirect } = useAuth0();
+
+const { logout } = useAuth0();
+
+
+const handleLogout = () => {
+  logout({ returnTo: window.location.origin });
+};
+
 </script>
   
 <style scoped>

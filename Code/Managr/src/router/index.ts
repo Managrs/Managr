@@ -11,7 +11,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: () => import('../components/HelloWorld.vue'),
+    component: () => import('../components/LandingPage.vue'),
   },
   {
     path: '/landing',
@@ -33,6 +33,11 @@ const routes = [
     name: 'client',
     component: () => import('../components/dashboardclient.vue'),
   },
+  {
+    path: '/freelance',
+    name: 'freelance',
+    component: () => import('../views/DashboardLayout.vue'),
+  },
   /*
   {
     path: '/client',
@@ -51,7 +56,7 @@ const routes = [
       requiresAuth: true, // Protect this route
     },
   },*/
-
+/*
   {
     path: '/freelance',
     name: 'freelance',
@@ -60,7 +65,7 @@ const routes = [
       requiresAuth: true, // Protect this route
     },
 
-  },
+  },*/
   {path: '/dashboard',name: 'DashboardLayout',component: DashboardLayout},
   { path: '/', name: 'LandingPage', component: LandingPage },
 
