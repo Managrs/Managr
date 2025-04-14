@@ -11,8 +11,11 @@ app.use(
     createAuth0({
       domain: "dev-7jtzu3jbzi1vm4qi.us.auth0.com",
       clientId: "tKIrxFqmYQtpYb47oSNBrz8XRDNNMoXc",
+
       authorizationParams: {
-        redirect_uri: window.location.origin
+        redirect_uri: window.location.origin,
+        audience: `https://dev-7jtzu3jbzi1vm4qi.us.auth0.com/api/v2/`,
+        scope: 'openid profile email'
       }
     })
   );

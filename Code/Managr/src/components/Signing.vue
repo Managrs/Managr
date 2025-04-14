@@ -4,6 +4,37 @@ import { RouterLink } from 'vue-router';
 import { ref } from 'vue';
 
 const { loginWithRedirect } = useAuth0();
+
+const handleLogin = () => {
+  // Determine the target route based on userType
+  let targetRoute = '/';
+  switch(userType.value) {
+    case 'Admin':
+      targetRoute = '/admin';
+      break;
+    case 'Freelancer':
+      targetRoute = '/freelancer';
+      break;
+    case 'Client':
+      targetRoute = '/client';
+      break;
+    default:
+      targetRoute = '/';
+  }
+
+  loginWithRedirect({
+    appState: {
+      target: targetRoute // This will be available after authentication
+    },
+    authorizationParams: {
+      // Optional: Include any additional parameters needed for roles
+      // audience: 'YOUR_API_AUDIENCE',
+      // scope: 'openid profile email'
+    }
+  });
+};
+
+
 const { logout } = useAuth0();
 
 const userType = ref<string>('');

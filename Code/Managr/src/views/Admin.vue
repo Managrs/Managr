@@ -12,6 +12,7 @@ defineProps<{ msg: string }>();
       <RouterLink to="/admin">Admin</RouterLink>
       <RouterLink to="/client">Client</RouterLink>
       <RouterLink to="/freelancer">Freelancer</RouterLink>
+      
     </nav>
 </template>
 
