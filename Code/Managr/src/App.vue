@@ -17,5 +17,14 @@ export default defineComponent({
 </script>
 
 <style>
-/* Global styles if needed */
+/* Reset and base styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
-    <div class="admin-dashboard">
-      <header>
+    <div class="admin-dashboard-wrapper">
+      <header class="admin-header">
         <section class="logo">
           <img src="../assets/managr_logo.jpg" alt="Admin Logo" />
         </section>
@@ -13,7 +13,7 @@
         </nav>
       </header>
   
-      <main>
+      <main class="admin-main">
         <section class="search-container">
           <h2>Welcome, Admin! Here's your platform overview</h2>
         </section>
@@ -88,25 +88,17 @@
     methods: {
       approve(name: string) {
         alert(`${name} has been approved.`);
-        // Add your approval logic here
       },
       reject(name: string) {
         alert(`${name} has been rejected.`);
-        // Add your rejection logic here
       }
     }
   });
   </script>
   
-  <style scoped>
-  /* Copy all the CSS from style.css here */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
+  <style>
+  /* Global styles (not scoped) */
+  .admin-dashboard-wrapper {
     font-family: Arial, Calibri, sans-serif;
     background-color: #ffffff;
     color: #000000;
@@ -116,7 +108,7 @@
     flex-direction: column;
   }
   
-  header {
+  .admin-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -125,17 +117,18 @@
     color: #000;
   }
   
-  .logo img {
+  .admin-header .logo img {
     height: 1.5rem;
   }
   
-  nav {
+  .admin-header nav {
     display: flex;
     align-items: center;
     gap: 1rem;
   }
   
-  .post-btn, .messages-btn {
+  .admin-header .post-btn, 
+  .admin-header .messages-btn {
     background: #fff;
     color: #000;
     border: 2px solid #000;
@@ -144,20 +137,20 @@
     font-weight: bold;
   }
   
-  .profile-picture {
+  .admin-header .profile-picture {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     overflow: hidden;
   }
   
-  .profile-picture img {
+  .admin-header .profile-picture img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
   
-  main {
+  .admin-main {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -232,7 +225,6 @@
     color: #555555;
   }
   
-  /* Pending approvals table */
   .approval-table {
     width: 100%;
     border-collapse: collapse;
