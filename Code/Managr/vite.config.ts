@@ -8,7 +8,8 @@ export default defineConfig({
   base: '/',
   resolve: {
     alias: {
-      vue: 'vue/dist/vue.esm-bundler.js' // Add this line
+      '@': '/src',  // Optional but recommended
+      vue: 'vue/dist/vue.esm-bundler.js'  // Critical fix
     }
   }
 })
