@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
+import AdminDashboard from './components/Admin_Dash.vue';
+import { defineComponent } from 'vue';
 </script>
 
 <template>
-  <div id="app">
-    <AdminDashboard />
-  </div>
   <!--<nav id="btnSec">
       <RouterLink to="/">Homepage</RouterLink>
       <RouterLink to="/admin">Admin</RouterLink>
@@ -14,18 +13,6 @@ import { RouterLink } from 'vue-router';
     </nav>-->
   <RouterView />
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
-import AdminDashboard from './components/Admin_Dash.vue';
-
-export default defineComponent({
-  name: 'App',
-  components: {
-    AdminDashboard
-  }
-});
-</script>
 
 <style>
 /* Reset and base styles */
