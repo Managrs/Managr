@@ -1,6 +1,6 @@
 // src/router/index.ts
 import { createRouter, createWebHistory } from 'vue-router';
-import { useAuth0 } from '@auth0/auth0-vue';
+//import { useAuth0 } from '@auth0/auth0-vue';
 import 'core-js/stable/promise';
 
 // Define the routes with type annotations
@@ -23,7 +23,7 @@ const routes = [
       requiresAuth: true, // Protect this route
     },
   },
-  
+
   {
     path: '/admin',
     name: 'admin',
