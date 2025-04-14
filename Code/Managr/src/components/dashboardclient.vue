@@ -1,13 +1,13 @@
 <template>
     <header>
       <section class="logo">
-        <img src="@/assets/logo2.png" alt="Managr Logo" />
+        <img src="@/assets/logo2.jpg" alt="Managr Logo" />
       </section>
       <nav>
         <button class="post-btn">Post Project</button>
         <button class="messages-btn">Messages</button>
         <section class="profile-picture">
-          <img src="@/assets/noprofile.png" alt="Profile Picture" />
+          <img src="@/assets/noprofile.jpg" alt="Profile Picture" />
         </section>
       </nav>
     </header>
