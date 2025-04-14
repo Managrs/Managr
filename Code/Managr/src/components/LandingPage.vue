@@ -18,14 +18,12 @@
   <main>
     <section class="landing-content">
       <section class="hero-section">
-  <video autoplay muted loop class="display-video">
-    <source src="/display.mp4" type="video/mp4" />
-  </video>
-  <div class="overlay-content">
+  <img src="/display.jpg" alt="A cute picture" class="display-image">
+  <section class="overlay-content">
     <h1 class="main-title">Welcome to Managr!</h1>
     <p class="main-subtitle">Your platform for freelancers and clients to connect seamlessly.</p>
     <router-link to="/dashboard" class="cta-button">Get Started</router-link>
-  </div>
+  </section>
 </section>
     </section>    
   </main>
@@ -136,7 +134,7 @@
   overflow: hidden;
 }
 
-.display-video {
+.display-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
