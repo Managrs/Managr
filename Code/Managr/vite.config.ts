@@ -5,5 +5,10 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   css: {},
-  base: '/' 
+  base: '/',
+  resolve: {
+    alias: {
+      vue: 'vue/dist/vue.esm-bundler.js' // Add this line
+    }
+  }
 })
