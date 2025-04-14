@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 
 defineProps<{ msg: string }>()
+import Signing from './Signing.vue'; 
 
 const count = ref(0)
 </script>
@@ -31,6 +32,7 @@ const count = ref(0)
     >.
   </p>
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+  <Signing msg ="hello" />
 </template>
 
 <style scoped>
