@@ -1,8 +1,17 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink } from 'vue-router';
+import AdminDashboard from './components/Admin_Dash.vue';
+import { defineComponent } from 'vue';
 </script>
 
 <template>
+  <!--<nav id="btnSec">
+      <RouterLink to="/">Homepage</RouterLink>
+      <RouterLink to="/admin">Admin</RouterLink>
+      <RouterLink to="/client">Client</RouterLink>
+      <RouterLink to="/freelancer">Freelancer</RouterLink>
+    </nav>-->
+  <RouterView />
   <section>
     <a href="https://vite.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
@@ -14,17 +23,23 @@ import HelloWorld from './components/HelloWorld.vue'
   <HelloWorld msg="Lebo + Lemo" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<style>
+/* Reset and base styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+#app {
+  height: 100%;
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
+#btnSec{
+  display: flex;
+  justify-content: space-between;
+}
+
 </style>
