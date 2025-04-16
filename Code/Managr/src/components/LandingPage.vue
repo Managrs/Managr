@@ -51,6 +51,7 @@ import { RouterLink } from 'vue-router';
 
 const { loginWithRedirect } = useAuth0();
 
+
 /*
 
 const handleLogin = () =>{
