@@ -4,7 +4,7 @@ import { RouterLink } from 'vue-router';
 import { ref } from 'vue';
 
 const { loginWithRedirect } = useAuth0();
-
+/*
 const handleLogin = () => {
   // Determine the target route based on userType
   let targetRoute = '/';
@@ -34,13 +34,19 @@ const handleLogin = () => {
   });
 };
 
-
+*/
 const { logout } = useAuth0();
 
 const userType = ref<string>('');
 
+const handleLogin = () => {
+  loginWithRedirect();
+};
+
 const handleLogout = () => {
-  logout({ returnTo: window.location.origin });
+  logout({  
+    logoutParams:  {returnTo: window.location.origin}
+   });
 };
 
 defineProps<{ msg: string }>();

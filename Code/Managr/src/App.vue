@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
-import AdminDashboard from './components/Admin_Dash.vue';
-import { defineComponent } from 'vue';
+
 </script>
 
 <template>

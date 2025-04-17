@@ -8,7 +8,7 @@
       <ul class="nav-links">
         <li>
           <!--<router-link to="/dashboard" class="nav-link">Login</router-link>-->
-          <button class="nav-link" @click="loginWithRedirect">Log in</button>
+          <button class="nav-link" @click="handleLogin">Log in</button>
         </li>
         <li>
           <!--<router-link to="/dashboard" class="nav-link">Signup</router-link>-->
@@ -51,9 +51,14 @@ const { loginWithRedirect } = useAuth0();
 
 const { logout } = useAuth0();
 
+const handleLogin = () => {
+  loginWithRedirect();
+};
 
 const handleLogout = () => {
-  logout({ returnTo: window.location.origin });
+  logout({  
+    logoutParams:  {returnTo: window.location.origin}
+   });
 };
 
 </script>

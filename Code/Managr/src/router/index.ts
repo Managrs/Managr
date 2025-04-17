@@ -1,7 +1,6 @@
 // src/router/index.ts
 import { createRouter, createWebHistory } from 'vue-router';
 //import { useAuth0 } from '@auth0/auth0-vue';
-import 'core-js/stable/promise';
 
 import LandingPage from '../components/LandingPage.vue'
 import DashboardLayout from '../views/DashboardLayout.vue'
