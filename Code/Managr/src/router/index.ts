@@ -18,11 +18,13 @@ const routes = [
     name: 'land',
     component: () => import('../components/LandingPage.vue'),
   },
+  
   {
     path: '/admin',
     name: 'admin',
     component: () => import('../components/Admin_Dash.vue'),
   },
+  
   {
     path: '/sign',
     name: 'sign',
