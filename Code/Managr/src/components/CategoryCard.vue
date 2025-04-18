@@ -1,15 +1,12 @@
 <template>
   <article class="card">
-    <section 
-      class="image-container" 
-      :style="{ backgroundImage: `url(${image})` }"
-    >
+    <div class="image-container" :style="{ backgroundImage: `url(${image})` }">
+    </div>
+    <div class="card-content">
       <h3 class="card-title">{{ title }}</h3>
-    </section>
-    <section class="card-content">
       <h4 class="card-category">{{ category }}</h4>
       <p class="card-description">{{ description }}</p>
-    </section>
+    </div>
   </article>
 </template>
 
@@ -41,47 +38,50 @@ export default defineComponent({
 
 <style scoped>
 .card {
-  background: #2b3d4f;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  width: 280px;
+  background: white;
+  margin: 1rem;
+  z-index: 1;
 }
 
 .card:hover {
   transform: translateY(-5px);
+  z-index: 2;
 }
 
 .image-container {
-  height: 150px;
+  height: 140px;
   background-size: cover;
   background-position: center;
   display: flex;
-  align-items: flex-end;
-  padding: 1rem;
+  justify-content: center;
 }
 
 .card-title {
-  color: #2b3d4f;
-  margin: 0;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  color: black;
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding: 10px;
 }
 
 .card-content {
-  padding: 1.5rem;
-  background: white;
+  padding: 1rem;
+
 }
 
 .card-category {
-  color: #666;
-  font-size: 0.9rem;
-  margin: 0 0 0.5rem 0;
-  text-transform: uppercase;
+  color: #111;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
 .card-description {
-  color: #333;
-  margin: 0;
-  line-height: 1.5;
+  color: #444;
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 </style>

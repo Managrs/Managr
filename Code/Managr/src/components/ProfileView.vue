@@ -1,16 +1,15 @@
 <template>
   <section class="profiles-view">
-    <h2 class="section-title">Explore other Freelancers</h2>
-    <section class="profiles-container">
+    <h2 class="section-title">Featured Professionals</h2>
+    <div class="profiles-container">
       <ProfileCard
         v-for="profile in profiles"
         :key="profile.id"
         :image="profile.image"
         :name="profile.name"
         :job="profile.job"
-        :bio="profile.bio"
       />
-    </section>
+    </div>
   </section>
 </template>
 
@@ -23,7 +22,6 @@ interface Profile {
   image: string;
   name: string;
   job: string;
-  bio: string;
 }
 
 export default defineComponent({
@@ -32,55 +30,50 @@ export default defineComponent({
   data() {
     return {
       profiles: [
-        {
-          id: 1,
-          image: '/images/fashion.jpg',
-          name: 'Alex Johnson',
-          job: 'UX Designer',
-          bio: 'Specializing in user-centered design with 8 years of experience.'
-        },
-        {
-          id: 2,
-          image: '/images/fashion.jpg',
-          name: 'Sarah Williams',
-          job: 'Frontend Developer',
-          bio: 'React specialist passionate about creating beautiful interfaces.'
-        },
-        {
-          id: 3,
-          image: '/images/fashion.jpg',
-          name: 'Sarah Williams',
-          job: 'Frontend Developer',
-          bio: 'React specialist passionate about creating beautiful interfaces.'
-        },
-        {
-          id: 4,
-          image: '/images/fashion.jpg',
-          name: 'Sarah Williams',
-          job: 'Frontend Developer',
-          bio: 'React specialist passionate about creating beautiful interfaces.'
-        },
-        {
-          id: 5,
-          image: '/images/fashion.jpg',
-          name: 'Sarah Williams',
-          job: 'Frontend Developer',
-          bio: 'React specialist passionate about creating beautiful interfaces.'
-        },
-        {
-          id: 6,
-          image: '/images/fashion.jpg',
-          name: 'Sarah Williams',
-          job: 'Frontend Developer',
-          bio: 'React specialist passionate about creating beautiful interfaces.'
-        },
-        {
-          id: 7,
-          image: '/images/fashion.jpg',
-          name: 'Sarah Williams',
-          job: 'Frontend Developer',
-          bio: 'React specialist passionate about creating beautiful interfaces.'
-        },
+          {
+            id: 1,
+            image: '/images/fashion.jpg',
+            name: 'Alex Johnson',
+            job: 'UX Designer',
+            
+          },
+          {
+            id: 2,
+            image: '/images/fashion.jpg',
+            name: 'Sarah Williams',
+            job: 'Frontend Developer',
+            
+          },
+          {
+            id: 3,
+            image: '/images/fashion.jpg',
+            name: 'Sarah Williams',
+            job: 'Frontend Developer',
+          },
+          {
+            id: 4,
+            image: '/images/fashion.jpg',
+            name: 'Sarah Williams',
+            job: 'Frontend Developer',
+          },
+          {
+            id: 5,
+            image: '/images/fashion.jpg',
+            name: 'Sarah Williams',
+            job: 'Frontend Developer',
+          },
+          {
+            id: 6,
+            image: '/images/fashion.jpg',
+            name: 'Sarah Williams',
+            job: 'Frontend Developer',
+          },
+          {
+            id: 7,
+            image: '/images/fashion.jpg',
+            name: 'Sarah Williams',
+            job: 'Frontend Developer',
+          },
         // Add more profiles...
       ] as Profile[]
     };
@@ -97,7 +90,6 @@ export default defineComponent({
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   padding-left: 1rem;
-  color: #2b3d4f;
 }
 
 .profiles-container {

@@ -149,17 +149,16 @@ export default defineComponent({
 .category-view {
   padding: 2rem 1rem;
 }
-  
+
 .view-title {
-  text-align: center;
   margin-bottom: 2rem;
   font-size: 2rem;
-  color: #2b3d4f;
+  color: #333;
 }
-  
+
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 2rem;
 }
 
@@ -167,7 +166,7 @@ export default defineComponent({
   display: block;
   margin: 2rem auto 0;
   padding: 0.75rem 1.5rem;
-  background: #007BFF;
+  background: #007bff;
   color: white;
   border: none;
   border-radius: 6px;

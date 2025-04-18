@@ -7,10 +7,10 @@
       
       <ul class="nav-links">
         <li>
-          <router-link to="/dashboard" class="nav-link">Login</router-link>
+          <router-link to="/dashboard" class="nav-link">Freelancers</router-link>
         </li>
         <li>
-          <router-link to="/dashboard" class="nav-link">Signup</router-link>
+          <router-link to="/DashboardClient" class="nav-link">Clients</router-link>
         </li>
       </ul>
     </nav>
@@ -22,7 +22,7 @@
   <section class="overlay-content">
     <h1 class="main-title">Welcome to Managr</h1>
     <p class="main-subtitle">Your platform for freelancers and clients to connect seamlessly.</p>
-    <router-link to="/dashboard" class="cta-button">Get Started</router-link>
+    <router-link to="/dashboardadmin" class="cta-button">Get Started</router-link>
   </section>
 </section>
     </section>    
@@ -50,6 +50,7 @@
   /* Header Styling */
   .header {
     display: flex;
+    margin: auto;
     justify-content: center; /* Centers the content */
     align-items: center;
     position: relative;
