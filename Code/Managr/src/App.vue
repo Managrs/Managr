@@ -10,7 +10,6 @@
       <RouterLink to="/freelancer">Freelancer</RouterLink>
     </nav>-->
   <RouterView />
-  <HelloWorld msg="Lebo + Lemo" />
 </template>
 
 <style>
@@ -26,10 +25,6 @@ html, body {
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
-}
-#btnSec{
-  display: flex;
-  justify-content: space-between;
 }
 
 </style>
