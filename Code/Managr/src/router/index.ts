@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
 //import { useAuth0 } from '@auth0/auth0-vue';
 
 import LandingPage from '../components/LandingPage.vue';
