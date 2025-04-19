@@ -27,7 +27,7 @@ export default defineComponent({
     job: {
       type: String as PropType<string>,
       required: true
-    },
+    }
   }
 });
 </script>
