@@ -1,4 +1,6 @@
 <template>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/@vue/compiler-sfc@3/dist/compiler-sfc.js"></script>
   <section class="category-view">
     <h2 class="view-title">Browse Gigs</h2>
     <section class="cards-container">
