@@ -1,23 +1,5 @@
-import { createApp } from 'vue';
-import App from '../src/App.vue';
-import { createAuth0 } from '@auth0/auth0-vue';
-import router from './router';
+import { createApp } from 'vue'
+import './style.css'
+import App from './App.vue'
 
-
-const app = createApp(App);
-app.use(router);
-app.use(
-    createAuth0({
-      domain: "dev-7jtzu3jbzi1vm4qi.us.auth0.com",
-      clientId: "tKIrxFqmYQtpYb47oSNBrz8XRDNNMoXc",
-
-      authorizationParams: {
-        redirect_uri: window.location.origin,
-        audience: `https://dev-7jtzu3jbzi1vm4qi.us.auth0.com/api/v2/`,
-        scope: 'openid profile email'
-      }
-    })
-  );
-  app.mount('#app');
-
-
+createApp(App).mount('#app')
