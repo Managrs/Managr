@@ -40,6 +40,13 @@ const routes = [
     name: 'freelance',
     component: () => import('../views/DashboardLayout.vue'),
   },
+
+  {
+    path: '/message',
+    name: 'message',
+    component: () => import('../components/Message.vue')
+  },
+
   /*
   {
     path: '/client',
@@ -68,6 +75,7 @@ const routes = [
     },
 
   },*/
+  
   {path: '/dashboard',name: 'DashboardLayout',component: DashboardLayout},
   { path: '/', name: 'LandingPage', component: LandingPage },
 

@@ -24,9 +24,11 @@
           <li>
             <router-link to="/" class="nav-link">Home</router-link>
           </li>
+
           <li>
             <router-link to="/todo" class="nav-link">Earnings</router-link>
           </li>
+          
           <li>
             <router-link to="/projects" class="nav-link">View Gigs</router-link>
           </li>

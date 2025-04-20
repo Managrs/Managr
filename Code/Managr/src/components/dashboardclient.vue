@@ -6,8 +6,14 @@
       </section>
       <nav>
         <button class="post-btn">Post Project</button>
-        <button id="messages-btn">Messages</button>
+
+        <a href="https://wa.me/+27791465725" class="whatsapp-float" target="_blank">
+          <button class="messages-btn">Messages</button>
+
+        </a>
+        
         <!-- <button onclick ="location.href='https://wa.me/+27814903174/?text=Conntect me on whatsapp'">Message</button>-->
+         
         <section class="profile-picture">
           <img :src="profilePic" alt="Profile Picture" />
         </section>
@@ -48,10 +54,6 @@ import logo from '../assets/logo1.jpg'
 import profilePic from '../assets/noprofile.jpg'
 
 console.log("Dashboard ready");
-
-document.getElementById("message-btn").onclick = function(){
-
-}
 
 </script>
 
