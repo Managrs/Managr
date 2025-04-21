@@ -25,9 +25,9 @@
               <router-link to="/messages" class="nav-link">Messages</router-link>
             </li>
           </ul>
-          <figure class="user-avatar">
+          <figure class="user-avatar" v-if="isAuthenticated">
             <a href="#">
-              <img src="https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png" alt="User Avatar" class="avatar-image" />
+              <img :src="user.picture" alt="User Avatar" class="avatar-image" />
             </a>
           </figure>
         </section>
@@ -35,11 +35,39 @@
     </header>
   </template>  
   
-<script lang="ts">
-  export default {
-    name: "DashClient"
-  }
-</script>
+  <script lang="ts">
+  import { defineComponent, onMounted, ref, watch } from 'vue';
+  import { useAuth0 } from '@auth0/auth0-vue';
+  
+  export default defineComponent({
+    name: 'DashClient',
+    setup() {
+      const { user, isAuthenticated } = useAuth0();
+  
+      const userData = ref<any>(null);
+      const isAuth = ref(false);
+  
+      watch(isAuthenticated, (newVal) => {
+        isAuth.value = newVal;
+      });
+  
+      watch(user, (newVal) => {
+        userData.value = newVal;
+      });
+  
+      onMounted(() => {
+        isAuth.value = isAuthenticated.value;
+        userData.value = user.value;
+      });
+  
+      return {
+        user: userData,
+        isAuthenticated: isAuth
+      };
+    }
+  });
+  </script>
+  
   
 <style scoped>
 /* Global Variables */
