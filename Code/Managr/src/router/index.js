@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 //import { useAuth0 } from '@auth0/auth0-vue';
 import LandingPage from '../components/LandingPage.vue';
 import DashboardLayout from '../views/DashboardLayout.vue';
-import dashboardclient from '../views/dashboardclient.vue';
+//import dashboardclient from '../views/dashboardclient.vue';
 import dashboardadmin from '../views/dashboardadmin.vue';
 import AdminDashboard from '../components/AdminSide.vue';
 //admin routers
@@ -17,7 +17,7 @@ import PostGig from '../views/client/postGig.vue';
 import ManageGigs from '../views/client/manageGigs.vue';
 const routes = [
     { path: '/', name: 'LandingPage', component: LandingPage },
-    { path: '/DashboardClient', name: 'dashboardclient', component: dashboardclient },
+    //{ path: '/DashboardClient', name: 'dashboardclient', component: dashboardclient },
     { path: '/Admindashboard', name: 'AdminDashboard', component: AdminDashboard },
     { path: '/dashboard', name: 'DashboardLayout', component: DashboardLayout },
     {

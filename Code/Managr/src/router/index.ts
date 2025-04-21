@@ -19,6 +19,7 @@ import ManageGigs from '../views/client/manageGigs.vue';
 
 const routes = [
   { path: '/', name: 'LandingPage', component: LandingPage },
+  //{ path: '/DashboardClient', name: 'dashboardclient', component: dashboardclient },
   {path: '/Admindashboard',name: 'AdminDashboard', component: AdminDashboard},
   {path: '/dashboard',name: 'DashboardLayout', component: DashboardLayout},
   
