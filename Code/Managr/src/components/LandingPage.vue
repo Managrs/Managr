@@ -1,7 +1,4 @@
 <template>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <script src="https://unpkg.com/@vue/compiler-sfc@3/dist/compiler-sfc.js"></script>
-    
   <header class="header">
     <nav class="navigation">
       <router-link to="/" class="logo-link" aria-label="Home">
@@ -13,7 +10,6 @@
           <!--<router-link to="/dashboard" class="nav-link">Login</router-link>-->
           <button class="nav-link" @click="handleLogin">Sign in</button>
         </li>
-
         <li>
           <!--<router-link to="/dashboard" class="nav-link">Signup</router-link>-->
           <!--<button class="nav-link" @click="handleLogout" >Log out</button>-->
@@ -28,7 +24,7 @@
   <section class="overlay-content">
     <h1 class="main-title">Welcome to Managr</h1>
     <p class="main-subtitle">Your platform for freelancers and clients to connect seamlessly.</p>
-    <router-link to="/dashboardadmin" class="cta-button">Get Started with Managr</router-link>
+    <router-link to="/dashboardadmin" class="cta-button">Get Started</router-link>
   </section>
 </section>
     </section>    
@@ -59,7 +55,7 @@ const handleLogin = () => {
   logout({  
     logoutParams:  {returnTo: window.location.origin}
    });
-};*/
+};
 
 </script>
   
