@@ -50,13 +50,11 @@ import { RouterLink } from 'vue-router';
 
 const { loginWithRedirect } = useAuth0();
 
-/*const { logout } = useAuth0();*/
-
 const handleLogin = () => {
   loginWithRedirect();
 };
 
-
+/*const { logout } = useAuth0();*/
 /*const handleLogout = () => {
   logout({  
     logoutParams:  {returnTo: window.location.origin}
