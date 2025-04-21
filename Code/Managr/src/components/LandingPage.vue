@@ -50,12 +50,12 @@ const handleLogin = () => {
   loginWithRedirect();
 };
 
-/*const { logout } = useAuth0();*/
-/*const handleLogout = () => {
+/*const { logout } = useAuth0();
+const handleLogout = () => {
   logout({  
     logoutParams:  {returnTo: window.location.origin}
    });
-};
+};*/
 
 </script>
   
