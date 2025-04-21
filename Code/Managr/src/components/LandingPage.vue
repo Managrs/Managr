@@ -14,10 +14,10 @@
           <button class="nav-link" @click="handleLogin">Sign in</button>
         </li>
 
-        <!--<li>-->
-          <!--<router-link to="/dashboard" class="nav-link">Signup</router-link>-->
-          <!--<button class="nav-link" @click="handleLogout" >Log out</button>-->
-        <!--</li>-->
+        <li>
+          <router-link to="/dashboard" class="nav-link">Signup</router-link>
+          <button class="nav-link" @click="handleLogout" >Log out</button>
+        </li>
       </ul>
     </nav>
   </header>
