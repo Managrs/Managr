@@ -22,7 +22,7 @@ const routes = [
   { path: '/', name: 'LandingPage', component: LandingPage },
   {path: '/Dashboardclient' , name: 'Dashboardclient' , component: Dashboardclient},
   {path: '/Admindashboard',name: 'AdminDashboard', component: AdminDashboard},
-  {path: '/dashboard',name: 'DashboardLayout', component: DashboardLayout},
+  {path: '/dashboardfreelance',name: 'DashboardLayout', component: DashboardLayout},
   
   {
     path: '/dashboardadmin',
