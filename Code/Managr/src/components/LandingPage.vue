@@ -11,8 +11,8 @@
           <button class="nav-link" @click="handleLogin">Sign in</button>
         </li>
         <li>
-          <!--<router-link to="/dashboard" class="nav-link">Signup</router-link>-->
-          <!--<button class="nav-link" @click="handleLogout" >Log out</button>-->
+          <!--<router-link to="/dashboard" class="nav-link">Sign up</router-link>-->
+          <button class="nav-link" @click="handleSignup" >Sign up</button>
         </li>
       </ul>
     </nav>
@@ -41,22 +41,53 @@
 </template>
   
 <script setup lang="ts">
-import { useAuth0 } from '@auth0/auth0-vue';
-import { RouterLink } from 'vue-router';
+import { useAuth0 } from "@auth0/auth0-vue";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 
-const { loginWithRedirect } = useAuth0();
+const { loginWithRedirect, isAuthenticated, user } = useAuth0();
+const router = useRouter();
 
-const handleLogin = () => {
-  loginWithRedirect();
+// Reactive ref for user authentication status
+const isUserAuthenticated = ref(false);
+
+// Call this when the user clicks “Log In”
+const handleLogin = async () => {
+  await loginWithRedirect();
 };
 
-/*const { logout } = useAuth0();
-const handleLogout = () => {
-  logout({  
-    logoutParams:  {returnTo: window.location.origin}
-   });
-};*/
+// Call this when the user clicks “Sign Up”
+const handleSignup = async () => {
+  await loginWithRedirect({
+    authorizationParams: {
+      screen_hint: "signup",
+    },
+  });
+};
 
+// Check if the user is authenticated and redirect them accordingly
+const checkAndRedirect = () => {
+  isUserAuthenticated.value = isAuthenticated.value;
+
+  if (isUserAuthenticated.value) {
+    // You can use `user` here to check the user's role
+    const userRole = (user.value as any)?.app_metadata?.role;
+    if (userRole === "admin") {
+      router.push("/dashboardadmin");
+    } else if (userRole === "freelancer") {
+      router.push("/dashboardfreelance");
+    } else if (userRole === "client") {
+      router.push("/dashboardclient");
+    } else {
+      router.push("/");
+    }
+  }
+};
+
+// Run the check after the component is mounted
+onMounted(() => {
+  checkAndRedirect();
+});
 </script>
   
 <style scoped>
