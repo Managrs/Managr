@@ -25,9 +25,9 @@
               <router-link to="/messages" class="nav-link">Messages</router-link>
             </li>
           </ul>
-          <figure class="user-avatar" v-if="isAuthenticated">
-            <a href="#">
-              <img :src="user.picture" alt="User Avatar" class="avatar-image" />
+          <figure class="user-avatar" >
+            <a href="#" v-if="isAuthenticated">
+              <img :src="user.picture || defaultPic" alt="User Avatar" class="avatar-image" />
             </a>
           </figure>
         </section>
@@ -46,7 +46,8 @@
   
       const userData = ref<any>(null);
       const isAuth = ref(false);
-  
+      const defaultPic = 'https://via.placeholder.com/100';
+
       watch(isAuthenticated, (newVal) => {
         isAuth.value = newVal;
       });
@@ -62,7 +63,8 @@
   
       return {
         user: userData,
-        isAuthenticated: isAuth
+        isAuthenticated: isAuth,
+        defaultPic
       };
     }
   });
