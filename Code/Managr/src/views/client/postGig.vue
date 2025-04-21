@@ -62,7 +62,7 @@
     methods: {
       async submitGig() {
         try {
-          const response = await fetch("http://localhost:3000/newGig", {
+          const response = await fetch("${import.meta.env.MONGO_URI}/newGig", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
