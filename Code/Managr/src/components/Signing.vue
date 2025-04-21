@@ -54,8 +54,6 @@ defineProps<{ msg: string }>();
 </script>
 
 <template>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <script src="https://unpkg.com/@vue/compiler-sfc@3/dist/compiler-sfc.js"></script>
   <h1> Welcome to login</h1>
   <section>
   <nav id="links">
