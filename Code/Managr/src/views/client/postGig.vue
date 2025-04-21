@@ -62,7 +62,7 @@
     methods: {
       async submitGig() {
         try {
-          const response = await fetch("${import.meta.env.VITE_API_URL}/newGig", {
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/newGig`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
