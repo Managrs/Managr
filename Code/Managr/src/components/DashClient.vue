@@ -26,7 +26,7 @@
             </li>
           </ul>
           <figure class="user-avatar" >
-            <a href="#" v-if="isAuthenticated">
+            <a href="#">
               <img :src="user.picture || defaultPic" alt="User Avatar" class="avatar-image" />
             </a>
           </figure>
