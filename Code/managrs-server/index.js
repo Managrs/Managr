@@ -7,45 +7,40 @@ require('dotenv').config();
 
 const app = express();
 
-// Allowed frontend origins
+// Always run CORS middleware first
 const allowedOrigins = [
-  'https://red-flower-021f5d510.6.azurestaticapps.net', // Production
-  'http://localhost:5173' // Development
+  'https://red-flower-021f5d510.6.azurestaticapps.net',
+  'http://localhost:5173'
 ];
 
-// CORS options
-const corsOptions = {
+app.use(cors({
   origin: function (origin, callback) {
-    console.log('Origin trying to access:', origin);
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
-};
+}));
 
-// Apply CORS globally
-app.use(cors(corsOptions));
+//  Required to respond to preflight OPTIONS requests
+app.options('*', cors());
 
-// Handle preflight OPTIONS requests
-app.options('*', cors(corsOptions));
-
-// Parse JSON bodies
+//  Parse incoming JSON requests
 app.use(express.json());
 
-// Connect to the database
+//  Connect to MongoDB
 connectToDB();
 
-// Health check route
+//  Health check
 app.get('/status', (req, res) => {
   res.send('Node server is live!');
 });
 
-// Route to create a new user
+//  POST: Create new user
 app.post('/newUser', async (req, res) => {
   try {
     const user = await User.create(req.body);
@@ -55,7 +50,7 @@ app.post('/newUser', async (req, res) => {
   }
 });
 
-// Route to create a new gig
+// POST: Create new gig
 app.post('/newGig', async (req, res) => {
   try {
     const gig = await Gig.create(req.body);
@@ -65,7 +60,7 @@ app.post('/newGig', async (req, res) => {
   }
 });
 
-// Start the server
+// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
