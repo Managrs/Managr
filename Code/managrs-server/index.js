@@ -7,62 +7,63 @@ require('dotenv').config();
 
 const app = express();
 
-// Frontend URLs that are allowed to make requests to this backend
+// Allowed frontend origins
 const allowedOrigins = [
-  'https://red-flower-021f5d510.6.azurestaticapps.net',  // Production URL
-  'http://localhost:5173'  // Development URL
+  'https://red-flower-021f5d510.6.azurestaticapps.net', // Production
+  'http://localhost:5173' // Development
 ];
 
-// CORS options configuration
-const options = {
+// CORS options
+const corsOptions = {
   origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);  // Allow request if origin is in the allowedOrigins list or if no origin is provided (like in the case of Postman or server-to-server requests)
+    console.log('Origin trying to access:', origin);
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));  // Block request if the origin is not allowed
+      callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allowed HTTP methods
-  allowedHeaders: ['Content-Type'],  // Allowed headers
-  credentials: true,  // Allow cookies if needed
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 };
 
-// Enable CORS middleware
-app.use(cors(options));  // Apply CORS settings
+// Apply CORS globally
+app.use(cors(corsOptions));
 
-// Parse incoming JSON data
+// Handle preflight OPTIONS requests
+app.options('*', cors(corsOptions));
+
+// Parse JSON bodies
 app.use(express.json());
 
-// Connect to your database
+// Connect to the database
 connectToDB();
 
-// Route for checking if the server is live
+// Health check route
 app.get('/status', (req, res) => {
   res.send('Node server is live!');
 });
 
-// Route for creating a new user
+// Route to create a new user
 app.post('/newUser', async (req, res) => {
   try {
-    const user = await User.create(req.body); 
-    res.status(201).json(user); 
+    const user = await User.create(req.body);
+    res.status(201).json(user);
   } catch (err) {
-    res.status(400).json({ error: err.message }); 
+    res.status(400).json({ error: err.message });
   }
 });
 
-// Route for creating a new gig
+// Route to create a new gig
 app.post('/newGig', async (req, res) => {
   try {
-    const gig = await Gig.create(req.body); 
-    res.status(201).json(gig); 
+    const gig = await Gig.create(req.body);
+    res.status(201).json(gig);
   } catch (err) {
-    res.status(400).json({ error: err.message }); 
+    res.status(400).json({ error: err.message });
   }
 });
-
-// Handle OPTIONS preflight requests
-app.options('*', cors(options));  // This will handle OPTIONS requests for all routes
 
 // Start the server
 const PORT = process.env.PORT || 3000;
