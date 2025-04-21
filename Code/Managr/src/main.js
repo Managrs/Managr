@@ -1,4 +1,4 @@
-import { createApp } from "https://unpkg.com/vue@3/dist/vue.global.js";
+import { createApp } from "https://unpkg.com/vue@3/dist/vue.global.j";
 import App from '../src/App.vue';
 import { createAuth0 } from '@auth0/auth0-vue';
 import router from './router';
