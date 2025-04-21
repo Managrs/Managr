@@ -1,7 +1,5 @@
 <!-- src/components/SearchComponent.vue -->
 <template>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <script src="https://unpkg.com/@vue/compiler-sfc@3/dist/compiler-sfc.js"></script>
     <section class="search-container">
       <h2>Find Trusted Freelancers for Your Everyday Needs</h2>
       <div class="search-wrapper">
