@@ -6,10 +6,28 @@ const Gig = require('./models/gigs');
 require('dotenv').config();
 
 const app = express();
-app.use(cors()); //I will change this so that my server only responds to my app
+
+const allowedOrigins = [
+  'https://red-flower-021f5d510.6.azurestaticapps.net',  // Frontend URL
+  'http://localhost:5173'  // Local development (if needed)
+];
+
+const options = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,  // If you want to allow cookies
+};
+
+app.use(cors(options)); //I will change this so that my server only responds to my app
 app.use(express.json());
 
 connectToDB();
+
 
 app.get('/status', (req, res) => {
   res.send('Node server is live!');
