@@ -72,11 +72,11 @@ const checkAndRedirect = () => {
   if (isUserAuthenticated.value) {
     // You can use `user` here to check the user's role
     const userRole = (user.value as any)?.app_metadata?.role;
-    if (userRole === "admin") {
+    if (userRole == "admin") {
       router.push("/dashboardadmin");
-    } else if (userRole === "freelancer") {
+    } else if (userRole == "freelancer") {
       router.push("/dashboardfreelance");
-    } else if (userRole === "client") {
+    } else if (userRole == "client") {
       router.push("/dashboardclient");
     } else {
       router.push("/");
