@@ -16,10 +16,11 @@ import Ausers from '../views/Admin/Ausers.vue';
 import Areports from '../views/Admin/Areports.vue';
 import PostGig from '../views/client/postGig.vue';
 import ManageGigs from '../views/client/manageGigs.vue';
+import Dashboardclient from '../views/dashboardclient.vue';
 
 const routes = [
   { path: '/', name: 'LandingPage', component: LandingPage },
-  //{ path: '/DashboardClient', name: 'dashboardclient', component: dashboardclient },
+  {path: '/Dashboardclient' , name: 'Dashboardclient' , component: Dashboardclient},
   {path: '/Admindashboard',name: 'AdminDashboard', component: AdminDashboard},
   {path: '/dashboard',name: 'DashboardLayout', component: DashboardLayout},
   
