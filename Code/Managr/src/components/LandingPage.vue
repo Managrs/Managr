@@ -8,11 +8,11 @@
       <ul class="nav-links">
         <li>
           <!--<router-link to="/dashboard" class="nav-link">Login</router-link>-->
-          <button class="nav-link" @click="handleLogin">Log in</button>
+          <button class="nav-link" @click="handleLogin">Sign in</button>
         </li>
         <li>
           <!--<router-link to="/dashboard" class="nav-link">Signup</router-link>-->
-          <button class="nav-link" @click="handleLogout" >Log out</button>
+          <!--<button class="nav-link" @click="handleLogout" >Log out</button>-->
         </li>
       </ul>
     </nav>
@@ -46,17 +46,16 @@ import { RouterLink } from 'vue-router';
 
 const { loginWithRedirect } = useAuth0();
 
-const { logout } = useAuth0();
-
 const handleLogin = () => {
   loginWithRedirect();
 };
 
+/*const { logout } = useAuth0();
 const handleLogout = () => {
   logout({  
     logoutParams:  {returnTo: window.location.origin}
    });
-};
+};*/
 
 </script>
   
