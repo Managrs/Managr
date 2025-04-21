@@ -8,12 +8,13 @@
       <ul class="nav-links">
         <li>
           <!--<router-link to="/dashboard" class="nav-link">Login</router-link>-->
-          <button class="nav-link" @click="handleLogin">Log in</button>
+          <button class="nav-link" @click="handleLogin">Sign in</button>
         </li>
-        <li>
+
+        <!--<li>-->
           <!--<router-link to="/dashboard" class="nav-link">Signup</router-link>-->
-          <button class="nav-link" @click="handleLogout" >Log out</button>
-        </li>
+          <!--<button class="nav-link" @click="handleLogout" >Log out</button>-->
+        <!--</li>-->
       </ul>
     </nav>
   </header>
@@ -24,7 +25,7 @@
   <section class="overlay-content">
     <h1 class="main-title">Welcome to Managr</h1>
     <p class="main-subtitle">Your platform for freelancers and clients to connect seamlessly.</p>
-    <router-link to="/dashboardadmin" class="cta-button">Get Started</router-link>
+    <router-link to="/dashboardadmin" class="cta-button">Get Started with Managr</router-link>
   </section>
 </section>
     </section>    
