@@ -4,8 +4,8 @@
   "description": "this is the backend app for managrs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
+    "postinstall": "npm install",
     "dev": "nodemon index.js"
   },
   "repository": {
@@ -23,7 +23,8 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "mongoose": "^8.13.2",
-    "mongoose-id-autoincrement": "^1.0.5"
+    "mongoose-id-autoincrement": "^1.0.5",
+    "node": "^4.9.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
