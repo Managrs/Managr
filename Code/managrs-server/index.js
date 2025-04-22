@@ -13,7 +13,7 @@ const allowedOrigins = [
   'http://localhost:5173'
 ];
 
-app.use(cors({
+const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
@@ -24,11 +24,9 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
-}));
+};
 
-//  Required to respond to preflight OPTIONS requests
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
 
 //  Parse incoming JSON requests
 app.use(express.json());
