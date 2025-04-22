@@ -35,12 +35,12 @@ app.use(express.json());
 connectToDB();
 
 //  Health check
-app.get('/api/status', (req, res) => {
+app.get('/status', (req, res) => {
   res.send('Node server is live!');
 });
 
 //  POST: Create new user
-app.post('/api/newUser', async (req, res) => {
+app.post('/newUser', async (req, res) => {
   try {
     const user = await User.create(req.body);
     res.status(201).json(user);
@@ -50,7 +50,7 @@ app.post('/api/newUser', async (req, res) => {
 });
 
 // POST: Create new gig
-app.post('/api/newGig', async (req, res) => {
+app.post('/newGig', async (req, res) => {
   try {
     const gig = await Gig.create(req.body);
     res.status(201).json(gig);
