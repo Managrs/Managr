@@ -21,6 +21,12 @@
             <li>
               <router-link to="/postgig" class="nav-link">Post Gig</router-link>
             </li>
+
+            <li>
+              <a href="https://wa.me/+27791465725" class="whatsapp-float" target="_blank">
+                  <button class="nav-link">Messages</button>
+              </a>
+            </li>
             <li>
               <router-link to="/messages" class="nav-link">Message us</router-link>
             </li>
