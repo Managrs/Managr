@@ -27,7 +27,8 @@ app.use(cors({
 }));
 
 //  Required to respond to preflight OPTIONS requests
-app.options('*', cors());
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 //  Parse incoming JSON requests
 app.use(express.json());
