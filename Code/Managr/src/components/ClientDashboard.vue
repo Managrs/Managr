@@ -46,7 +46,7 @@
           <template v-if="freelancers.length">
             <article v-for="(f, index) in freelancers" :key="index" class="freelancer-profile">
               <header class="profile-header">
-                <img src="/assets/noprofile.jpg" alt="Profile Picture" class="profile-pic" />
+                <img src="@/assets/noprofile.jpg" alt="Profile Picture" class="profile-pic" />
                 <h4>{{ f.name }}</h4>
               </header>
               <section class="profile-info">
@@ -74,6 +74,7 @@
   
   <script setup>
   import { ref } from 'vue'
+  import noProfileImg from '@/assets/noprofile.jpg'
   
   const searchTitle = ref('')
   const minPrice = ref('')
@@ -90,7 +91,7 @@
   
   const search = async () => {
     try {
-      const url = `http://localhost:3000/results?title=${encodeURIComponent(searchTitle.value)}&minPrice=${minPrice.value}&maxPrice=${maxPrice.value}`
+      const url = `http://localhost:5173/results?title=${encodeURIComponent(searchTitle.value)}&minPrice=${minPrice.value}&maxPrice=${maxPrice.value}`
       const res = await fetch(url)
       const data = await res.json()
       freelancers.value = data.freelancers

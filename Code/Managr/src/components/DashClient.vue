@@ -39,7 +39,9 @@
         </section>
       </nav>
     </header>
+    
   </template>  
+
   
 <script lang="ts">
   export default {
