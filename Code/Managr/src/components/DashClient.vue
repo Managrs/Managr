@@ -22,7 +22,7 @@
               <router-link to="/postgig" class="nav-link">Post Gig</router-link>
             </li>
             <li>
-              <router-link to="/messages" class="nav-link">Messages</router-link>
+              <router-link to="/messages" class="nav-link">Message us</router-link>
             </li>
           </ul>
           <figure class="user-avatar">
