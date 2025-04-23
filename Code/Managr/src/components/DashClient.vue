@@ -27,11 +27,8 @@
                   <button class="nav-link">Messages</button>
               </a>
             </li>
-            <li>
-              <router-link to="/messages" class="nav-link">Message us</router-link>
-            </li>
           </ul>
-          <figure class="user-avatar">
+          <figure class="user-avatar" @click="toggleSidebar">
             <a href="#">
               <img src="https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png" alt="User Avatar" class="avatar-image" />
             </a>
@@ -39,13 +36,28 @@
         </section>
       </nav>
     </header>
-    
+    <UserSidebar v-if="isOpen" @close="toggleSidebar" />
   </template>  
 
   
 <script lang="ts">
+  import UserSidebar from '../views/userProfile.vue'
+
   export default {
-    name: "DashClient"
+    name: 'DashClient',
+    components: {
+      UserSidebar
+    },
+    data() {
+      return {
+        isOpen: false // Controls visibility of the sidebar
+      }
+    },
+    methods: {
+      toggleSidebar() {
+        this.isOpen = !this.isOpen; // Toggle sidebar visibility
+      }
+    }
   }
 </script>
   
