@@ -30,6 +30,7 @@
   overflow-y: auto;
   background-color: #f5f5f5;
   padding: 2.7rem;
+  margin-left: 250px;
 }
   </style>
   

@@ -1,4 +1,4 @@
-<template>
+  <template>
   <header>
     <section class="logo">
       <img src="/logo2.png" alt="Managr Logo" />

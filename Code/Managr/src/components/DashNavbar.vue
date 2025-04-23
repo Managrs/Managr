@@ -37,7 +37,7 @@
   
         <!-- User Section - Avatar and Dropdown -->
         <section class="user-section">
-          <figure class="user-avatar">
+          <figure class="user-avatar"  @click="toggleSidebar">
             <a href="#">
               <img src="https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png" alt="User Avatar" class="avatar-image" />
             </a>
@@ -45,11 +45,27 @@
         </section>
       </nav>
     </header>
+    <UserSidebar v-if="isOpen" @close="toggleSidebar" />
 </template>
   
 <script lang="ts">
+ import UserSidebar from '../views/userProfile.vue'
+
   export default {
-    name: "DashNavbar"
+    name: "DashNavbar",
+    components: {
+      UserSidebar
+    },
+    data() {
+      return {
+        isOpen: false // Controls visibility of the sidebar
+      }
+    },
+    methods: {
+      toggleSidebar() {
+        this.isOpen = !this.isOpen; // Toggle sidebar visibility
+      }
+    }
   }
 </script>
   

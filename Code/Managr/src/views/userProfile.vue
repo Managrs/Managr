@@ -18,38 +18,52 @@
       </nav>
   
       <footer class="sidebar-footer">
-        <button @click="logout">Logout</button>
+        <button @click="handleLogout">Logout</button>
       </footer>
     </aside>
   </template>
   
   <script lang="ts">
+  import { ref } from 'vue';
+  import { useAuth0 } from '@auth0/auth0-vue';
+  
   export default {
     name: 'userProfile',
-    data() {
+    setup() {
+      const { logout } = useAuth0();
+  
+      const isOpen = ref(true);
+      const user = ref({
+        name: 'Dawid Pietrasiak',
+        email: 'dawid@product.com',
+        avatar: 'https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png'
+      });
+  
+      const handleLogout = () => {
+        logout({
+          logoutParams: { returnTo: window.location.origin },
+        });
+      };
+  
+      const openSidebar = () => {
+        isOpen.value = true;
+      };
+  
+      const closeSidebar = () => {
+        isOpen.value = false;
+      };
+  
       return {
-        isOpen: true, // Default isOpen to true for sidebar visibility
-        user: {
-          name: 'Dawid Pietrasiak',
-          email: 'dawid@product.com',
-          avatar: "https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png" // Larger avatar image
-        }
-      }
+        isOpen,
+        user,
+        handleLogout,
+        openSidebar,
+        closeSidebar,
+      };
     },
-    methods: {
-      logout() {
-        alert('Logging out...');
-        // Insert real logout logic here
-      },
-      openSidebar() {
-      this.isOpen = true; // Open the sidebar when mouse enters
-    },
-    closeSidebar() {
-      this.isOpen = false; // Close the sidebar when mouse leaves
-    }
-    }
-  }
+  };
   </script>
+  
   
   <style scoped>
   .sidebar {

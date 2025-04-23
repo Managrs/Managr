@@ -24,7 +24,7 @@
       </section>
   
       <!-- Bottom Profile Section -->
-    <section class="bottom-profile">
+    <section class="bottom-profile" @click="toggleSidebar">
     <router-link to="/Aprofile" class="profile-link">
     <img
       src="https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png"
@@ -35,14 +35,31 @@
     </router-link>
     </section>
     </aside>
-
-    <main class="main-view">
-      <router-view />
-    </main>
+    <UserSidebar v-if="isOpen" @close="toggleSidebar" />
+    <!--<main class="main-view">-->
+      <!--<router-view />-->
+    <!--</main>-->
   </template>
   
   <script lang="ts">
-  export default {}
+  import UserSidebar from '../views/userProfile.vue'
+
+  export default {
+    name: "Adminside",
+    components: {
+      UserSidebar
+    },
+    data() {
+      return {
+        isOpen: false // Controls visibility of the sidebar
+      }
+    },
+    methods: {
+      toggleSidebar() {
+        this.isOpen = !this.isOpen; // Toggle sidebar visibility
+      }
+    }
+  }
   </script>
   
   <style scoped>
