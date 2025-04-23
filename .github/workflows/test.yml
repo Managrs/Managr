@@ -27,7 +27,7 @@ jobs:
 
       # Change to /Code/Managr directory
       - name: Change to /Code/Managr directory
-        run: cd /Code/Managr
+        run: cd Code/Managr
 
       # Run coverage
       - name: Run coverage
