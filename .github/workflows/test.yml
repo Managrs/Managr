@@ -21,13 +21,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Install dependencies using npm ci
-      - name: Install dependencies
-        run: npm ci
-
       # Change to /Code/Managr directory
       - name: Change to /Code/Managr directory
         run: cd Code/Managr
+
+      # Install dependencies using npm ci
+      - name: Install dependencies
+        run: npm ci
 
       # Run coverage
       - name: Run coverage
