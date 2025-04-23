@@ -26,9 +26,9 @@ jobs:
       - name: npm install, build, and test
         run: |
           npm install
-          working-directory: Managr/Code/managrs-server
           npm run build --if-present
           npm run test --if-present
+        working-directory: Managr/Code/managrs-server
 
 
       - name: Zip artifact for deployment
