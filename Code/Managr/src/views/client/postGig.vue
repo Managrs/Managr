@@ -62,7 +62,7 @@
     methods: {
       async submitGig() {
         try {
-          const response = await fetch("http://localhost:3000/newGig", {
+          const response = await fetch("https://managrs-server.azurewebsites.net/newGig", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
