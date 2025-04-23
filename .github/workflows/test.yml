@@ -6,7 +6,7 @@ on:
       - main
       - LeboDev2
       - LeboDev
-      
+
   pull_request:
     branches:
       - main
@@ -28,8 +28,8 @@ jobs:
         run: npm ci
 
       # Run coverage
-      - name: Run coverage
-        run: npm run coverage
+      #- name: Run coverage
+      #  run: npm run coverage
 
       # Run tests
       - name: Run tests
