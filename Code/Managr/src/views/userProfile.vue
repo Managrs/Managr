@@ -1,10 +1,10 @@
 <template>
-    <aside v-if="isOpen" class="sidebar" @mouseenter="openSidebar" @mouseleave="closeSidebar">
+    <aside v-if="isOpen" class="sidebar"          @mouseenter="openSidebar" @mouseleave="closeSidebar">
       <section class="sidebar-header">
-        <img class="avatar" :src="user?.picture || 'https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png'" alt="User Avatar" />
+        <img class="avatar" :src="user.avatar" alt="User Avatar" />
         <div class="user-info">
-          <h2>{{ user?.name }}</h2>
-          <p>{{ user?.email }}</p>
+          <h2>{{ user.name }}</h2>
+          <p>{{ user.email }}</p>
         </div>
       </section>
   
@@ -24,30 +24,20 @@
   </template>
   
   <script lang="ts">
-  import { ref , onMounted } from 'vue';
+  import { ref } from 'vue';
   import { useAuth0 } from '@auth0/auth0-vue';
   
   export default {
     name: 'userProfile',
     setup() {
-      const { logout, user: auth0User, isAuthenticated } = useAuth0();
+      const { logout } = useAuth0();
   
       const isOpen = ref(true);
-      const user = ref<{
-      name?: string;
-      email?: string;
-      picture?: string;
-    } | null>(null);
-
-    onMounted(() => {
-      if (isAuthenticated && auth0User.value) {
-        user.value = {
-          name: auth0User.value.name,
-          email: auth0User.value.email,
-          picture: auth0User.value.picture,
-        };
-      }
-    });
+      const user = ref({
+        name: 'Dawid Pietrasiak',
+        email: 'dawid@product.com',
+        avatar: 'https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png'
+      });
   
       const handleLogout = () => {
         logout({
