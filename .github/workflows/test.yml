@@ -35,6 +35,11 @@ jobs:
         run: npm run test
         working-directory: ./Code/Managr
 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
       # Build the project
       - name: Build project
         run: npm run build
