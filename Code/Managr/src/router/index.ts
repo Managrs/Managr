@@ -5,7 +5,7 @@ import LandingPage from '../components/LandingPage.vue';
 import DashboardLayout from '../views/DashboardLayout.vue';
 import dashboardadmin from '../views/dashboardadmin.vue';
 import AdminDashboard from '../components/AdminSide.vue';
-import ClientDashboard from '../components/ClientDashboard.vue';
+//import ClientDashboard from '../components/ClientDashboard.vue';
 
 //admin routers
 import Aauditlogs from '../views/Admin/Aauditlogs.vue';
@@ -24,7 +24,7 @@ const routes = [
   {path: '/Dashboardclient' , name: 'Dashboardclient' , component: Dashboardclient},
   {path: '/Admindashboard',name: 'AdminDashboard', component: AdminDashboard},
   {path: '/dashboardfreelance',name: 'DashboardLayout', component: DashboardLayout},
-  {path: '/clientdashboard',name: 'ClientDashboard', component: ClientDashboard},
+  //{path: '/clientdashboard',name: 'ClientDashboard', component: ClientDashboard},
   
   {
     path: '/dashboardadmin',
