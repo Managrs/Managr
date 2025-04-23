@@ -21,7 +21,7 @@ app.use(express.json());
 connectToDB();
 
 //  Health check
-app.get('/status', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Node server is live!');
 });
 
