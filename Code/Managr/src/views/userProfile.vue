@@ -1,68 +1,74 @@
 <template>
-    <aside v-if="isOpen" class="sidebar"          @mouseenter="openSidebar" @mouseleave="closeSidebar">
-      <section class="sidebar-header">
-        <img class="avatar" :src="user.avatar" alt="User Avatar" />
-        <div class="user-info">
-          <h2>{{ user.name }}</h2>
-          <p>{{ user.email }}</p>
-        </div>
-      </section>
-  
-      <nav class="sidebar-links">
-        <ul>
-          <li><a href="#">Personal Settings</a></li>
-          <li><a href="#">Notifications</a></li>
-          <li><a href="#">Language</a></li>
-          <li><a href="#">Members</a></li>
-        </ul>
-      </nav>
-  
-      <footer class="sidebar-footer">
-        <button @click="handleLogout">Logout</button>
-      </footer>
-    </aside>
-  </template>
-  
-  <script lang="ts">
-  import { ref } from 'vue';
-  import { useAuth0 } from '@auth0/auth0-vue';
-  
-  export default {
-    name: 'userProfile',
-    setup() {
-      const { logout } = useAuth0();
-  
-      const isOpen = ref(true);
-      const user = ref({
-        name: 'Dawid Pietrasiak',
-        email: 'dawid@product.com',
-        avatar: 'https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png'
+  <aside v-if="isOpen" class="sidebar" @mouseenter="openSidebar" @mouseleave="closeSidebar">
+    <section class="sidebar-header">
+      <!-- Display the user's avatar, name, and email fetched from Auth0 -->
+      <img class="avatar" :src="user?.picture" alt="User Avatar" />
+      <div class="user-info">
+        <h2>{{ user?.name }}</h2>
+        <p>{{ user?.email }}</p>
+      </div>
+    </section>
+
+    <nav class="sidebar-links">
+      <ul>
+        <li><a href="#">Personal Settings</a></li>
+        <li><a href="#">Notifications</a></li>
+        <li><a href="#">Language</a></li>
+        <li><a href="#">Members</a></li>
+      </ul>
+    </nav>
+
+    <footer class="sidebar-footer">
+      <button @click="handleLogout">Logout</button>
+    </footer>
+  </aside>
+</template>
+
+<script lang="ts">
+import { ref, onMounted } from 'vue';
+import { useAuth0 } from '@auth0/auth0-vue';
+
+export default {
+  name: 'UserProfile',
+  setup() {
+    // Access Auth0's logout function and user data
+    const { logout, user: auth0User, isAuthenticated, isLoading } = useAuth0();
+    
+    const isOpen = ref(true);
+    const user = ref(null);
+
+    // When the component is mounted, set the user information from Auth0
+    onMounted(() => {
+      if (isAuthenticated.value && auth0User.value) {
+        user.value = auth0User.value;  // Store the user data from Auth0
+      }
+    });
+
+    const handleLogout = () => {
+      logout({
+        logoutParams: { returnTo: window.location.origin },
       });
-  
-      const handleLogout = () => {
-        logout({
-          logoutParams: { returnTo: window.location.origin },
-        });
-      };
-  
-      const openSidebar = () => {
-        isOpen.value = true;
-      };
-  
-      const closeSidebar = () => {
-        isOpen.value = false;
-      };
-  
-      return {
-        isOpen,
-        user,
-        handleLogout,
-        openSidebar,
-        closeSidebar,
-      };
-    },
-  };
-  </script>
+    };
+
+    const openSidebar = () => {
+      isOpen.value = true;
+    };
+
+    const closeSidebar = () => {
+      isOpen.value = false;
+    };
+
+    return {
+      isOpen,
+      user,
+      handleLogout,
+      openSidebar,
+      closeSidebar,
+      isLoading,
+    };
+  },
+};
+</script>
   
   
   <style scoped>
