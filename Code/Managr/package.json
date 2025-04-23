@@ -25,6 +25,7 @@
     "@vue/runtime-dom": "^3.5.13",
     "@vue/test-utils": "^2.4.0-alpha.2",
     "@vue/tsconfig": "^0.7.0",
+    "codecov": "^3.8.2",
     "happy-dom": "^17.4.4",
     "jsdom": "^26.1.0",
     "typescript": "~5.7.2",
