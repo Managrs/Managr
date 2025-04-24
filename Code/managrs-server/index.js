@@ -9,7 +9,7 @@ const app = express();
 
 //  Parse incoming JSON requests
 app.use(cors({
-  origin: 'https://red-flower-021f5d510.6.azurestaticapps.net',
+  origin: 'https://jolly-bush-0f6975910.6.azurestaticapps.net',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type'],
   credentials: true,
