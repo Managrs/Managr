@@ -1,0 +1,109 @@
+//User Story
+As a user, I want to click the message button so that I can be redirected to WhatsApp for communication.
+UAT
+Given I am logged in and viewing a user or job profile, when I click the message button, then I should be redirected to WhatsApp with the relevant contact pre-filled.
+
+//User Story
+As a user, I want to type into the search bar so that I can search for specific freelancers or services.
+UAT
+Given I am on the search interface, when I click the search input field, then I should be able to type a keyword into the bar.
+
+User Story
+As a user, I want to click the search button so that I can see freelancers matching my search query.
+UAT
+Given I have typed a keyword into the search bar, when I click the search button, then a list of freelancers matching the query should be displayed.
+
+User Story
+As a user, I want to filter freelancers by minimum and maximum price so that I can find those within my budget.
+UAT
+Given I have entered a min and/or max price in the filter, when I click the search button, then only freelancers whose rates fall within the specified price range should be shown.
+`
+User Story
+As a client, I want to post jobs so that I can hire freelancers for specific tasks.
+UAT
+Given I am a logged-in client, when I fill in the job details and click “Post Job”, then the job should be saved and visible to freelancers.
+
+User Story
+As a client, I want to delete a job so that I can remove outdated or irrelevant postings.
+UAT
+Given I am the owner of a job posting, when I click the delete option for that job, then the job should be removed from the job list.
+
+
+//User Story
+As a new user, I want to choose my role (Client or Freelancer) during sign-up so that I can be assigned the correct account type.
+UAT
+Given I am on the registration page,
+when I select either “Client” or “Freelancer” from the role options,
+then the system should store my selected role and use it to determine my experience.
+
+//User Story
+As a client, I want to be redirected to the client dashboard after sign-up so that I can immediately start using the platform as a client.
+UAT
+Given I chose “Client” during sign-up and completed the registration process,
+when I am authenticated,
+then I should be redirected to the client dashboard.
+
+//User Story
+As a freelancer, I want to be redirected to the freelancer dashboard after sign-up so that I can immediately begin offering services.
+UAT
+Given I chose “Freelancer” during sign-up and completed the registration process,
+when I am authenticated,
+then I should be redirected to the freelancer dashboard.
+
+
+//User Story
+As a new user, I want to be required to accept the terms and conditions during sign-up so that I understand the rules and policies of using the platform.
+UAT
+Given I am on the registration page,
+when I attempt to sign up without checking the “I accept the Terms and Conditions” checkbox,
+then I should see a validation message preventing submission.
+And when I check the box and submit the form,
+then my account should be created successfully and the system should record my acceptance of the terms.
+
+
+
+//User Story
+As a client, I want to click the “Post Job” button so that I can be taken to a page where I can enter the job details.
+UAT
+Given I am logged in as a client and on my dashboard,
+when I click the “Post Job” button,
+then I should be redirected to a job posting form page
+where I can input details such as job title, description, category, budget, and deadline.
+
+
+User Story
+As a client, I want to mark posted jobs as taken so that I can manage job availability.
+UAT
+Given I am viewing my posted jobs, when I click on “Mark as Taken” a job, then the job’s status should be updated or removed accordingly from the listing.
+
+
+
+
+//User Story
+As a client, I want to manage my gigs so that I can view all the jobs I’ve posted.
+UAT
+Given I have posted one or more gigs, when I click the “Manage Gigs” button, then I should see a list of all my posted gigs 
+
+
+
+//User Story: Client Logout Button
+As a client, I want to log out so that I can securely end my session on the platform.
+UAT 
+Given I am logged in as a client, when I click the "Logout" button in my profile view, then I should be logged out of my account and redirected to the login page.
+
+//User Story: Freelancer Logout Button
+As a freelancer, I want to log out so that I can securely end my session on the platform.
+UAT
+ Given I am logged in as a freelancer, when I click the "Logout" button in my profile view, then I should be logged out of my account and redirected to the login page.
+
+//User Story: Post a Job (Client)
+As a client, I want to post a job so that I can advertise a gig on the platform.
+UAT
+ Given I am logged in as a client, when I click the "Post Job" button, then I should be taken to the job posting form where I can enter details (e.g., title, description, requirements) and submit the posting.
+
+//User Story: Avatar Click (Client)
+As a client, I want to click on my profile avatar so that I can view my personal information.
+UAT 
+Given I am logged in as a client, when I click my profile avatar, then I should see a dropdown displaying my name, profile picture, and email, along with an option to log out.
+
+
