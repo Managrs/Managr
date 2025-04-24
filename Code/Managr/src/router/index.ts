@@ -20,7 +20,7 @@ import ManageGigs from '../views/client/manageGigs.vue';
 import Dashboardclient from '../views/dashboardclient.vue';
 
 const routes = [
-  { path: '/', name: 'LandingPage', component: LandingPage },
+  {path: '/', name: 'LandingPage', component: LandingPage },
   {path: '/Dashboardclient' , name: 'Dashboardclient' , component: Dashboardclient},
   {path: '/Admindashboard',name: 'AdminDashboard', component: AdminDashboard},
   {path: '/dashboardfreelance',name: 'DashboardLayout', component: DashboardLayout},

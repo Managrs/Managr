@@ -3,12 +3,6 @@
 </script>
 
 <template>
-  <!--<nav id="btnSec">
-      <RouterLink to="/">Homepage</RouterLink>
-      <RouterLink to="/admin">Admin</RouterLink>
-      <RouterLink to="/client">Client</RouterLink>
-      <RouterLink to="/freelancer">Freelancer</RouterLink>
-    </nav>-->
   <RouterView />
 </template>
 
