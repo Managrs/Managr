@@ -1,8 +1,16 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { fileURLToPath, URL } from 'node:url'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
-  css: {},
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      'vue': 'vue/dist/vue.esm-browser.js' // Explicit ESM browser build
+    }
+  },
+  optimizeDeps: {
+    include: ['vue', 'vue-router'] // Pre-bundle dependencies
+  }
 })

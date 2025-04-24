@@ -1,5 +1,4 @@
 <template>
-    
   <header class="header">
     <nav class="navigation">
       <router-link to="/" class="logo-link" aria-label="Home">
@@ -9,11 +8,11 @@
       <ul class="nav-links">
         <li>
           <!--<router-link to="/dashboard" class="nav-link">Login</router-link>-->
-          <button class="nav-link" @click="handleLogin">Log in</button>
+          <button class="nav-link" @click="handleLogin">Sign in</button>
         </li>
         <li>
-          <!--<router-link to="/dashboard" class="nav-link">Signup</router-link>-->
-          <button class="nav-link" @click="handleLogout" >Log out</button>
+          <!--<router-link to="/dashboard" class="nav-link">Sign up</router-link>-->
+          <!--<button class="nav-link" @click="handleLogout" >Log out</button>-->
         </li>
       </ul>
     </nav>
@@ -25,7 +24,7 @@
   <section class="overlay-content">
     <h1 class="main-title">Welcome to Managr</h1>
     <p class="main-subtitle">Your platform for freelancers and clients to connect seamlessly.</p>
-    <router-link to="/dashboardadmin" class="cta-button">Get Started</router-link>
+    <router-link to="/dashboardadmin" class="cta-button">Get Started with Managr</router-link>
   </section>
 </section>
     </section>    
@@ -47,17 +46,16 @@ import { RouterLink } from 'vue-router';
 
 const { loginWithRedirect } = useAuth0();
 
-const { logout } = useAuth0();
-
 const handleLogin = () => {
   loginWithRedirect();
 };
 
+/*const { logout } = useAuth0();
 const handleLogout = () => {
   logout({  
     logoutParams:  {returnTo: window.location.origin}
    });
-};
+};*/
 
 </script>
   
