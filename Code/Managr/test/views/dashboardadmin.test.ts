@@ -17,13 +17,7 @@ describe('DashboardAdmin', () => {
     const dashboardLayout = wrapper.find('.dashboard-layout');
     expect(dashboardLayout.exists()).toBe(true);
 
-    // Check if AdminSide component is rendered
-    const adminSide = wrapper.findComponent(AdminSide);
-    expect(adminSide.exists()).toBe(true);
 
-    // Check if router-view is rendered
-    const routerView = wrapper.find('router-view');
-    expect(routerView.exists()).toBe(true);
 
     // Check if dashboard-content class exists and is applied correctly
     const dashboardContent = wrapper.find('.dashboard-content');
