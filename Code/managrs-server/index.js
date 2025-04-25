@@ -7,7 +7,6 @@ require('dotenv').config();
 
 const app = express();
 
-//  Parse incoming JSON requests
 app.use(cors({
   origin: 'https://jolly-bush-0f6975910.6.azurestaticapps.net',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -17,15 +16,15 @@ app.use(cors({
 
 app.use(express.json());
 
-//  Connect to MongoDB
+
 connectToDB();
 
-//  Health check
+
 app.get('/', (req, res) => {
   res.send('Node server is live!');
 });
 
-//  POST: Create new user
+
 app.post('/newUser', async (req, res) => {
   try {
     const user = await User.create(req.body);
@@ -35,7 +34,7 @@ app.post('/newUser', async (req, res) => {
   }
 });
 
-// POST: Create new gig
+
 app.post('/newGig', async (req, res) => {
   try {
     const gig = await Gig.create(req.body);
@@ -45,7 +44,27 @@ app.post('/newGig', async (req, res) => {
   }
 });
 
-// Start server
+app.get('/getGig', async (req, res) => {
+  try {
+    const gigs = await db.collection('Gigs').find().toArray()
+
+    const mapped = gigs.map((gig, index) => ({
+      id: index + 1,
+      image: "https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png",
+      name: gig.clientName,
+      mail: "gigureout@gmail.com",
+      title: gig.gigName,
+      description: gig.gigDescription,
+      category: gig.category,
+      time: gig.gigDue,
+      budget: gig.budget,
+    }));
+    res.json(mapped)
+  } catch (err) {
+    res.status(500).send('Failed to fetch gigs')
+  }
+})
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
