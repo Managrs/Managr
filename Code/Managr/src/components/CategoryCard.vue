@@ -1,12 +1,12 @@
 <template>
   <article class="card">
-    <div class="image-container" :style="{ backgroundImage: `url(${image})` }">
-    </div>
-    <div class="card-content">
+    <section class="image-container" :style="{ backgroundImage: `url(${image})` }">
+    </section>
+    <section class="card-content">
       <h3 class="card-title">{{ title }}</h3>
       <h4 class="card-category">{{ category }}</h4>
       <p class="card-description">{{ description }}</p>
-    </div>
+    </section>
   </article>
 </template>
 
