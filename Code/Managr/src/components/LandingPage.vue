@@ -24,7 +24,7 @@
   <section class="overlay-content">
     <h1 class="main-title">Welcome to Managr</h1>
     <p class="main-subtitle">Your platform for freelancers and clients to connect seamlessly.</p>
-    <router-link to="/dashboardadmin" class="cta-button">Get Started with Managr</router-link>
+    <router-link to="/documentation" class="cta-button">Get Started with Managr</router-link>
   </section>
 </section>
     </section>    
