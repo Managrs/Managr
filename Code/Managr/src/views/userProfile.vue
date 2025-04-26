@@ -2,10 +2,10 @@
     <aside v-if="isOpen" class="sidebar"          @mouseenter="openSidebar" @mouseleave="closeSidebar">
       <section class="sidebar-header">
         <img class="avatar" :src="user.avatar" alt="User Avatar" />
-        <div class="user-info">
+        <section class="user-info">
           <h2>{{ user.name }}</h2>
           <p>{{ user.email }}</p>
-        </div>
+        </section>
       </section>
   
       <nav class="sidebar-links">
