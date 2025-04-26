@@ -63,7 +63,7 @@ app.get('/getGig', async (req, res) => {
   } catch (err) {
     res.status(500).send('Failed to fetch gigs')
   }
-})
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

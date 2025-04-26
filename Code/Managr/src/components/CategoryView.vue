@@ -69,8 +69,8 @@ export default defineComponent({
         this.categories = data.map((gig: any, index: number) => ({
           id: index + 1,
           name: gig.clientName,
-          mail: gig.clientEmail || 'no-email@example.com',
-          image: gig.image,
+          mail: 'no-email@example.com',
+          image: 'https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png',
           title: gig.gigName,
           description: gig.gigDescription,
           category: gig.category,
