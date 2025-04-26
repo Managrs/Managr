@@ -1,52 +1,48 @@
-// src/router/index.ts
 import { createRouter, createWebHistory } from 'vue-router';
 //import { useAuth0 } from '@auth0/auth0-vue';
-import 'core-js/stable/promise';
 
-import LandingPage from '../components/LandingPage.vue'
-import DashboardLayout from '../views/DashboardLayout.vue'
+import LandingPage from '../components/LandingPage.vue';
+import DashboardLayout from '../views/DashboardLayout.vue';
+import dashboardadmin from '../views/dashboardadmin.vue';
+import AdminDashboard from '../components/AdminSide.vue';
+//import ClientDashboard from '../components/ClientDashboard.vue';
 
-// Define the routes with type annotations
+//admin routers
+import Aauditlogs from '../views/Admin/Aauditlogs.vue';
+import Adashboard from '../views/Admin/Adashboard.vue';
+import Aorders from '../views/Admin/Aorders.vue';
+import Aproducts from '../views/Admin/Aproducts.vue';
+import Aprofile from '../views/Admin/Aprofile.vue';
+import Ausers from '../views/Admin/Ausers.vue';
+import Areports from '../views/Admin/Areports.vue';
+import PostGig from '../views/client/postGig.vue';
+import ManageGigs from '../views/client/manageGigs.vue';
+import Dashboardclient from '../views/dashboardclient.vue';
+import Documentation from '../views/documentation.vue';
+
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: () => import('../components/LandingPage.vue'),
-  },
-  {
-    path: '/landing',
-    name: 'land',
-    component: () => import('../components/LandingPage.vue'),
-  },
+  {path: '/', name: 'LandingPage', component: LandingPage },
+  {path: '/Dashboardclient' , name: 'Dashboardclient' , component: Dashboardclient},
+  {path: '/Admindashboard',name: 'AdminDashboard', component: AdminDashboard},
+  {path: '/dashboardfreelance',name: 'DashboardLayout', component: DashboardLayout},
+  {path: '/documentation', name: 'documentation', component:Documentation},
   
   {
-    path: '/admin',
-    name: 'admin',
-    component: () => import('../components/Admin_Dash.vue'),
+    path: '/dashboardadmin',
+    component: dashboardadmin,
+    children: [
+      { path: '' ,name: 'Adashboard', redirect: '/Adashboard' },
+      { path: '/Adashboard' ,name: 'Adashboard', component: Adashboard },
+      { path: '/Aauditlogs' ,name: 'Aauditlogs', component: Aauditlogs },
+      { path: '/Ausers' ,name: 'Ausers', component: Ausers },
+      { path: '/Areports' ,name: 'Areports', component: Areports },
+      { path: '/Aproducts' ,name: 'Aproducts', component: Aproducts },
+      { path: '/Aorders' ,name: 'Aorders', component: Aorders },
+      {path:'/Aprofile' ,name: 'Aprofile', component: Aprofile}
+    ]
   },
-  
-  {
-    path: '/sign',
-    name: 'sign',
-    component: () => import('../components/Signing.vue'),
-  },
-  {
-    path: '/client',
-    name: 'client',
-    component: () => import('../components/dashboardclient.vue'),
-  },
-  {
-    path: '/freelance',
-    name: 'freelance',
-    component: () => import('../views/DashboardLayout.vue'),
-  },
-
-  {
-    path: '/message',
-    name: 'message',
-    component: () => import('../components/Message.vue')
-  },
-
+  {path: '/postgig',name: 'postGig', component: PostGig},
+  {path: '/managegig',name: 'manageGig', component: ManageGigs}
   /*
   {
     path: '/client',
@@ -75,16 +71,11 @@ const routes = [
     },
 
   },*/
-  
-  {path: '/dashboard',name: 'DashboardLayout',component: DashboardLayout},
-  { path: '/', name: 'LandingPage', component: LandingPage },
+]
 
-];
-
-// Create the router
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
+  history: createWebHistory(),
+  routes
 });
 
 
@@ -101,4 +92,5 @@ router.beforeEach((to, from, next) => {
   }
 });
 */
+
 export default router;
