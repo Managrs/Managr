@@ -46,7 +46,7 @@ app.post('/newGig', async (req, res) => {
 
 app.get('/getGig', async (req, res) => {
   try {
-    const gigs = await db.collection('Gigs').find().toArray()
+    const gigs = await Gig.find(); 
 
     const mapped = gigs.map((gig, index) => ({
       id: index + 1,
@@ -59,9 +59,9 @@ app.get('/getGig', async (req, res) => {
       time: gig.gigDue,
       budget: gig.budget,
     }));
-    res.json(mapped)
+    res.json(mapped);
   } catch (err) {
-    res.status(500).send('Failed to fetch gigs')
+    res.status(500).send('Failed to fetch gigs');
   }
 });
 
