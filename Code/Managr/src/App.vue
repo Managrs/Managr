@@ -1,16 +1,8 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
-import AdminDashboard from './components/Admin_Dash.vue';
-import { defineComponent } from 'vue';
+
 </script>
 
 <template>
-  <!--<nav id="btnSec">
-      <RouterLink to="/">Homepage</RouterLink>
-      <RouterLink to="/admin">Admin</RouterLink>
-      <RouterLink to="/client">Client</RouterLink>
-      <RouterLink to="/freelancer">Freelancer</RouterLink>
-    </nav>-->
   <RouterView />
 </template>
 
@@ -27,10 +19,6 @@ html, body {
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
-}
-#btnSec{
-  display: flex;
-  justify-content: space-between;
 }
 
 </style>

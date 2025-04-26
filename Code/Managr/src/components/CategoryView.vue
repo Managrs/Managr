@@ -5,10 +5,14 @@
       <CategoryCard
         v-for="item in visibleCategories"
         :key="item.id"
-        :image="item.image"
+        :name="item.name"
+        :mail="item.mail"
+        :avatar="item.image"
         :title="item.title"
         :description="item.description"
         :category="item.category"
+        :budget="item.budget"
+        :time="item.time"
       />
     </section>
     <button 
@@ -26,10 +30,14 @@ import CategoryCard from './CategoryCard.vue';
 
 interface CategoryItem {
   id: number;
+  name: string;
+  mail: string;
   image: string;
   title: string;
   description: string;
   category: string;
+  budget: number;
+  time: number;
 }
 
 export default defineComponent({
@@ -40,102 +48,39 @@ export default defineComponent({
   data() {
     return {
       showAll: false,
-      initialLimit: 8,
-      categories: [
-        {
-          id: 1,
-          image: '/favicom.ico',
-          title: 'Favicom Inc',
-          description: 'Discover our new summer arrivals',
-          category: 'Fashion',
-        },
-        {
-          id: 2,
-          image: '/favicom.ico',
-          title: 'Summer Collection',
-          description: 'Discover our new summer arrivals',
-          category: 'Fashion',
-        },
-        {
-          id: 3,
-          image: '/favicom.ico',
-          title: 'Summer Collection',
-          description: 'Discover our new summer arrivals',
-          category: 'Fashion',
-        },
-        {
-          id: 4,
-          image: '/favicom.ico',
-          title: 'Summer Collection',
-          description: 'Discover our new summer arrivals',
-          category: 'Fashion',
-        },
-        {
-          id: 5,
-          image: '/favicom.ico',
-          title: 'Summer Collection',
-          description: 'Discover our new summer arrivals',
-          category: 'Fashion',
-        },
-        {
-          id: 6,
-          image: '/favicom.ico',
-          title: 'Summer Collection',
-          description: 'Discover our new summer arrivals',
-          category: 'Fashion',
-        },
-        {
-          id: 7,
-          image: '/favicom.ico',
-          title: 'Summer Collection',
-          description: 'Discover our new summer arrivals',
-          category: 'Fashion',
-        },
-        {
-          id: 8,
-          image: '/favicom.ico',
-          title: 'Latest Gadgets',
-          description: 'Cutting-edge technology for your home',
-          category: 'Electronics',
-        },
-        {
-          id: 9,
-          image: '/favicom.ico',
-          title: 'Home Essentials',
-          description: 'Everything to make your home cozy',
-          category: 'Home Decor',
-        },
-        {
-          id: 10,
-          image: '/favicom.ico',
-          title: 'Sports Gear',
-          description: 'Equipment for your active lifestyle',
-          category: 'Sports',
-        },
-        {
-          id: 11,
-          image: '/favicom.ico',
-          title: 'Sports Gear',
-          description: 'Equipment for your active lifestyle',
-          category: 'Sports',
-        },
-        {
-          id: 12,
-          image: '/favicom.ico',
-          title: 'Sports Gear',
-          description: 'Equipment for your active lifestyle',
-          category: 'Sports',
-        },
-      ] as CategoryItem[],
+      initialLimit: 10,
+      categories: [] as CategoryItem[],
     };
   },
   computed: {
     visibleCategories(): CategoryItem[] {
-      if (!Array.isArray(this.categories)) return [];
-      return this.showAll 
-        ? this.categories 
+      return this.showAll
+        ? this.categories
         : this.categories.slice(0, this.initialLimit);
     }
+  },
+  mounted() {
+    fetch("https://managrs-server1.azurewebsites.net/getGig")
+      .then(response => {
+        if (!response.ok) throw new Error('Failed to fetch gigs');
+        return response.json();
+      })
+      .then(data => {
+        this.categories = data.map((gig: any, index: number) => ({
+          id: index + 1,
+          name: gig.clientName,
+          mail: 'no-email@example.com',
+          image: 'https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png',
+          title: gig.gigName,
+          description: gig.gigDescription,
+          category: gig.category,
+          budget: gig.budget,
+          time: gig.gigDue,
+        }));
+      })
+      .catch(error => {
+        console.error('Error loading gigs:', error);
+      });
   },
   methods: {
     toggleShowAll(): void {
@@ -145,21 +90,22 @@ export default defineComponent({
 });
 </script>
 
+
 <style scoped>
 .category-view {
   padding: 2rem 1rem;
 }
-  
+
 .view-title {
-  text-align: center;
+  position: sticky;
   margin-bottom: 2rem;
   font-size: 2rem;
-  color: #2b3d4f;
+  color: #333;
 }
-  
+
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 2rem;
 }
 
@@ -167,7 +113,7 @@ export default defineComponent({
   display: block;
   margin: 2rem auto 0;
   padding: 0.75rem 1.5rem;
-  background: #007BFF;
+  background: #007bff;
   color: white;
   border: none;
   border-radius: 6px;

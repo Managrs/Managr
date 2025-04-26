@@ -8,11 +8,11 @@
       <ul class="nav-links">
         <li>
           <!--<router-link to="/dashboard" class="nav-link">Login</router-link>-->
-          <button class="nav-link" @click="handleLogin">Log in</button>
+          <button class="nav-link" @click="handleLogin">Sign in</button>
         </li>
         <li>
-          <!--<router-link to="/dashboard" class="nav-link">Signup</router-link>-->
-          <button class="nav-link" @click="handleLogout" >Log out</button>
+          <!--<router-link to="/dashboard" class="nav-link">Sign up</router-link>-->
+          <!--<button class="nav-link" @click="handleLogout" >Log out</button>-->
         </li>
       </ul>
     </nav>
@@ -20,15 +20,12 @@
   <main>
     <section class="landing-content">
       <section class="hero-section">
-  <!--<video autoplay muted loop class="display-video">
-    <source src="/display.mp4" type="video/mp4" />
-  </video>-->
-  <img src="/display.jpg" alt="Logo" class="logo-image" >
-  <div class="overlay-content">
-    <h1 class="main-title">Welcome to Managr!</h1>
+        <img src="/display.jpg" alt="Dark sky background on landing page">
+  <section class="overlay-content">
+    <h1 class="main-title">Welcome to Managr</h1>
     <p class="main-subtitle">Your platform for freelancers and clients to connect seamlessly.</p>
-    <router-link to="/dashboard" class="cta-button">Get Started</router-link>
-  </div>
+    <router-link to="/documentation" class="cta-button">Get Started with Managr</router-link>
+  </section>
 </section>
     </section>    
   </main>
@@ -51,21 +48,16 @@ import { RouterLink } from 'vue-router';
 
 const { loginWithRedirect } = useAuth0();
 
-
-
-
-const handleLogin = () =>{
+const handleLogin = () => {
   loginWithRedirect();
-}
-
-
-const { logout } = useAuth0();
-
-
-const handleLogout = () => {
-  logout({ returnTo: window.location.origin });
-  
 };
+
+/*const { logout } = useAuth0();
+const handleLogout = () => {
+  logout({  
+    logoutParams:  {returnTo: window.location.origin}
+   });
+};*/
 
 </script>
   
@@ -75,6 +67,7 @@ const handleLogout = () => {
   /* Header Styling */
   .header {
     display: flex;
+    margin: auto;
     justify-content: center; /* Centers the content */
     align-items: center;
     position: relative;
@@ -152,8 +145,8 @@ const handleLogout = () => {
   overflow-x: hidden;
 }
 
-  .hero-section {
-  width: 100%; /* Full screen width */
+.hero-section img {
+  width: 100%;
   height: auto;
   display: block;
 }
