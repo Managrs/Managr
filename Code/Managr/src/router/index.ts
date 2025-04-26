@@ -18,14 +18,13 @@ import Areports from '../views/Admin/Areports.vue';
 import PostGig from '../views/client/postGig.vue';
 import ManageGigs from '../views/client/manageGigs.vue';
 import Dashboardclient from '../views/dashboardclient.vue';
-import Documentation from '../views/documentation.vue';
 
 const routes = [
   {path: '/', name: 'LandingPage', component: LandingPage },
   {path: '/Dashboardclient' , name: 'Dashboardclient' , component: Dashboardclient},
   {path: '/Admindashboard',name: 'AdminDashboard', component: AdminDashboard},
   {path: '/dashboardfreelance',name: 'DashboardLayout', component: DashboardLayout},
-  {path: '/documentation', name: 'documentation', component:Documentation},
+  //{path: '/clientdashboard',name: 'ClientDashboard', component: ClientDashboard},
   
   {
     path: '/dashboardadmin',
