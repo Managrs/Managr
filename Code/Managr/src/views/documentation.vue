@@ -52,7 +52,7 @@ export default{
 }
 
 .hero {
-  background: linear-gradient(135deg, #7f5af0, #2cb67d);
+  background: linear-gradient(135deg, #b9821b, #4cd3e8);
   color: white;
   padding: 100px 20px;
   text-align: center;
@@ -70,7 +70,7 @@ export default{
 }
 
 .highlight {
-  color: #00f5d4;
+  color: #8c44b9;
 }
 
 .description {
@@ -80,7 +80,7 @@ export default{
 
 .btn-primary {
   background-color: white;
-  color: #7f5af0;
+  color: #bc7430;
   padding: 12px 24px;
   border: none;
   border-radius: 30px;
@@ -109,18 +109,4 @@ export default{
   margin-bottom: 20px;
 }
 
-.btn-secondary {
-  margin-top: 20px;
-  background: #7f5af0;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: background 0.3s ease-in-out;
-}
-
-.btn-secondary:hover {
-  background: #6841e4;
-}
 </style>
