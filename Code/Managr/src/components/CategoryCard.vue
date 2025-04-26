@@ -1,12 +1,24 @@
 <template>
   <article class="card">
-    <div class="image-container" :style="{ backgroundImage: `url(${image})` }">
-    </div>
-    <div class="card-content">
+    <section class="client-info">
+      <img class="client-avatar" src="https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png" />
+      <section class="user-details">
+        <p class="client-name"> {{ title }} </p>
+        <p class="client-mail"> myemail@gmail.com </p>
+      </section>
+    </section>
+
+    <section class="card-content">
       <h3 class="card-title">{{ title }}</h3>
       <h4 class="card-category">{{ category }}</h4>
       <p class="card-description">{{ description }}</p>
-    </div>
+      <section class="time-price">
+        <article class="budget-price"> R 500.00 </article>
+        <article class="time-est"> 7 days</article>
+      </section>
+      <button class="apply-button"> Apply for Gig</button>
+      
+    </section>
   </article>
 </template>
 
@@ -16,7 +28,11 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'CategoryCard',
   props: {
-    image: {
+    name: {
+      type: String,
+      required: true,
+    },
+    avatar: {
       type: String,
       required: true,
     },
@@ -32,6 +48,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    budget:{
+      type: Number,
+      required: true,
+    }
   },
 });
 </script>
@@ -53,35 +73,88 @@ export default defineComponent({
   z-index: 2;
 }
 
-.image-container {
-  height: 140px;
-  background-size: cover;
-  background-position: center;
+.client-info{
+  width: 100%;
+  height: 50px;
   display: flex;
-  justify-content: center;
+  border-radius:7.5px;
+  align-items: center;
+  background: white;
+}
+
+.client-avatar{
+  width: 45px;
+  height: 45px;
+  margin: 2%;
+  background: var(--color-light-gray);
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.user-details {
+  line-height: 0.5%;
+  text-align: center;
+}
+
+.client-name{
+  font: bold;
+  font-size: 15px;
+  color: black;
+}
+
+.client-mail{
+  font:italic;
+  font-size: 10px;;
 }
 
 .card-title {
   color: black;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  padding: 10px;
 }
 
 .card-content {
-  padding: 1rem;
-
+  padding: 0.5rem;
 }
 
 .card-category {
   color: #111;
   font-weight: bold;
-  margin-bottom: 0.5rem;
 }
 
 .card-description {
-  color: #444;
+  color: #111;
   font-size: 0.9rem;
-  line-height: 1.4;
 }
+
+.time-price {
+  display: flex;
+}
+
+.budget-price {
+  display: block;
+  margin-right: 35%;
+  padding: .2rem .5rem;
+  color: rgb(0, 4, 6);
+  font-family: sans-serif;
+}
+
+
+.apply-button{
+  display: block;
+  margin-left: 35%;
+  position: relative;
+  padding: 0.4rem 2.5rem;
+  color: #f4f5f7;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  background-color: rgb(37, 55, 73);
+  border-radius: 0.275rem;
+}
+.apply-button:hover{
+  background: #202c39;
+  color: #ffffff;
+}
+
 </style>

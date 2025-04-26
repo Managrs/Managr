@@ -5,7 +5,6 @@ import LandingPage from '../components/LandingPage.vue';
 import DashboardLayout from '../views/DashboardLayout.vue';
 import dashboardadmin from '../views/dashboardadmin.vue';
 import AdminDashboard from '../components/AdminSide.vue';
-//import ClientDashboard from '../components/ClientDashboard.vue';
 
 //admin routers
 import Aauditlogs from '../views/Admin/Aauditlogs.vue';
@@ -18,13 +17,14 @@ import Areports from '../views/Admin/Areports.vue';
 import PostGig from '../views/client/postGig.vue';
 import ManageGigs from '../views/client/manageGigs.vue';
 import Dashboardclient from '../views/dashboardclient.vue';
+import Documentation from '../views/documentation.vue';
 
 const routes = [
   {path: '/', name: 'LandingPage', component: LandingPage },
   {path: '/Dashboardclient' , name: 'Dashboardclient' , component: Dashboardclient},
   {path: '/Admindashboard',name: 'AdminDashboard', component: AdminDashboard},
   {path: '/dashboardfreelance',name: 'DashboardLayout', component: DashboardLayout},
-  //{path: '/clientdashboard',name: 'ClientDashboard', component: ClientDashboard},
+  {path: '/documentation', name: 'documentation', component:Documentation},
   
   {
     path: '/dashboardadmin',
