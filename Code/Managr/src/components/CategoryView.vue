@@ -69,7 +69,7 @@ export default defineComponent({
         this.categories = data.map((gig: any, index: number) => ({
           id: index + 1,
           name: gig.clientName,
-          mail: gig.clientEmail || 'no-email@example.com', // fallback
+          mail: gig.clientEmail || 'no-email@example.com',
           image: gig.image,
           title: gig.gigName,
           description: gig.gigDescription,
