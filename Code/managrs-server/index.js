@@ -44,7 +44,7 @@ app.post('/newGig', async (req, res) => {
   }
 });
 
-app.get('/getGig', async (req, res) => {
+/*app.get('/getGig', async (req, res) => {
   try {
     const gigs = await db.collection('Gigs').find().toArray()
 
@@ -63,7 +63,7 @@ app.get('/getGig', async (req, res) => {
   } catch (err) {
     res.status(500).send('Failed to fetch gigs')
   }
-});
+});*/
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
