@@ -44,24 +44,21 @@ app.post('/newGig', async (req, res) => {
   }
 });
 
-app.get('/allgigs', async(req, res) => {
-  try{
-    const gigs = await db.collection('Gigs').find().toArray();
-    const users = await db.collection('Users').find().toArray();
-
+app.get('/allgigs', async (req, res) => {
+  try {
+    const gigs = await Gig.find();
+    const users = await User.find();
     const userMap = {};
     users.forEach(user => {
       userMap[user.fullName] = user;
     });
-
     const mapped = gigs.map((gig, index) => {
       const user = userMap[gig.clientName];
-
       return {
         id: index + 1,
-        image: user.avatar, 
+        image: user.avatar,
         name: gig.clientName,
-        mail:user.email,
+        mail: user.email,
         title: gig.gigName,
         description: gig.gigDescription,
         category: gig.category,
@@ -69,34 +66,28 @@ app.get('/allgigs', async(req, res) => {
         budget: gig.budget,
       };
     });
-
     res.json(mapped);
-
-  } catch(err){
-    res.status(400).json({error: err.message });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 
-app.get('/allfreelancers', async(req, res) => {
-  try{
-    const users = await db.collection('Users').find().toArray();
-    
+app.get('/allusers', async (req, res) => {
+  try {
+    const users = await User.find();
     const freelancers = users.map((user, index) => {
       return {
-        id : index+1,
+        id: index + 1,
         fullName: user.fullName,
-        avatar:user.avatar,
-        Role:user.role,
+        avatar: user.avatar,
+        role: user.role,
       };
     });
-
     res.json(freelancers);
-
-  } catch(errr){
-    res.status(400).json({error: err.message });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
-
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

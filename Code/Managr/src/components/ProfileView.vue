@@ -40,7 +40,7 @@ export default defineComponent({
   methods: {
     async fetchProfiles() {
       try {
-        const response = await fetch('https://managrs-server1.azurewebsites.net/allfreelancers');
+        const response = await fetch('https://managrs-server1.azurewebsites.net/allusers');
         if (!response.ok) {
           throw new Error('Failed to fetch freelancers');
         }
