@@ -28,10 +28,10 @@ const gigSchema =  new mongoose.Schema({
     },
 
     gigDue: {
-        type:Number, //in days, or hours. I will decide later
+        type:Number, //in days
         required: true
     }
 
-},{ timestamps: true });
+});
 
 module.exports = mongoose.model('Gig',gigSchema,'Gigs');
