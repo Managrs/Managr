@@ -60,7 +60,7 @@ export default defineComponent({
     }
   },
   mounted() {
-    fetch("https://managrs-server1.azurewebsites.net/getGig")
+    fetch("https://managrs-server1.azurewebsites.net/allgigs")
       .then(response => {
         if (!response.ok) throw new Error('Failed to fetch gigs');
         return response.json();
@@ -69,7 +69,7 @@ export default defineComponent({
         this.categories = data.map((gig: any, index: number) => ({
           id: index + 1,
           name: gig.clientName,
-          mail: gig.clientEmail || 'no-email@example.com',
+          mail: gig.clientEmail,
           image: gig.image,
           title: gig.gigName,
           description: gig.gigDescription,

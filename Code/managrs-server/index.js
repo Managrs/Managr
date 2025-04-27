@@ -44,26 +44,58 @@ app.post('/newGig', async (req, res) => {
   }
 });
 
-/*app.get('/getGig', async (req, res) => {
-  try {
-    const gigs = await db.collection('Gigs').find().toArray()
+app.get('/allgigs', async(req, res) => {
+  try{
+    const gigs = await db.collection('Gigs').find().toArray();
+    const users = await db.collection('Users').find().toArray();
 
-    const mapped = gigs.map((gig, index) => ({
-      id: index + 1,
-      image: "https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png",
-      name: gig.clientName,
-      mail: "gigureout@gmail.com",
-      title: gig.gigName,
-      description: gig.gigDescription,
-      category: gig.category,
-      time: gig.gigDue,
-      budget: gig.budget,
-    }));
-    res.json(mapped)
-  } catch (err) {
-    res.status(500).send('Failed to fetch gigs')
+    const userMap = {};
+    users.forEach(user => {
+      userMap[user.fullName] = user;
+    });
+
+    const mapped = gigs.map((gig, index) => {
+      const user = userMap[gig.clientName];
+
+      return {
+        id: index + 1,
+        image: user.avatar, 
+        name: gig.clientName,
+        mail:user.email,
+        title: gig.gigName,
+        description: gig.gigDescription,
+        category: gig.category,
+        time: gig.gigDue,
+        budget: gig.budget,
+      };
+    });
+
+    res.json(mapped);
+
+  } catch(err){
+    res.status(400).json({error: err.message });
   }
-});*/
+});
+
+app.get('/allfreelancers', async(req, res) => {
+  try{
+    const users = await db.collection('Users').find().toArray();
+    
+    const freelancers = users.map((user, index) => {
+      return {
+        id : index+1,
+        fullName: user.fullName,
+        avatar:user.avatar,
+        Role:user.role,
+      };
+    });
+
+    res.json(freelancers);
+
+  } catch(errr){
+    res.status(400).json({error: err.message });
+  }
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

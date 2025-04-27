@@ -47,7 +47,7 @@
   <script>
   export default {
     name: "PostGig",
-   /*data() {
+    data() {
       return {
         gig: {
           clientName: "",
@@ -96,7 +96,7 @@
       goToRecentGigs() {
           this.$router.push('/recent-gigs');
       }
-    }*/
+    }
   };
   </script>
   
