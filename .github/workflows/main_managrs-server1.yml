@@ -61,4 +61,4 @@ jobs:
           app-name: 'managrs-server1'
           slot-name: 'Production'
           package: ./Code/managrs-server
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B514446FC881422EACACF41EB25A7ABD }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C1A92319AFAE4844B881F72F6F518A2A }}
