@@ -25,7 +25,7 @@
         </tr>
       </tbody>
     </table>
-  </section>
+  </section> 
 </template>
 
 <script setup>

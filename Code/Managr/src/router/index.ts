@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 //import { useAuth0 } from '@auth0/auth0-vue';
 
+
 import LandingPage from '../components/LandingPage.vue';
 import DashboardLayout from '../views/DashboardLayout.vue';
 import dashboardadmin from '../views/dashboardadmin.vue';
@@ -26,6 +27,8 @@ const routes = [
   {path: '/Admindashboard',name: 'AdminDashboard', component: AdminDashboard},
   {path: '/dashboardfreelance',name: 'DashboardLayout', component: DashboardLayout},
   {path: '/documentation', name: 'documentation', component:Documentation},
+  
+  
   
   {
     path: '/dashboardadmin',
