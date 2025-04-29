@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "build": "echo 'No build needed for Node.js' && exit 0",
     "dev": "nodemon index.js"
   },
   "repository": {
@@ -25,6 +26,6 @@
     "mongoose-id-autoincrement": "^1.0.5"
   },
   "engines": {
-    "node": "14.x"
+    "node": "22.x"
   }
 }
