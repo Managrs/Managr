@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "this is the backend app for managrs",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "build": "echo 'No build needed for Node.js' && exit 0",
-    "dev": "nodemon index.js"
-  },
+  "engines": {
+  "node": "22.x",
+  "npm": "10.x"
+},
+"scripts": {
+  "start": "node index.js",
+  "build": "echo 'No build needed' && exit 0"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Managrs/Managr.git"
@@ -24,8 +27,5 @@
     "express": "^4.17.1",
     "mongoose": "^8.13.2",
     "mongoose-id-autoincrement": "^1.0.5"
-  },
-  "engines": {
-    "node": "22.x"
   }
 }

@@ -17,7 +17,9 @@ app.use(cors({
 // Wrap database connection and server start in an async function
 const startServer = async () => {
   try {
+    console.log("Connecting to database...");
     await connectToDB();
+    console.log("Database connected!");
     
     app.use(express.json());
 
