@@ -70,5 +70,5 @@ jobs:
         with:
           app-name: 'managrs-server'
           slot-name: 'Production'
-          package: ./Code/managrs-server
+          package: Code/managrs-server
           
