@@ -65,6 +65,35 @@ app.get('/getGig', async (req, res) => {
   }
 });
 
+app.get('/users', async(req,res) =>{
+  try{
+    const {role, status, search} = req.query;
+    const filter = {};
+    if (role){
+      filter.role = role;
+    }
+
+    if(status){
+      filter.status = status;
+    }
+
+    if (search) {
+      filter.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } }
+      ];
+    }
+
+    const users = await User.find(filter);
+    res.json(users);
+  } catch(error){
+    res.status(500).json({error: error.message});
+  }
+
+});
+
+
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -1,134 +1,137 @@
 <template>
-  <section class="container">
-    <table class="user-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Last Active</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="user in users" :key="user.id">
-          <td class="name-cell">
-            <img :src="user.avatar" alt="Avatar" class="avatar" />
-            <span class="user-name">{{ user.name }}</span>
-          </td>
-          <td class="email">{{ user.email }}</td>
-          <td class="role">{{ user.role }}</td>
-          <td class="last-active">{{ user.lastActive }}</td>
-          <td class="action-cell">
-            <button @click="deleteUser(user.id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </section> 
+    <section class="user-management">
+        <header class="controls">
+            <h1> User Management</h1>
+            <!-- v-model: connects your form input (what the user sees and types) directly to a Vue.js data property 
+             It binds the input field two ways:
+                When theuser types, Vue updates the JavaScript variable.
+                When thevariable changes in the code, Vue updates the field.
+            
+            -->
+            <form @submit.prevent="applyFilters" class="filters">
+                <input
+                type="search"
+                v-model="searchQuery"
+                placeholder="Search users..."
+                aria-label="Search users"
+                />
+                <select v-model="roleFilter" aria-label="Filter by role">
+                    <option value="">
+                        All Roles
+                    </option>
+
+                    <option value="freelancer">
+                        Freelancer
+                    </option>
+                    
+                    <option value="cient">
+                        Client
+                    </option>
+                </select>
+                <button type="submit">Apply </button>
+            </form>
+        </header>
+
+        <section class="stats">
+            <article v-for="stat in stats" :key="stat.title">
+                <h2>{{ stat.title }}</h2>
+                <p>{{ stat.value }}</p>
+            </article>
+        </section>
+
+        <table>
+            <thead>
+                <tr>
+                <th><input type="checkbox" v-model="selectAll" /></th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                <tr v-for="user in paginatedUsers" :key="user.id">
+                    <td><input type="checkbox" v-model="selectedUsers" :value="user.id" /></td>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td :class="`role-${user.role}`">{{ user.role }}</td>
+                    <td :class="`status-${user.verificationStatus}`">
+                        {{ user.verificationStatus }}
+                    </td>
+                    <td>
+                        <button @click="editUser(user)">Edit</button>
+                        <button @click="suspendUser(user.id)">Suspend</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <nav class="pagination">
+            <button 
+                v-for="page in totalPages" 
+                :key="page" 
+                @click="currentPage = page"
+                :disabled="currentPage === page"
+            >
+        {{ page }}
+      </button>
+    </nav>
+
+
+    </section>
+
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<style scoped lang="scss">
+.user-management{
+    max-width:1200px;
+    margin: 0 auto;
 
-const users = ref([
-  {
-    id: 1,
-    name: 'Olivia Rhye',
-    email: 'olivia@untitledui.com',
-    role: 'Admin',
-    lastActive: 'Mar 14, 2022',
-    avatar: 'https://randomuser.me/api/portraits/women/1.jpg'
-  },
-  {
-    id: 2,
-    name: 'Phoenix Baker',
-    email: 'phoenix@untitledui.com',
-    role: 'Editor',
-    lastActive: 'Mar 12, 2022',
-    avatar: 'https://randomuser.me/api/portraits/men/2.jpg'
-  },
-  {
-    id: 3,
-    name: 'Lana Steiner',
-    email: 'lana@untitledui.com',
-    role: 'Viewer',
-    lastActive: 'Mar 10, 2022',
-    avatar: 'https://randomuser.me/api/portraits/women/3.jpg'
+    .controls{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .stats{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+
+        article{
+            border: 1px solid #eee;
+            padding: 1rem;
+        }
+    }
+
+    table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .role-admin { background: #f0f0f0; }
+    .status-pending { color: orange; }
   }
-])
+  .pagination{
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+  }
 
-const deleteUser = (id) => {
-  alert(`Deleting user with id: ${id}`)
-}
-</script>
 
-<style scoped>
-.container {
-  padding: 24px;
-  font-family: Arial, sans-serif;
+
 }
 
-.user-table {
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.user-table thead {
-  background-color: #f9fafb;
-  text-align: left;
-}
-
-.user-table th,
-.user-table td {
-  padding: 14px 16px;
-  border-bottom: 1px solid #eee;
-  vertical-align: middle;
-}
-
-.user-table tbody tr:hover {
-  background-color: #f5f5f5;
-}
-
-.name-cell {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.user-name {
-  font-weight: bold;
-  color: #111827;
-}
-
-.email {
-  color: #6b7280;
-}
-
-.role,
-.last-active {
-  color: #374151;
-}
-
-.action-cell button {
-  background-color: transparent;
-  color: #dc2626;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.action-cell button:hover {
-  text-decoration: underline;
-}
 </style>
+
+<script>
+    
+</script>
