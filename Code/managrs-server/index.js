@@ -93,6 +93,21 @@ app.get('/users', async(req,res) =>{
 });
 
 
+app.patch('/users/:id', async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { status: req.body.status },
+      { new: true }
+    );
+    res.json(user);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+
+
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
