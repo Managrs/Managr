@@ -39,7 +39,14 @@ const userSchema = new mongoose.Schema({
     enum:['active, suspended'],
     default: 'active'
 
+  },
+  
+  verificationStatus: { 
+    type: String, 
+    enum: ['verified', 'pending', 'suspended'], 
+    default: 'pending' 
   }
+
 },{ timestamps: true });
 
 module.exports = mongoose.model('User', userSchema, 'Users');

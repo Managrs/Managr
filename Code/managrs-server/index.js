@@ -26,13 +26,12 @@ app.get('/', (req, res) => {
   res.send('Node server is live!');
 });
 
-
-app.post('/newUser', async (req, res) => {
-  try {
+app.post('/newUser', async(req, res) => {
+  try{
     const user = await User.create(req.body);
     res.status(201).json(user);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+  } catch(error){
+    res.status(400).json({error: error.message});
   }
 });
 

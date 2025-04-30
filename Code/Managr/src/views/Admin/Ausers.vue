@@ -135,7 +135,29 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 const API_URL = import.meta.env.VITE_API_URL;
-console.log("API Base:", import.meta.env.VITE_API_BASE);
+//console.log("API Base:", import.meta.env.VITE_API_URL);
+
+const selectAll = ref(false);
+const selectedUsers = ref([]);
+const statusFilter = ref('');
+
+const totalPages = computed(() =>{
+  return Math.ceil(filteredUsers.value.length / perPage.value);
+});
+const paginatedUsers = computed(() => {
+  const start = (currentPage.value - 1) * perPage.value;
+  const end = start + perPage.value;
+  return filteredUsers.value.slice(start, end);
+});
+
+const stats = ref([
+  { title: 'Total Users', value: 0 },
+  { title: 'Active Users', value: 0 },
+  { title: 'Suspended Users', value: 0 }
+]);
+
+
+
 
 const users = ref([]); 
 const searchQuery = ref('');
@@ -153,8 +175,14 @@ const fetchUsers = async () => {
       status: statusFilter.value,
       search: searchQuery.value
     });
-    const response = await fetch(`/users?${params}`);
+    const response = await fetch(`${API_URL}/users?${params}`);
     users.value = await response.json();
+
+    stats.value = [
+    { title: 'Total Users', value: users.value.length },
+    { title: 'Active Users', value: users.value.filter(u => u.verificationStatus === 'active').length },
+    { title: 'Suspended Users', value: users.value.filter(u => u.verificationStatus === 'suspended').length }
+    ];
   } catch (err) {
     error.value = err.message;
   } finally {
@@ -177,7 +205,7 @@ const filteredUsers = computed(() => {
 
 const suspendUser = async (id) => {
   try {
-    const response = await fetch(`/users/${id}`, {
+    const response = await fetch(`${API_URL}/users?${params}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status: 'suspended' })
