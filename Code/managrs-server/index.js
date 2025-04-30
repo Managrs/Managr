@@ -9,7 +9,7 @@ const app = express();
 
 app.use(cors({
   origin: 'https://jolly-bush-0f6975910.6.azurestaticapps.net',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type'],
   credentials: true,
 }));

@@ -30,8 +30,15 @@ const userSchema = new mongoose.Schema({
 
   role: {
     type: String,
-    enum: ['CLIENT','FREELANCER', 'ADMIN'],
+    enum: ['freelancer','client', 'ad,min'],
     default: 'FREELANCER'
+  },
+
+  status:{
+    type: String,
+    enum:['active, suspended'],
+    default: 'active'
+
   }
 },{ timestamps: true });
 
