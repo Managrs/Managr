@@ -135,6 +135,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 const API_URL = import.meta.env.VITE_API_URL;
+console.log("API Base:", import.meta.env.VITE_API_BASE);
 
 const users = ref([]); 
 const searchQuery = ref('');

@@ -8,7 +8,9 @@ require('dotenv').config();
 const app = express();
 
 app.use(cors({
-  origin: 'https://jolly-bush-0f6975910.6.azurestaticapps.net',
+  origin: [
+    'http://localhost:5173',
+    'https://jolly-bush-0f6975910.6.azurestaticapps.net'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type'],
   credentials: true,
