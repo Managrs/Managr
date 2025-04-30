@@ -132,6 +132,63 @@
 
 </style>
 
-<script>
-    
+<script setup>
+import { ref, computed, onMounted } from 'vue';
+const API_URL = import.meta.env.VITE_API_URL;
+
+const users = ref([]); 
+const searchQuery = ref('');
+const roleFilter = ref('');
+const currentPage = ref(1);
+const perPage = ref(10);
+const isLoading = ref(false);
+const error = ref(null);
+
+const fetchUsers = async () => {
+  isLoading.value = true;
+  try {
+    const params = new URLSearchParams({
+      role: roleFilter.value,
+      status: statusFilter.value,
+      search: searchQuery.value
+    });
+    const response = await fetch(`/users?${params}`);
+    users.value = await response.json();
+  } catch (err) {
+    error.value = err.message;
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+
+onMounted(fetchUsers);
+
+
+const filteredUsers = computed(() => {
+  return users.value.filter(user => {
+    const matchesSearch = user.name.toLowerCase().includes(searchQuery.value.toLowerCase());
+    const matchesRole = !roleFilter.value || user.role === roleFilter.value;
+    return matchesSearch && matchesRole;
+  });
+});
+
+
+const suspendUser = async (id) => {
+  try {
+    const response = await fetch(`/users/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'suspended' })
+    });
+    if (!response.ok) throw new Error('Failed to update user');
+    await fetchUsers(); // Refresh the list
+  } catch (err) {
+    error.value = err.message;
+  }
+};
+
+const editUser = async (userData) => {
+  // Similar API call for editing
+};
 </script>
