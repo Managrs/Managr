@@ -6,7 +6,6 @@
           <th>Name</th>
           <th>Email</th>
           <th>Role</th>
-          <th>Last Active</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -14,11 +13,10 @@
         <tr v-for="user in users" :key="user.id">
           <td class="name-cell">
             <img :src="user.avatar" alt="Avatar" class="avatar" />
-            <span class="user-name">{{ user.name }}</span>
+            <span class="user-name">{{ user.fullName }}</span>
           </td>
           <td class="email">{{ user.email }}</td>
           <td class="role">{{ user.role }}</td>
-          <td class="last-active">{{ user.lastActive }}</td>
           <td class="action-cell">
             <button @click="deleteUser(user.id)">Delete</button>
           </td>
@@ -29,38 +27,49 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue';
 
-const users = ref([
-  {
-    id: 1,
-    name: 'Olivia Rhye',
-    email: 'olivia@untitledui.com',
-    role: 'Admin',
-    lastActive: 'Mar 14, 2022',
-    avatar: 'https://randomuser.me/api/portraits/women/1.jpg'
-  },
-  {
-    id: 2,
-    name: 'Phoenix Baker',
-    email: 'phoenix@untitledui.com',
-    role: 'Editor',
-    lastActive: 'Mar 12, 2022',
-    avatar: 'https://randomuser.me/api/portraits/men/2.jpg'
-  },
-  {
-    id: 3,
-    name: 'Lana Steiner',
-    email: 'lana@untitledui.com',
-    role: 'Viewer',
-    lastActive: 'Mar 10, 2022',
-    avatar: 'https://randomuser.me/api/portraits/women/3.jpg'
+const users = ref([]);
+
+// Fetch users when the component is mounted
+const fetchUsers = async () => {
+  try {
+    const backendUrl = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${backendUrl}/allusers`);
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();  // Parse the JSON response
+    users.value = data;  // Assign the fetched data to your users ref
+  } catch (err) {
+    console.error('Error fetching users:', err);
   }
-])
+};
 
-const deleteUser = (id) => {
-  alert(`Deleting user with id: ${id}`)
-}
+// Delete user functionality
+const deleteUser = async (id) => {
+  try {
+    const backendUrl = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${backendUrl}/deleteUser/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete user');
+    }
+
+    const result = await response.json();
+    console.log('User deleted:', result.message);
+    fetchUsers();  // Re-fetch the users after deleting
+  } catch (error) {
+    console.error('Error deleting user:', error);
+  }
+};
+
+// Fetch users on component mount
+onMounted(fetchUsers);
 </script>
 
 <style scoped>
@@ -115,8 +124,7 @@ const deleteUser = (id) => {
   color: #6b7280;
 }
 
-.role,
-.last-active {
+.role {
   color: #374151;
 }
 

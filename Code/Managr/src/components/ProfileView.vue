@@ -40,7 +40,8 @@ export default defineComponent({
   methods: {
     async fetchProfiles() {
       try {
-        const response = await fetch('https://managrs-server1.azurewebsites.net/allusers');
+        const backendUrl = import.meta.env.VITE_API_URL;
+        const response = await fetch(`${backendUrl}/allusers`);
         if (!response.ok) {
           throw new Error('Failed to fetch freelancers');
         }
@@ -49,7 +50,7 @@ export default defineComponent({
           id: user.id,
           image: user.avatar,
           name: user.fullName,
-          job: user.Role.charAt(0) + user.Role.slice(1).toLowerCase(),
+          job: user.role.charAt(0) + user.role.slice(1).toLowerCase(),
         }));
       } catch (error) {
         console.error('Error fetching profiles:', error);

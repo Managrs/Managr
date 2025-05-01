@@ -10,12 +10,25 @@ connectToDB();
 
 app.use(express.json());
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://jolly-bush-0f6975910.6.azurestaticapps.net'
+];
+
 app.use(cors({
-  origin: 'https://jolly-bush-0f6975910.6.azurestaticapps.net',
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type'],
   credentials: true,
 }));
+
 
 app.get('/', (req, res) => {
   res.send('Node server is live!');
@@ -28,6 +41,28 @@ app.post('/newUser', async (req, res) => {
     res.status(201).json(user);
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+});
+
+app.post('/auth/registerOrUpdateUser', async (req, res) => {
+  try {
+    const { fullName, email, avatar, role } = req.body;
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = new User({ fullName, email, avatar, role });
+      await user.save();
+    } else {
+      user.fullName = fullName;
+      user.avatar = avatar;
+      await user.save();
+    }
+
+    res.status(200).json({ message: 'User synced' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to sync user' });
   }
 });
 
@@ -78,6 +113,7 @@ app.get('/allusers', async (req, res) => {
         fullName: user.fullName,
         avatar: user.avatar,
         role: user.role,
+        email: user.email
       };
     });
     res.json(freelancers);
@@ -85,6 +121,21 @@ app.get('/allusers', async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
+app.delete('/deleteUser/:id', async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
