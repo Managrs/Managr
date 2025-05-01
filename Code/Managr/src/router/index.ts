@@ -5,7 +5,6 @@ import LandingPage from '../components/LandingPage.vue';
 import DashboardLayout from '../views/DashboardLayout.vue';
 import dashboardadmin from '../views/dashboardadmin.vue';
 import AdminDashboard from '../components/AdminSide.vue';
-//import ClientDashboard from '../components/ClientDashboard.vue';
 
 //admin routers
 import Aauditlogs from '../views/Admin/Aauditlogs.vue';

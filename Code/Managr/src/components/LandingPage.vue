@@ -42,13 +42,40 @@
   
 <script setup lang="ts">
 import { useAuth0 } from '@auth0/auth0-vue';
+import { watchEffect } from 'vue';
 import { RouterLink } from 'vue-router';
 
-const { loginWithRedirect } = useAuth0();
+const { loginWithRedirect, isAuthenticated, user } = useAuth0();
 
 const handleLogin = () => {
   loginWithRedirect();
 };
+
+watchEffect(async () => {
+  if (isAuthenticated.value && user.value) {
+    const backendUrl = import.meta.env.VITE_API_URL;
+
+    const payload = {
+      fullName: user.value.name,
+      email: user.value.email,
+      avatar: user.value.picture,
+      role: "CLIENT", // You can make this dynamic later
+    };
+
+    try {
+      await fetch(`${backendUrl}/auth/registerOrUpdateUser`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+      console.log("User synced to backend");
+    } catch (error) {
+      console.error("User sync failed", error);
+    }
+  }
+});
 
 /*const { logout } = useAuth0();
 const handleLogout = () => {

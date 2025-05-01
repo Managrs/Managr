@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "postinstall": "npm install",
     "dev": "nodemon index.js"
   },
   "repository": {
@@ -21,9 +20,11 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
-    "express": "^5.1.0",
+    "express": "^4.17.1",
     "mongoose": "^8.13.2",
-    "mongoose-id-autoincrement": "^1.0.5",
-    "node": "^4.9.1"
+    "mongoose-id-autoincrement": "^1.0.5"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }

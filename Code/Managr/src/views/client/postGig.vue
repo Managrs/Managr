@@ -62,7 +62,8 @@
     methods: {
       async submitGig() {
         try {
-          const response = await fetch("https://managrs-server1.azurewebsites.net/newGig", {
+          const backendUrl = import.meta.env.VITE_API_URL;
+          const response = await fetch(`${backendUrl}/newGig`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -78,7 +79,6 @@
           console.log("Gig posted successfully:", data);
           alert("Gig posted successfully!");
   
-          // Optional: reset form
           this.gig = {
             clientName: "",
             gigName: "",
