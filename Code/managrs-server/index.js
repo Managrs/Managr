@@ -8,9 +8,7 @@ require('dotenv').config();
 const app = express();
 
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://jolly-bush-0f6975910.6.azurestaticapps.net'],
+  origin: 'http://localhost:5173',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type'],
   credentials: true,
@@ -106,8 +104,6 @@ app.patch('/users/:id', async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
-
-
 
 
 const PORT = process.env.PORT || 8080;
