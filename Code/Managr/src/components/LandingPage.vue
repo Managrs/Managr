@@ -42,7 +42,7 @@
   
 <script setup lang="ts">
 import { useAuth0 } from '@auth0/auth0-vue';
-import { onMounted, watchEffect } from 'vue';
+import { watchEffect } from 'vue';
 import { RouterLink } from 'vue-router';
 
 const { loginWithRedirect, isAuthenticated, user } = useAuth0();
