@@ -18,6 +18,7 @@ import PostGig from '../views/client/postGig.vue';
 import ManageGigs from '../views/client/manageGigs.vue';
 import Dashboardclient from '../views/dashboardclient.vue';
 import Documentation from '../views/documentation.vue';
+import ApplyPost from '../views/freelance/applyPost.vue';
 
 const routes = [
   {path: '/', name: 'LandingPage', component: LandingPage },
@@ -41,7 +42,8 @@ const routes = [
     ]
   },
   {path: '/postgig',name: 'postGig', component: PostGig},
-  {path: '/managegig',name: 'manageGig', component: ManageGigs}
+  {path: '/managegig',name: 'manageGig', component: ManageGigs},
+  {path: '/applypost', name: 'applypost', component: ApplyPost}
   /*
   {
     path: '/client',

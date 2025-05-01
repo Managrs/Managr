@@ -1,10 +1,13 @@
 import { createApp } from 'vue';
 import App from '../src/App.vue';
 import { createAuth0 } from '@auth0/auth0-vue';
+import { createPinia } from 'pinia';
 import router from './router';
 
 
 const app = createApp(App);
+const pinia = createPinia();
+app.use(pinia);
 app.use(router);
 app.use(
     createAuth0({

@@ -1,7 +1,7 @@
 <template>
   <article class="card">
     <section class="client-info">
-      <img class="client-avatar" src="https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png" />
+      <img class="client-avatar"  :src="avatar" />
       <section class="user-details">
         <p class="client-name"> {{ name }} </p>
         <p class="client-mail"> {{mail}} </p>
@@ -16,8 +16,9 @@
         <article class="budget-price"> {{ formatCurrency(budget) }} </article>
         <article class="time-est"> {{ formatTime(time) }}</article>
       </section>
-      <button class="apply-button"> Apply for Gig</button>
-      
+      <router-link :to="{ path: '/applypost', query: { clientEmail: mail } }">
+        <button class="apply-button">Apply for Gig</button>
+      </router-link>
     </section>
   </article>
 </template>
