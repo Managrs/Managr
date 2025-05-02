@@ -1,10 +1,10 @@
 <template>
   <article class="card">
     <section class="client-info">
-      <img class="client-avatar" src="https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png" />
+      <img class="client-avatar"  :src="avatar" />
       <section class="user-details">
-        <p class="client-name"> {{ title }} </p>
-        <p class="client-mail"> myemail@gmail.com </p>
+        <p class="client-name"> {{ name }} </p>
+        <p class="client-mail"> {{mail}} </p>
       </section>
     </section>
 
@@ -13,11 +13,12 @@
       <h4 class="card-category">{{ category }}</h4>
       <p class="card-description">{{ description }}</p>
       <section class="time-price">
-        <article class="budget-price"> R 500.00 </article>
-        <article class="time-est"> 7 days</article>
+        <article class="budget-price"> {{ formatCurrency(budget) }} </article>
+        <article class="time-est"> {{ formatTime(time) }}</article>
       </section>
-      <button class="apply-button"> Apply for Gig</button>
-      
+      <router-link :to="{ path: '/applypost', query: { clientEmail: mail } }">
+        <button class="apply-button">Apply for Gig</button>
+      </router-link>
     </section>
   </article>
 </template>
@@ -29,6 +30,10 @@ export default defineComponent({
   name: 'CategoryCard',
   props: {
     name: {
+      type: String,
+      required: true,
+    },
+    mail:{
       type: String,
       required: true,
     },
@@ -48,13 +53,30 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    budget:{
+    budget: {
       type: Number,
       required: true,
+    },
+    time: {
+      type: Number,
+      required: true,
+    },
+  },
+  methods: {
+    formatCurrency(value: number) {
+      return new Intl.NumberFormat('en-ZA', {
+        style: 'currency',
+        currency: 'ZAR',
+        minimumFractionDigits: 2,
+      }).format(value);
+    },
+    formatTime(days: Number) {
+      return `${days} days`; // You can change the format here
     }
   },
 });
 </script>
+
 
 <style scoped>
 .card {

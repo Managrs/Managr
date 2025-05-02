@@ -29,54 +29,35 @@ export default defineComponent({
   components: { ProfileCard },
   data() {
     return {
-      profiles: [
-          {
-            id: 1,
-            image: '/images/fashion.jpg',
-            name: 'Alex Johnson',
-            job: 'UX Designer',
-            
-          },
-          {
-            id: 2,
-            image: '/images/fashion.jpg',
-            name: 'Sarah Williams',
-            job: 'Frontend Developer',
-            
-          },
-          {
-            id: 3,
-            image: '/images/fashion.jpg',
-            name: 'Sarah Williams',
-            job: 'Frontend Developer',
-          },
-          {
-            id: 4,
-            image: '/images/fashion.jpg',
-            name: 'Sarah Williams',
-            job: 'Frontend Developer',
-          },
-          {
-            id: 5,
-            image: '/images/fashion.jpg',
-            name: 'Sarah Williams',
-            job: 'Frontend Developer',
-          },
-          {
-            id: 6,
-            image: '/images/fashion.jpg',
-            name: 'Sarah Williams',
-            job: 'Frontend Developer',
-          },
-          {
-            id: 7,
-            image: '/images/fashion.jpg',
-            name: 'Sarah Williams',
-            job: 'Frontend Developer',
-          },
-        // Add more profiles...
-      ] as Profile[]
+      profiles: [] as Profile[],
+      loading: true,
+      error: 'Error occured', 
     };
+  },
+  mounted() {
+    this.fetchProfiles();
+  },
+  methods: {
+    async fetchProfiles() {
+      try {
+        const backendUrl = import.meta.env.VITE_API_URL;
+        const response = await fetch(`${backendUrl}/allusers`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch freelancers');
+        }
+        const data = await response.json();
+        this.profiles = data.map((user: any) => ({
+          id: user.id,
+          image: user.avatar,
+          name: user.fullName,
+          job: user.role.charAt(0) + user.role.slice(1).toLowerCase(),
+        }));
+      } catch (error) {
+        console.error('Error fetching profiles:', error);
+      } finally {
+        this.loading = false;
+      }
+    }
   }
 });
 </script>

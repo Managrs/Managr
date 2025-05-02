@@ -1,121 +1,74 @@
 <template>
-  <section class="user-management">
-    <header class="controls">
-      <h1>User Management</h1>
-      <form @submit.prevent="applyFilters" class="filters">
-        <input
-          type="search"
-          v-model="searchQuery"
-          placeholder="Search users..."
-          aria-label="Search users"
-        />
-        <select v-model="roleFilter" aria-label="Filter by role">
-          <option value="">All Roles</option>
-          <option value="freelancer">Freelancer</option>
-          <option value="client">Client</option>
-        </select>
-        <button type="submit">Apply</button>
-      </form>
-    </header>
-
-    <div class="container">
-      <table class="user-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="user in paginatedUsers" :key="user.id">
-            <td class="name-cell">
-              <img :src="user.avatar || '/default-avatar.png'" alt="Avatar" class="avatar" />
-              <span class="user-name">{{ user.name }}</span>
-            </td>
-            <td class="email">{{ user.email }}</td>
-            <td class="role">{{ user.role }}</td>
-            <td class="action-cell">
-              <button @click="deleteUser(user.id)" class="delete-btn">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <nav class="pagination">
-      <button 
-        v-for="page in totalPages" 
-        :key="page" 
-        @click="currentPage = page"
-        :disabled="currentPage === page"
-      >
-        {{ page }}
-      </button>
-    </nav>
+  <section class="container">
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="user in users" :key="user.id">
+          <td class="name-cell">
+            <img :src="user.avatar" alt="Avatar" class="avatar" />
+            <span class="user-name">{{ user.fullName }}</span>
+          </td>
+          <td class="email">{{ user.email }}</td>
+          <td class="role">{{ user.role }}</td>
+          <td class="action-cell">
+            <button @click="deleteUser(user.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 
-const API_URL = import.meta.env.VITE_API_URL;
-const users = ref([]); 
-const searchQuery = ref('');
-const roleFilter = ref('');
-const currentPage = ref(1);
-const perPage = ref(10);
-const isLoading = ref(false);
-const error = ref(null);
+const users = ref([]);
 
+// Fetch users when the component is mounted
 const fetchUsers = async () => {
-  isLoading.value = true;
   try {
-    const params = new URLSearchParams({
-      role: roleFilter.value,
-      search: searchQuery.value
-    });
-    const response = await fetch(`${API_URL}/users?${params}`);
-    users.value = await response.json();
+    const backendUrl = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${backendUrl}/allusers`);
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();  // Parse the JSON response
+    users.value = data;  // Assign the fetched data to your users ref
   } catch (err) {
-    error.value = err.message;
-  } finally {
-    isLoading.value = false;
+    console.error('Error fetching users:', err);
   }
 };
 
-const filteredUsers = computed(() => {
-  return users.value.filter(user => {
-    const matchesSearch = user.name.toLowerCase().includes(searchQuery.value.toLowerCase()) || 
-                         user.email.toLowerCase().includes(searchQuery.value.toLowerCase());
-    const matchesRole = !roleFilter.value || user.role === roleFilter.value;
-    return matchesSearch && matchesRole;
-  });
-});
-
-const totalPages = computed(() => {
-  return Math.ceil(filteredUsers.value.length / perPage.value);
-});
-
-const paginatedUsers = computed(() => {
-  const start = (currentPage.value - 1) * perPage.value;
-  const end = start + perPage.value;
-  return filteredUsers.value.slice(start, end);
-});
-
+// Delete user functionality
 const deleteUser = async (id) => {
   try {
-    const response = await fetch(`${API_URL}/users/${id}`, {
+    const backendUrl = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${backendUrl}/deleteUser/${id}`, {
       method: 'DELETE',
     });
-    if (!response.ok) throw new Error('Failed to delete user');
-    await fetchUsers();
-  } catch (err) {
-    error.value = err.message;
+
+    if (!response.ok) {
+      throw new Error('Failed to delete user');
+    }
+
+    const result = await response.json();
+    console.log('User deleted:', result.message);
+    fetchUsers();  // Re-fetch the users after deleting
+  } catch (error) {
+    console.error('Error deleting user:', error);
   }
 };
 
+// Fetch users on component mount
 onMounted(fetchUsers);
 </script>
 
@@ -173,11 +126,12 @@ onMounted(fetchUsers);
       text-align: left;
     }
 
-    th, td {
-      padding: 14px 16px;
-      border-bottom: 1px solid #eee;
-      vertical-align: middle;
-    }
+.user-table th,
+.user-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
 
     tbody tr:hover {
       background-color: #f5f5f5;
@@ -209,6 +163,9 @@ onMounted(fetchUsers);
       color: #374151;
       text-transform: capitalize;
     }
+.role {
+  color: #374151;
+}
 
     .action-cell {
       button.delete-btn {
