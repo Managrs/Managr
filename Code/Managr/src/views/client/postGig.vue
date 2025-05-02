@@ -8,7 +8,7 @@
       <h2 class="page-title">What Service Are You Looking For?</h2>
       <form @submit.prevent="submitGig">
         <label for="clientName">Client Name</label><br>
-        <input type="text" id="clientName" v-model="gig.clientName" required><br>
+        <input type="text" id="clientName" v-model="gig.clientName" required readonly><br>
   
         <label for="gigName">Gig Title</label><br>
         <input type="text" id="gigName" v-model="gig.gigName" required><br>
@@ -45,6 +45,7 @@
   </template>
   
   <script>
+  import { useUserStore } from '@/stores/userStore';
   export default {
     name: "PostGig",
     data() {
@@ -58,6 +59,10 @@
           category: ""
         }
       };
+    },
+    mounted() {
+      const userStore = useUserStore();
+      this.gig.clientName = userStore.name;
     },
     methods: {
       async submitGig() {

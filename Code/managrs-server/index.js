@@ -1,8 +1,11 @@
 const express = require('express');
+const nodemailer = require("nodemailer");
 const cors = require('cors');
 const connectToDB = require('./db/connect');
 const User = require('./models/user'); 
 const Gig = require('./models/gigs'); 
+const Message = require('./models/messages');
+
 require('dotenv').config();
 
 const app = express();
@@ -10,10 +13,7 @@ connectToDB();
 
 app.use(express.json());
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://jolly-bush-0f6975910.6.azurestaticapps.net'
-];
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -29,6 +29,9 @@ app.use(cors({
   credentials: true,
 }));
 
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
 
 app.get('/', (req, res) => {
   res.send('Node server is live!');
@@ -100,6 +103,45 @@ app.get('/allgigs', async (req, res) => {
     });
     res.json(mapped);
   } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+app.post("/newApplication", async (req, res) => {
+  const { clientEmail, freelancerEmail, gigName, gigDescription } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "noreply.managrs@gmail.com",
+      pass: "your-app-password" 
+    }
+  });
+
+  const mailOptions = {
+    from: freelancerEmail,
+    to: clientEmail,
+    subject: `Application for ${gigName}`,
+    text: gigDescription
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: "Email sent!" });
+  } catch (err) {
+    console.error("Failed to send email:", err);
+    res.status(500).json({ message: "Failed to send email" });
+  }
+});
+
+app.post("/messages", async (req, res) => {
+  try{
+    const message = await Message.create(req.body);
+   /* const { senderId, receiverId, content } = req.body;
+    const message = new Message({ senderId, receiverId, content });
+    await message.save();*/
+    res.status(201).json(message);
+  } catch(err){
     res.status(400).json({ error: err.message });
   }
 });

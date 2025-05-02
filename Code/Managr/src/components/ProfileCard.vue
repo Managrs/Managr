@@ -1,7 +1,7 @@
 <template>
   <article class="profile-card">
     <div class="profile-image-container">
-      <img src="https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png"  class="profile-image">
+      <img :src="image"  class="profile-image">
     </div>
     <div class="profile-content">
       <h3 class="profile-name">{{ name }}</h3>

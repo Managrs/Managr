@@ -22,9 +22,10 @@
     "dotenv": "^16.5.0",
     "express": "^4.17.1",
     "mongoose": "^8.13.2",
-    "mongoose-id-autoincrement": "^1.0.5"
+    "mongoose-id-autoincrement": "^1.0.5",
+    "nodemailer": "^6.10.1"
   },
   "engines": {
-    "node": "14.x"
+    "node": "22.x"
   }
 }

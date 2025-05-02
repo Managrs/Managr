@@ -1,5 +1,5 @@
 <template>
-    <aside v-if="isOpen" class="sidebar"          @mouseenter="openSidebar" @mouseleave="closeSidebar">
+    <aside v-if="isOpen" class="sidebar" @mouseenter="openSidebar" @mouseleave="closeSidebar">
       <section class="sidebar-header">
         <img class="avatar" :src="user.avatar" alt="User Avatar" />
         <section class="user-info">
@@ -25,20 +25,25 @@
   
   <script lang="ts">
   import { ref } from 'vue';
+  import { useUserStore } from '../stores/userStore';
   import { useAuth0 } from '@auth0/auth0-vue';
   
   export default {
     name: 'userProfile',
     setup() {
       const { logout } = useAuth0();
+      const userStore = useUserStore();
   
       const isOpen = ref(true);
-      const user = ref({
+      const user = {
         name: 'Dawid Pietrasiak',
         email: 'dawid@product.com',
         avatar: 'https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png'
-      });
+      };
   
+      
+      userStore.setUser(user);
+
       const handleLogout = () => {
         logout({
           logoutParams: { returnTo: window.location.origin },
