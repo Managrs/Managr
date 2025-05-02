@@ -13,10 +13,7 @@ connectToDB();
 
 app.use(express.json());
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://jolly-bush-0f6975910.6.azurestaticapps.net'
-];
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -32,6 +29,9 @@ app.use(cors({
   credentials: true,
 }));
 
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
 
 app.get('/', (req, res) => {
   res.send('Node server is live!');
