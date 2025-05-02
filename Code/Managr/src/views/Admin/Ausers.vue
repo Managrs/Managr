@@ -1,211 +1,265 @@
 <template>
-  <section class="container">
-    <table class="user-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="user in users" :key="user.id">
-          <td class="name-cell">
-            <img :src="user.avatar" alt="Avatar" class="avatar" />
-            <span class="user-name">{{ user.fullName }}</span>
-          </td>
-          <td class="email">{{ user.email }}</td>
-          <td class="role">{{ user.role }}</td>
-          <td class="action-cell">
-            <button @click="deleteUser(user.id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <section class="user-management">
+    <header class="controls">
+      <h1>User Management</h1>
+      <form @submit.prevent="applyFilters" class="filters">
+        <input
+          type="search"
+          v-model="searchQuery"
+          placeholder="Search by name or email..."
+          aria-label="Search users"
+        />
+        <select v-model="roleFilter" aria-label="Filter by role">
+          <option value="">All Roles</option>
+          <option value="freelancer">Freelancer</option>
+          <option value="client">Client</option>
+          <option value="admin">Admin</option>
+        </select>
+        <button type="submit" class="apply-btn">Apply Filters</button>
+      </form>
+    </header>
+
+    <div class="container">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="user in paginatedUsers" :key="user.id">
+            <td class="name-cell">
+              <img :src="user.avatar || '/default-avatar.png'" alt="Avatar" class="avatar" />
+              <span class="user-name">{{ user.fullName }}</span>
+            </td>
+            <td class="email">{{ user.email }}</td>
+            <td class="role">{{ user.role }}</td>
+            <td class="action-cell">
+              <button @click="deleteUser(user._id)" class="delete-btn">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <nav class="pagination" v-if="totalPages > 1">
+      <button 
+        v-for="page in totalPages" 
+        :key="page" 
+        @click="currentPage = page"
+        :class="{ active: currentPage === page }"
+      >
+        {{ page }}
+      </button>
+    </nav>
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
 const users = ref([]);
+const searchQuery = ref('');
+const roleFilter = ref('');
+const currentPage = ref(1);
+const perPage = ref(10);
+const isLoading = ref(false);
+const error = ref(null);
 
-// Fetch users when the component is mounted
 const fetchUsers = async () => {
+  isLoading.value = true;
   try {
-    const backendUrl = import.meta.env.VITE_API_URL;
-    const response = await fetch(`${backendUrl}/allusers`);
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const data = await response.json();  // Parse the JSON response
-    users.value = data;  // Assign the fetched data to your users ref
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/allusers`);
+    if (!response.ok) throw new Error('Failed to fetch users');
+    const data = await response.json();
+    users.value = data;
   } catch (err) {
-    console.error('Error fetching users:', err);
+    error.value = err.message;
+    console.error('Error:', err);
+  } finally {
+    isLoading.value = false;
   }
 };
 
-// Delete user functionality
-const deleteUser = async (id) => {
+const filteredUsers = computed(() => {
+  const searchTerm = searchQuery.value.toLowerCase();
+  return users.value.filter(user => {
+    const matchesSearch = 
+      user.fullName?.toLowerCase().includes(searchTerm) || 
+      user.email?.toLowerCase().includes(searchTerm);
+    const matchesRole = !roleFilter.value || user.role?.toLowerCase() === roleFilter.value.toLowerCase();
+    return matchesSearch && matchesRole;
+  });
+});
+
+const totalPages = computed(() => Math.ceil(filteredUsers.value.length / perPage.value));
+const paginatedUsers = computed(() => {
+  const start = (currentPage.value - 1) * perPage.value;
+  return filteredUsers.value.slice(start, start + perPage.value);
+});
+
+const deleteUser = async (userId) => {
+  if (!confirm('Are you sure you want to delete this user?')) return;
+  
   try {
-    const backendUrl = import.meta.env.VITE_API_URL;
-    const response = await fetch(`${backendUrl}/deleteUser/${id}`, {
-      method: 'DELETE',
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/deleteUser/${userId}`, {
+      method: 'DELETE'
     });
-
-    if (!response.ok) {
-      throw new Error('Failed to delete user');
-    }
-
-    const result = await response.json();
-    console.log('User deleted:', result.message);
-    fetchUsers();  // Re-fetch the users after deleting
-  } catch (error) {
-    console.error('Error deleting user:', error);
+    if (!response.ok) throw new Error('Failed to delete user');
+    await fetchUsers(); // Refresh the list
+  } catch (err) {
+    error.value = err.message;
+    console.error('Error:', err);
   }
 };
 
-// Fetch users on component mount
+const applyFilters = () => {
+  currentPage.value = 1;
+};
+
 onMounted(fetchUsers);
 </script>
 
-<style scoped lang="scss">
+<style scoped>
+.apply-btn {
+  padding: 8px 16px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.apply-btn:hover {
+  background-color: #4338ca;
+}
+
 .user-management {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 24px;
-  font-family: Arial, sans-serif;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-  .controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
 
-    .filters {
-      display: flex;
-      gap: 12px;
+.filters {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
 
-      input, select {
-        padding: 8px 12px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-      }
+input, select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
 
-      button {
-        padding: 8px 16px;
-        background-color: #4f46e5;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
 
-        &:hover {
-          background-color: #4338ca;
-        }
-      }
-    }
-  }
+.user-table th {
+  background-color: #f8f9fa;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+}
 
-  .container {
-    margin-bottom: 24px;
-  }
-
-  .user-table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    overflow: hidden;
-
-    thead {
-      background-color: #f9fafb;
-      text-align: left;
-    }
-
-.user-table th,
 .user-table td {
-  padding: 14px 16px;
+  padding: 12px 15px;
   border-bottom: 1px solid #eee;
-  vertical-align: middle;
 }
 
-    tbody tr:hover {
-      background-color: #f5f5f5;
-    }
+.name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-    .name-cell {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
-    .avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
+.user-name {
+  font-weight: 500;
+}
 
-    .user-name {
-      font-weight: bold;
-      color: #111827;
-    }
+.email {
+  color: #666;
+}
 
-    .email {
-      color: #6b7280;
-    }
-
-    .role {
-      color: #374151;
-      text-transform: capitalize;
-    }
 .role {
-  color: #374151;
+  text-transform: capitalize;
+  font-weight: 500;
 }
 
-    .action-cell {
-      button.delete-btn {
-        padding: 6px 12px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.875rem;
-        background-color: #fee2e2;
-        color: #dc2626;
-        border: 1px solid #fca5a5;
+.action-cell .delete-btn {
+  background-color: #ffebee;
+  color: #d32f2f;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
 
-        &:hover {
-          background-color: #fecaca;
-        }
-      }
-    }
+.action-cell .delete-btn:hover {
+  background-color: #ffcdd2;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button.active {
+  background-color: #1976d2;
+  color: white;
+  border-color: #1976d2;
+}
+
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+    align-items: flex-start;
   }
-
-  .pagination {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-
-    button {
-      padding: 8px 12px;
-      border: 1px solid #ddd;
-      background-color: white;
-      cursor: pointer;
-      border-radius: 4px;
-
-      &:hover:not(:disabled) {
-        background-color: #f3f4f6;
-      }
-
-      &:disabled {
-        background-color: #4f46e5;
-        color: white;
-        cursor: default;
-      }
-    }
+  
+  .filters {
+    width: 100%;
+    flex-direction: column;
+  }
+  
+  input, select {
+    width: 100%;
   }
 }
 </style>

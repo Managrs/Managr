@@ -20,13 +20,13 @@ const userSchema = new mongoose.Schema({
 
   role: {
     type: String,
-    enum: ['freelancer','client', 'ad,min'],
-    default: 'FREELANCER'
+    enum: ['freelancer','client', 'admin'],
+    default: 'freelancer'
   },
 
   status:{
     type: String,
-    enum:['active, suspended'],
+    enum:['active', 'suspended'],
     default: 'active'
 
   },
