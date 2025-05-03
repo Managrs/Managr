@@ -21,9 +21,11 @@
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^4.17.1",
-    "mongoose": "^8.13.2",
+    "mongodb": "^6.16.0",
+    "mongoose": "^8.14.1",
     "mongoose-id-autoincrement": "^1.0.5",
-    "nodemailer": "^6.10.1"
+    "nodemailer": "^6.10.1",
+    "nodemon": "^3.1.10"
   },
   "engines": {
     "node": "22.x"
