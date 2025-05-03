@@ -6,6 +6,8 @@ const User = require('./models/user');
 const Gig = require('./models/gigs'); 
 const Message = require('./models/messages');
 
+const mongoose = require('mongoose');
+
 require('dotenv').config();
 
 const app = express();
