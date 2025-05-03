@@ -31,7 +31,7 @@
             <router-link to="/projects" class="nav-link">View Gigs</router-link>
           </li>
           <li>
-            <router-link to="/messages" class="nav-link">Messages</router-link>
+            <router-link to="/chatsystem" class="nav-link">Messages</router-link>
           </li>
         </ul>
   
