@@ -178,6 +178,45 @@ app.delete('/deleteUser/:id', async (req, res) => {
   }
 });
 
+app.get('/messages', async (req, res) => {
+  try {
+    const userEmail = req.query.userId;
+
+    if (!userEmail) {
+      return res.status(400).json({ error: 'Missing userId (email) query parameter' });
+    }
+
+    const users = await User.find();
+    const currentUser = users.find(u => u.email === userEmail);
+
+    if (!currentUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const messages = await Message.find({
+      $or: [{ senderId: currentUser._id.toString() }, { receiverId: currentUser._id.toString() }]
+    });
+
+    const formattedMessages = messages.map((msg, index) => {
+      const sender = users.find(u => u._id.toString() === msg.senderId);
+      const receiver = users.find(u => u._id.toString() === msg.receiverId);
+      return {
+        id: index + 1,
+        senderId: msg.senderId,
+        senderName: sender?.fullName,
+        senderAvatar: sender?.avatar,
+        receiverId: msg.receiverId,
+        receiverName: receiver?.fullName,
+        receiverAvatar: receiver?.avatar,
+        content: msg.content
+      };
+    });
+    res.json(formattedMessages);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
