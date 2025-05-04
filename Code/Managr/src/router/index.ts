@@ -15,6 +15,7 @@ import Aprofile from '../views/Admin/Aprofile.vue';
 import Ausers from '../views/Admin/Ausers.vue';
 import Areports from '../views/Admin/Areports.vue';
 import PostGig from '../views/client/postGig.vue';
+import MakeReport from '../views/client/makeReport.vue';
 import ManageGigs from '../views/client/manageGigs.vue';
 import Dashboardclient from '../views/dashboardclient.vue';
 import Documentation from '../views/documentation.vue';
@@ -43,6 +44,7 @@ const routes = [
     ]
   },
   {path: '/postgig',name: 'postGig', component: PostGig},
+  {path: '/makeReport',name: 'makeReport', component: MakeReport},
   {path: '/managegig',name: 'manageGig', component: ManageGigs},
   {path: '/applypost', name: 'applypost', component: ApplyPost},
   {path: '/chatsystem', name:'chatsystem', component:Chatbox}
