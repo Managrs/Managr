@@ -1,10 +1,10 @@
 <template>
     <aside v-if="isOpen" class="sidebar" @mouseenter="openSidebar" @mouseleave="closeSidebar">
       <section class="sidebar-header">
-        <img class="avatar" :src="user.avatar" alt="User Avatar" />
+        <img class="avatar" :src="user?.avatar" alt="User Avatar" />
         <section class="user-info">
-          <h2>{{ user.name }}</h2>
-          <p>{{ user.email }}</p>
+          <h2>{{ user?.name }}</h2>
+          <p>{{ user?.email }}</p>
         </section>
       </section>
   
@@ -24,25 +24,26 @@
   </template>
   
   <script lang="ts">
-  import { ref } from 'vue';
+  import { ref,watchEffect } from 'vue';
   import { useUserStore } from '../stores/userStore';
   import { useAuth0 } from '@auth0/auth0-vue';
   
   export default {
     name: 'userProfile',
     setup() {
-      const { logout } = useAuth0();
+      const { logout, user, isAuthenticated } = useAuth0();
       const userStore = useUserStore();
   
       const isOpen = ref(true);
-      const user = {
-        name: 'Dawid Pietrasiak',
-        email: 'dawid@product.com',
-        avatar: 'https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png'
-      };
-  
-      
-      userStore.setUser(user);
+    watchEffect(() => {
+      if (isAuthenticated.value && user.value) {
+        userStore.setUser({
+          name: user.value.name || 'John Doe',
+          email: user.value.email || 'unknown@getMaxListeners.com',
+          avatar: user.value.picture || 'https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png', // Ensure a default picture exists
+        });
+      }
+    });   
 
       const handleLogout = () => {
         logout({
