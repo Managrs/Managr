@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/views/dashboardclient.vue</title>
+    <title>Code coverage report for src/views/chatCard.vue</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/views</a> dashboardclient.vue</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/views</a> chatCard.vue</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>21/21</span>
+                <span class='fraction'>17/17</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>21/21</span>
+                <span class='fraction'>17/17</span>
             </div>
         
             
@@ -111,8 +111,18 @@
 <a name='L46'></a><a href='#L46'>46</a>
 <a name='L47'></a><a href='#L47'>47</a>
 <a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -125,18 +135,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -160,54 +160,54 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
-  &lt;section class="page-container"&gt;
-    &lt;DashClient/&gt;
-    &lt;main&gt;
-      &lt;SearchComponent /&gt;
-    &lt;/main&gt;
-    &lt;router-view/&gt;
-    &lt;section class="freelancer-section"&gt;
-      &lt;ProfileView /&gt;
-    &lt;/section&gt;
-  &lt;/section&gt;
-&lt;/template&gt;
-&nbsp;
-&lt;script lang="ts"&gt;
-import DashClient from '../components/DashClient.vue';
-import ProfileView from '../components/ProfileView.vue';
-import SearchComponent from '../components/SearchComponent.vue';
-&nbsp;
-export default {
-  name: "dashboardclient",
-  components: {
-    DashClient,
-    ProfileView,
-    SearchComponent
+    &lt;article class="message-card" @click="$emit('select', user)"&gt;
+      &lt;img :src="user.avatar" class="avatar" /&gt;
+      &lt;section class="details"&gt;
+        &lt;h4&gt;{{ user.name }}&lt;/h4&gt;
+      &lt;/section&gt;
+    &lt;/article&gt;
+  &lt;/template&gt;
+  
+  &lt;script lang="ts"&gt;
+  import { defineComponent,type PropType } from 'vue';
+  
+  export default defineComponent({
+    name: 'ChatCard',
+    props: {
+      user: {
+        type: Object as PropType&lt;{ id: number; name: string; avatar: string }&gt;,
+        required: true
+      }
+    }
+  });
+  &lt;/script&gt;
+  
+  &lt;style scoped&gt;
+  .message-card {
+    display: flex;
+    align-items: center;
+    padding: 0.01rem;
+    margin: 0.5rem;
+    border: 1px solid #030809;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
   }
-}
-&lt;/script&gt;
-&nbsp;
-&lt;style scoped&gt;
-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 2rem;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-&nbsp;
-/* Make ProfileView full width */
-.freelancer-section {
-  width: 100vw;
-  padding: 2rem;
-  background-color: #f9f9f9;
-  display: flex;
-  justify-content: center; /* centers content horizontally */
-}
-&lt;/style&gt;
-&nbsp;</pre></td></tr></table></pre>
+  .message-card:hover {
+    background-color: #cae6ef;
+  }
+  .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 1rem;
+  }
+  .details h4 {
+    margin: 0;
+    font-weight: bold;
+  }
+  &lt;/style&gt;
+  </pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>58/58</span>
+                <span class='fraction'>61/61</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>58/58</span>
+                <span class='fraction'>61/61</span>
             </div>
         
             
@@ -196,9 +196,16 @@
 <a name='L131'></a><a href='#L131'>131</a>
 <a name='L132'></a><a href='#L132'>132</a>
 <a name='L133'></a><a href='#L133'>133</a>
-<a name='L134'></a><a href='#L134'>134</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -230,24 +237,24 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -257,6 +264,17 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -337,7 +355,6 @@
           &lt;th&gt;Name&lt;/th&gt;
           &lt;th&gt;Email&lt;/th&gt;
           &lt;th&gt;Role&lt;/th&gt;
-          &lt;th&gt;Last Active&lt;/th&gt;
           &lt;th&gt;Action&lt;/th&gt;
         &lt;/tr&gt;
       &lt;/thead&gt;
@@ -345,11 +362,10 @@
         &lt;tr v-for="user in users" :key="user.id"&gt;
           &lt;td class="name-cell"&gt;
             &lt;img :src="user.avatar" alt="Avatar" class="avatar" /&gt;
-            &lt;span class="user-name"&gt;{{ user.name }}&lt;/span&gt;
+            &lt;span class="user-name"&gt;{{ user.fullName }}&lt;/span&gt;
           &lt;/td&gt;
           &lt;td class="email"&gt;{{ user.email }}&lt;/td&gt;
           &lt;td class="role"&gt;{{ user.role }}&lt;/td&gt;
-          &lt;td class="last-active"&gt;{{ user.lastActive }}&lt;/td&gt;
           &lt;td class="action-cell"&gt;
             &lt;button @click="deleteUser(user.id)"&gt;Delete&lt;/button&gt;
           &lt;/td&gt;
@@ -360,38 +376,49 @@
 &lt;/template&gt;
 &nbsp;
 &lt;script setup&gt;
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue';
 &nbsp;
-const users = ref([
-  {
-    id: 1,
-    name: 'Olivia Rhye',
-    email: 'olivia@untitledui.com',
-    role: 'Admin',
-    lastActive: 'Mar 14, 2022',
-    avatar: 'https://randomuser.me/api/portraits/women/1.jpg'
-  },
-  {
-    id: 2,
-    name: 'Phoenix Baker',
-    email: 'phoenix@untitledui.com',
-    role: 'Editor',
-    lastActive: 'Mar 12, 2022',
-    avatar: 'https://randomuser.me/api/portraits/men/2.jpg'
-  },
-  {
-    id: 3,
-    name: 'Lana Steiner',
-    email: 'lana@untitledui.com',
-    role: 'Viewer',
-    lastActive: 'Mar 10, 2022',
-    avatar: 'https://randomuser.me/api/portraits/women/3.jpg'
+const users = ref([]);
+&nbsp;
+// Fetch users when the component is mounted
+const fetchUsers = async () =&gt; {
+  try {
+    const backendUrl = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${backendUrl}/allusers`);
+&nbsp;
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+&nbsp;
+    const data = await response.json();  // Parse the JSON response
+    users.value = data;  // Assign the fetched data to your users ref
+  } catch (err) {
+    console.error('Error fetching users:', err);
   }
-])
+};
 &nbsp;
-const deleteUser = (id) =&gt; {
-  alert(`Deleting user with id: ${id}`)
-}
+// Delete user functionality
+const deleteUser = async (id) =&gt; {
+  try {
+    const backendUrl = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${backendUrl}/deleteUser/${id}`, {
+      method: 'DELETE',
+    });
+&nbsp;
+    if (!response.ok) {
+      throw new Error('Failed to delete user');
+    }
+&nbsp;
+    const result = await response.json();
+    console.log('User deleted:', result.message);
+    fetchUsers();  // Re-fetch the users after deleting
+  } catch (error) {
+    console.error('Error deleting user:', error);
+  }
+};
+&nbsp;
+// Fetch users on component mount
+onMounted(fetchUsers);
 &lt;/script&gt;
 &nbsp;
 &lt;style scoped&gt;
@@ -446,8 +473,7 @@ const deleteUser = (id) =&gt; {
   color: #6b7280;
 }
 &nbsp;
-.role,
-.last-active {
+.role {
   color: #374151;
 }
 &nbsp;
@@ -462,14 +488,15 @@ const deleteUser = (id) =&gt; {
 .action-cell button:hover {
   text-decoration: underline;
 }
-&lt;/style&gt;</pre></td></tr></table></pre>
+&lt;/style&gt;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-24T15:06:49.022Z
+                at 2025-05-04T11:58:26.551Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
