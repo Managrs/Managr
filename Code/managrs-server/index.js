@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectToDB = require('./db/connect');
 const User = require('./models/user'); 
 const Gig = require('./models/gigs'); 
+const Report = require('./models/report'); 
 const Message = require('./models/messages');
 
 require('dotenv').config();
@@ -74,6 +75,15 @@ app.post('/newGig', async (req, res) => {
   try {
     const gig = await Gig.create(req.body);
     res.status(201).json(gig);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+app.post('/newReport', async (req, res) => {
+  try {
+    const report = await Report.create(req.body);
+    res.status(201).json(report);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

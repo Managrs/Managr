@@ -19,6 +19,9 @@
               <router-link to="/managegig" class="nav-link">Manage Gigs</router-link>
             </li>
             <li>
+              <router-link to="/makeReport" class="nav-link">Make Report</router-link>
+            </li>
+            <li>
               <router-link to="/postgig" class="nav-link">Post Gig</router-link>
             </li>
 
