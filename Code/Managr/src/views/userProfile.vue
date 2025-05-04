@@ -1,10 +1,10 @@
 <template>
     <aside v-if="isOpen" class="sidebar" @mouseenter="openSidebar" @mouseleave="closeSidebar">
       <section class="sidebar-header">
-        <img class="avatar" :src="user?.avatar" alt="User Avatar" />
+        <img class="avatar" :src="user.avatar" alt="User Avatar" />
         <section class="user-info">
-          <h2>{{ user?.name }}</h2>
-          <p>{{ user?.email }}</p>
+          <h2>{{ user.name }}</h2>
+          <p>{{ user.email }}</p>
         </section>
       </section>
   
@@ -24,34 +24,25 @@
   </template>
   
   <script lang="ts">
-  import { ref,onMounted } from 'vue';
+  import { ref } from 'vue';
   import { useUserStore } from '../stores/userStore';
   import { useAuth0 } from '@auth0/auth0-vue';
   
   export default {
     name: 'userProfile',
     setup() {
-      const { logout, user, isAuthenticated ,getAccessTokenSilently } = useAuth0();
+      const { logout } = useAuth0();
       const userStore = useUserStore();
   
       const isOpen = ref(true);
-      onMounted(async () => {
-      if (isAuthenticated.value && user.value) {
-        userStore.setUser({
-          name: user.value.name || "Not Authorized",
-          email: user.value.email || "noauthorized@gmail.com",
-          avatar: user.value.picture || "https://lh3.googleusercontent.com/a/ACg8ocKmQO4N2r-zqaOAMI4QcI5H6hp6xkn4VHwepUp66i_DW2tjow=s96-c",
-        });
-
-        // If you want to get a token:
-        try {
-          const token = await getAccessTokenSilently();
-          console.log('Access Token:', token);
-        } catch (e) {
-          console.error('Token error:', e);
-        }
-      }
-    });
+      const user = {
+        name: 'Dawid Pietrasiak',
+        email: 'dawid@product.com',
+        avatar: 'https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png'
+      };
+  
+      
+      userStore.setUser(user);
 
       const handleLogout = () => {
         logout({
