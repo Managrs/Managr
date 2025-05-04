@@ -71,7 +71,7 @@ export default defineComponent({
       }).format(value);
     },
     formatTime(days: Number) {
-      return `${days} days`; // You can change the format here
+      return `${days} days`; 
     }
   },
 });

@@ -1,6 +1,9 @@
 const express = require('express');
-const nodemailer = require("nodemailer");
 const cors = require('cors');
+const http = require('http');
+
+const { Server } = require('socket.io');
+
 const connectToDB = require('./db/connect');
 const User = require('./models/user'); 
 const Gig = require('./models/gigs'); 
@@ -10,6 +13,14 @@ require('dotenv').config();
 
 const app = express();
 connectToDB();
+
+const server = http.createServer(app);
+const io = new Server (server,  {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
 
 app.use(express.json());
 
@@ -37,6 +48,39 @@ app.get('/', (req, res) => {
   res.send('Node server is live!');
 });
 
+// Socket.IO Connection
+io.on('connection', (socket) => {
+  console.log('A user connected:', socket.id);
+
+  // Join a room
+  socket.on('joinRoom', ({ roomId }) => {
+    socket.join(roomId);
+    console.log(`User ${socket.id} joined room ${roomId}`);
+  });
+
+  // Leave a room
+  socket.on('leaveRoom', ({ roomId }) => {
+    socket.leave(roomId);
+    console.log(`User ${socket.id} left room ${roomId}`);
+  });
+
+  // Handle sending messages
+  socket.on('sendMessage', async ({ roomId, senderId, receiverId, content }) => {
+    const message = new Message({ senderId, receiverId, content });
+    await message.save();
+
+    io.to(roomId).emit('receiveMessage', {
+      senderId,
+      receiverId,
+      content,
+      timestamp: message.timestamp
+    });
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
+});
 
 app.post('/newUser', async (req, res) => {
   try {
@@ -107,42 +151,52 @@ app.get('/allgigs', async (req, res) => {
   }
 });
 
-app.post("/newApplication", async (req, res) => {
-  const { clientEmail, freelancerEmail, gigName, gigDescription } = req.body;
-
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "noreply.managrs@gmail.com",
-      pass: "your-app-password" 
-    }
-  });
-
-  const mailOptions = {
-    from: freelancerEmail,
-    to: clientEmail,
-    subject: `Application for ${gigName}`,
-    text: gigDescription
-  };
-
-  try {
-    await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: "Email sent!" });
-  } catch (err) {
-    console.error("Failed to send email:", err);
-    res.status(500).json({ message: "Failed to send email" });
-  }
-});
-
-app.post("/messages", async (req, res) => {
+app.post("/application", async (req, res) => {
   try{
     const message = await Message.create(req.body);
-   /* const { senderId, receiverId, content } = req.body;
-    const message = new Message({ senderId, receiverId, content });
-    await message.save();*/
     res.status(201).json(message);
   } catch(err){
     res.status(400).json({ error: err.message });
+  }
+});
+
+app.get("/applications", async (req, res) => {
+  try {
+    const Messages = await Message.find();
+    const users = await User.find();
+    const userMap = {};
+    users.forEach(user => {
+      userMap[user.email] = user;
+    });
+    const messages = Messages.map((msg, index) => {
+      const user = userMap[msg.senderId];
+      return {
+        id: index + 1,
+        sender: msg.senderId,
+        receiver: msg.receiverId,
+        content: msg.content,
+        name: user.fullName,
+        avatar: user.avatar,  
+      };
+    });
+    res.json(messages);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+app.get('/messages', async (req, res) => {
+  const { user1, user2 } = req.query;
+  try {
+    const messages = await Message.find({
+      $or: [
+        { senderId: user1, receiverId: user2 },
+        { senderId: user2, receiverId: user1 }
+      ]
+    }).sort({ timestamp: 1 });
+    res.json(messages);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -173,45 +227,6 @@ app.delete('/deleteUser/:id', async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
     res.status(200).json({ message: 'User deleted successfully' });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-app.get('/messages', async (req, res) => {
-  try {
-    const userEmail = req.query.userId;
-
-    if (!userEmail) {
-      return res.status(400).json({ error: 'Missing userId (email) query parameter' });
-    }
-
-    const users = await User.find();
-    const currentUser = users.find(u => u.email === userEmail);
-
-    if (!currentUser) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    const messages = await Message.find({
-      $or: [{ senderId: currentUser._id.toString() }, { receiverId: currentUser._id.toString() }]
-    });
-
-    const formattedMessages = messages.map((msg, index) => {
-      const sender = users.find(u => u._id.toString() === msg.senderId);
-      const receiver = users.find(u => u._id.toString() === msg.receiverId);
-      return {
-        id: index + 1,
-        senderId: msg.senderId,
-        senderName: sender?.fullName,
-        senderAvatar: sender?.avatar,
-        receiverId: msg.receiverId,
-        receiverName: receiver?.fullName,
-        receiverAvatar: receiver?.avatar,
-        content: msg.content
-      };
-    });
-    res.json(formattedMessages);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

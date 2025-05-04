@@ -37,6 +37,8 @@
   import { defineComponent } from 'vue';
   import ChatCard from '../chatCard.vue';
   import ChatThread from '../messageCard.vue';
+
+  
   
   interface ChatItem {
     id: number;
@@ -156,7 +158,7 @@
   }
   
   .search {
-    width: 100%;
+    width: 95%;
     padding: 0.4rem 0.8rem;
     border: 1px solid #ccc;
     border-radius: 6px;
