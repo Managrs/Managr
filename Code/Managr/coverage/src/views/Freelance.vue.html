@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/stores/userStore.ts</title>
+    <title>Code coverage report for src/views/Freelance.vue</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/stores</a> userStore.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/views</a> Freelance.vue</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/18</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/18</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -94,7 +94,28 @@
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -104,58 +125,61 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { defineStore } from 'pinia';
-import { ref } from 'vue';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;script setup lang="ts"&gt;
+import { RouterLink } from 'vue-router';
 &nbsp;
-// Define the user type for better type safety
-interface User {
-  name: string;
-  email: string;
-  avatar: string;
+defineProps&lt;{ msg: string }&gt;();
+&nbsp;
+&lt;/script&gt;
+&nbsp;
+&lt;template&gt;
+  &lt;h1&gt; Welcome to Freelancer&lt;/h1&gt;
+  &lt;nav id="links"&gt;
+      &lt;RouterLink to="/"&gt;Homepage&lt;/RouterLink&gt;
+      &lt;RouterLink to="/admin"&gt;Admin&lt;/RouterLink&gt;
+      &lt;RouterLink to="/client"&gt;Client&lt;/RouterLink&gt;
+      &lt;RouterLink to="/freelancer"&gt;Freelancer&lt;/RouterLink&gt;
+  &lt;/nav&gt;
+&lt;/template&gt;
+&nbsp;
+&lt;style scoped&gt;
+&nbsp;
+#links{
+  display: flex;
+  justify-content: space-between;
 }
 &nbsp;
-export const useUserStore = defineStore('user', () =&gt; {
-<span class="cstat-no" title="statement not covered" >  const name = ref('');</span>
-<span class="cstat-no" title="statement not covered" >  const email = ref('');</span>
-<span class="cstat-no" title="statement not covered" >  const avatar = ref('');</span>
+button{
+  margin: 1vw;
+}
 &nbsp;
-  // Set user data
-<span class="cstat-no" title="statement not covered" >  const setUser = (userData: User) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    name.value = userData.name;</span>
-<span class="cstat-no" title="statement not covered" >    email.value = userData.email;</span>
-<span class="cstat-no" title="statement not covered" >    avatar.value = userData.avatar;</span>
-<span class="cstat-no" title="statement not covered" >  };</span>
+form{
+  margin: 1vh;
+  padding: 1vh;
+}
 &nbsp;
-  // Optionally, clear user data (e.g., for logout)
-<span class="cstat-no" title="statement not covered" >  const clearUser = () =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    name.value = '';</span>
-<span class="cstat-no" title="statement not covered" >    email.value = '';</span>
-<span class="cstat-no" title="statement not covered" >    avatar.value = '';</span>
-<span class="cstat-no" title="statement not covered" >  };</span>
+h3{
+  margin: 0;
+  padding: 0;
+}
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return { name, email, avatar, setUser, clearUser };</span>
-<span class="cstat-no" title="statement not covered" >});</span>
+&lt;/style&gt;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -163,7 +187,7 @@ export const useUserStore = defineStore('user', () =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-04T11:58:26.551Z
+                at 2025-04-24T15:06:49.022Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

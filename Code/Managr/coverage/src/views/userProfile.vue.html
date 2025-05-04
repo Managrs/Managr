@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.66% </span>
+                <span class="strong">42.22% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>20/48</span>
+                <span class='fraction'>19/45</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.66% </span>
+                <span class="strong">42.22% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>20/48</span>
+                <span class='fraction'>19/45</span>
             </div>
         
             
@@ -209,12 +209,7 @@
 <a name='L144'></a><a href='#L144'>144</a>
 <a name='L145'></a><a href='#L145'>145</a>
 <a name='L146'></a><a href='#L146'>146</a>
-<a name='L147'></a><a href='#L147'>147</a>
-<a name='L148'></a><a href='#L148'>148</a>
-<a name='L149'></a><a href='#L149'>149</a>
-<a name='L150'></a><a href='#L150'>150</a>
-<a name='L151'></a><a href='#L151'>151</a>
-<a name='L152'></a><a href='#L152'>152</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L147'></a><a href='#L147'>147</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -240,7 +235,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -248,16 +242,12 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -366,13 +356,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
-    &lt;aside v-if="isOpen" class="sidebar" @mouseenter="openSidebar" @mouseleave="closeSidebar"&gt;
+    &lt;aside v-if="isOpen" class="sidebar"          @mouseenter="openSidebar" @mouseleave="closeSidebar"&gt;
       &lt;section class="sidebar-header"&gt;
         &lt;img class="avatar" :src="user.avatar" alt="User Avatar" /&gt;
-        &lt;section class="user-info"&gt;
+        &lt;div class="user-info"&gt;
           &lt;h2&gt;{{ user.name }}&lt;/h2&gt;
           &lt;p&gt;{{ user.email }}&lt;/p&gt;
-        &lt;/section&gt;
+        &lt;/div&gt;
       &lt;/section&gt;
   
       &lt;nav class="sidebar-links"&gt;
@@ -392,25 +382,20 @@
   
   &lt;script lang="ts"&gt;
   import { ref } from 'vue';
-  import { useUserStore } from '../stores/userStore';
   import { useAuth0 } from '@auth0/auth0-vue';
   
   export default {
     name: 'userProfile',
 <span class="fstat-no" title="function not covered" >    setup() {</span>
 <span class="cstat-no" title="statement not covered" >      const { logout } = useAuth0();</span>
-<span class="cstat-no" title="statement not covered" >      const userStore = useUserStore();</span>
   
 <span class="cstat-no" title="statement not covered" >      const isOpen = ref(true);</span>
-<span class="cstat-no" title="statement not covered" >      const user = {</span>
+<span class="cstat-no" title="statement not covered" >      const user = ref({</span>
 <span class="cstat-no" title="statement not covered" >        name: 'Dawid Pietrasiak',</span>
 <span class="cstat-no" title="statement not covered" >        email: 'dawid@product.com',</span>
 <span class="cstat-no" title="statement not covered" >        avatar: 'https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png'</span>
-<span class="cstat-no" title="statement not covered" >      };</span>
+<span class="cstat-no" title="statement not covered" >      });</span>
   
-      
-<span class="cstat-no" title="statement not covered" >      userStore.setUser(user);</span>
-&nbsp;
 <span class="cstat-no" title="statement not covered" >      const handleLogout = () =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        logout({</span>
 <span class="cstat-no" title="statement not covered" >          logoutParams: { returnTo: window.location.origin },</span>
@@ -523,7 +508,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-04T11:58:26.551Z
+                at 2025-04-24T15:06:49.022Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
