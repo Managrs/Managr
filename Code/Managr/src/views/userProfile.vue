@@ -24,26 +24,34 @@
   </template>
   
   <script lang="ts">
-  import { ref,watchEffect } from 'vue';
+  import { ref,onMounted } from 'vue';
   import { useUserStore } from '../stores/userStore';
   import { useAuth0 } from '@auth0/auth0-vue';
   
   export default {
     name: 'userProfile',
     setup() {
-      const { logout, user, isAuthenticated } = useAuth0();
+      const { logout, user, isAuthenticated ,getAccessTokenSilently } = useAuth0();
       const userStore = useUserStore();
   
       const isOpen = ref(true);
-    watchEffect(() => {
+      onMounted(async () => {
       if (isAuthenticated.value && user.value) {
         userStore.setUser({
-          name: user.value.name || 'John Doe',
-          email: user.value.email || 'unknown@getMaxListeners.com',
-          avatar: user.value.picture || 'https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png', // Ensure a default picture exists
+          name: user.value.name || "Not Authorized",
+          email: user.value.email || "noauthorized@gmail.com",
+          avatar: user.value.picture || "https://lh3.googleusercontent.com/a/ACg8ocKmQO4N2r-zqaOAMI4QcI5H6hp6xkn4VHwepUp66i_DW2tjow=s96-c",
         });
+
+        // If you want to get a token:
+        try {
+          const token = await getAccessTokenSilently();
+          console.log('Access Token:', token);
+        } catch (e) {
+          console.error('Token error:', e);
+        }
       }
-    });   
+    });
 
       const handleLogout = () => {
         logout({
