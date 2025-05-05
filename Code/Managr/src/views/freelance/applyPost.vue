@@ -62,7 +62,7 @@
             content: this.gig.gigDescription,
           };
   
-          const response = await fetch(`${backendUrl}/messages`, {
+          const response = await fetch(`${backendUrl}/application`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
