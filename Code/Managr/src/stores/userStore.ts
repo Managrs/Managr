@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
-// Define the user type for better type safety
+
 interface User {
-  name: string;
-  email: string;
-  avatar: string;
+  name?: string;
+  email?: string;
+  avatar?: string;
 }
 
 export const useUserStore = defineStore('user', () => {
@@ -13,14 +13,12 @@ export const useUserStore = defineStore('user', () => {
   const email = ref('');
   const avatar = ref('');
 
-  // Set user data
   const setUser = (userData: User) => {
-    name.value = userData.name;
-    email.value = userData.email;
-    avatar.value = userData.avatar;
+    name.value = userData.name || "John Doe";
+    email.value = userData.email || "johndoe@gmail.com";
+    avatar.value = userData.avatar || 'https://github.com/Managrs/Managr/blob/main/Code/Managr/public/blank.png';
   };
 
-  // Optionally, clear user data (e.g., for logout)
   const clearUser = () => {
     name.value = '';
     email.value = '';

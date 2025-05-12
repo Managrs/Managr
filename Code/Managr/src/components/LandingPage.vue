@@ -7,12 +7,7 @@
       
       <ul class="nav-links">
         <li>
-          <!--<router-link to="/dashboard" class="nav-link">Login</router-link>-->
           <button class="nav-link" @click="handleLogin">Sign in</button>
-        </li>
-        <li>
-          <!--<router-link to="/dashboard" class="nav-link">Sign up</router-link>-->
-          <!--<button class="nav-link" @click="handleLogout" >Log out</button>-->
         </li>
       </ul>
     </nav>
@@ -42,54 +37,14 @@
   
 <script setup lang="ts">
 import { useAuth0 } from '@auth0/auth0-vue';
-import { onMounted } from 'vue';
-import { useUserStore } from '../stores/userStore';
 import { RouterLink } from 'vue-router';
 
-const { loginWithRedirect, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
-const userStore = useUserStore();
+
+const { loginWithRedirect} = useAuth0();
 
 const handleLogin = () => {
   loginWithRedirect();
 };
-
-onMounted(async () => {
-  if (isAuthenticated.value && user.value && !userStore.name) {
-    const backendUrl = import.meta.env.VITE_API_URL;
-
-    const payload = {
-      fullName: user.value.name,
-      email: user.value.email,
-      avatar: user.value.picture,
-      role:  user.value.user_metadata?.role || "CLIENT",
-    };
-
-    try {
-      const res = await fetch(`${backendUrl}/auth/registerOrUpdateUser`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${await getAccessTokenSilently()}`
-        },
-        body: JSON.stringify(payload)
-      });
-
-      const data = await res.json();
-      userStore.setUser(data);
-      console.log("User synced and saved:", data);
-    } catch (error) {
-      console.error("User sync failed", error);
-    }
-  }
-});
-
-/*const { logout } = useAuth0();
-const handleLogout = () => {
-  logout({  
-    logoutParams:  {returnTo: window.location.origin}
-   });
-};*/
-
 </script>
   
 <style scoped>  

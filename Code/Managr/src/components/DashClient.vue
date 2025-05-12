@@ -51,12 +51,12 @@
     },
     data() {
       return {
-        isOpen: false // Controls visibility of the sidebar
+        isOpen: false
       }
     },
     methods: {
       toggleSidebar() {
-        this.isOpen = !this.isOpen; // Toggle sidebar visibility
+        this.isOpen = !this.isOpen; 
       }
     }
   }

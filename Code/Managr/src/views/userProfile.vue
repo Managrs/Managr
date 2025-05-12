@@ -1,22 +1,14 @@
 <template>
     <aside v-if="isOpen" class="sidebar" @mouseenter="openSidebar" @mouseleave="closeSidebar">
       <section class="sidebar-header">
-        <img class="avatar" :src="user.avatar" alt="User Avatar" />
+        <img class="avatar" :src="userStore.avatar" alt="User Avatar" />
         <section class="user-info">
-          <h2>{{ user.name }}</h2>
-          <p>{{ user.email }}</p>
+          <h2>{{ userStore.name }}</h2>
+          <p>{{ userStore.email }}</p>
         </section>
       </section>
   
-      <nav class="sidebar-links">
-        <ul>
-          <li><a href="#">Personal Settings</a></li>
-          <li><a href="#">Notifications</a></li>
-          <li><a href="#">Language</a></li>
-          <li><a href="#">Members</a></li>
-        </ul>
-      </nav>
-  
+
       <footer class="sidebar-footer">
         <button @click="handleLogout">Logout</button>
       </footer>
@@ -35,14 +27,14 @@
       const userStore = useUserStore();
   
       const isOpen = ref(true);
-      const user = {
+      /*const user = {
         name: 'Dawid Pietrasiak',
         email: 'dawid@product.com',
         avatar: 'https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png'
       };
   
       
-      userStore.setUser(user);
+      userStore.setUser(user);*/
 
       const handleLogout = () => {
         logout({
@@ -60,7 +52,7 @@
   
       return {
         isOpen,
-        user,
+        userStore,
         handleLogout,
         openSidebar,
         closeSidebar,
@@ -76,8 +68,8 @@
     top: 0;
     right: 0;
     width: 300px;
-    height: 80%; /* Set the height to 80% of the screen */
-    max-height: 600px; /* Ensure it doesn't exceed 600px in height */
+    height: 80%; 
+    max-height: 600px;
     background-color: white;
     border-left: 1px solid #ddd;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
@@ -92,41 +84,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem; /* Adjusted gap for better spacing */
+    gap: 0.5rem; 
   }
   
   .avatar {
-    width: 80px; /* Increased size */
-    height: 80px; /* Increased size */
+    width: 200px; 
+    height: 200px; 
     border-radius: 50%;
   }
   
   .user-info h2 {
     margin: 0;
-    font-size: 1.2rem; /* Slightly larger font size for name */
+    font-size: 1.9rem; 
     text-align: center;
   }
   
   .user-info p {
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     color: #777;
-  }
-  
-  .sidebar-links ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 1rem; /* Add some spacing above the links */
-  }
-  
-  .sidebar-links li {
-    margin: 0.5rem 0;
-  }
-  
-  .sidebar-links a {
-    color: #333;
-    text-decoration: none;
-    font-size: 1rem;
   }
   
   .sidebar-footer {
@@ -134,19 +110,19 @@
   }
   
   .sidebar-footer button {
-    background-color: #e74c3c;
+    background-color: #080201;
     color: white;
     border: none;
-    padding: 1rem 2rem; /* Increased padding for visibility */
-    font-size: 1.1rem; /* Larger button text */
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
     cursor: pointer;
-    border-radius: 5px; /* Rounded corners for the button */
-    width: 100%; /* Make button fill the width of the sidebar */
+    border-radius: 5px; 
+    width: 100%; 
     transition: background-color 0.3s ease;
   }
   
   .sidebar-footer button:hover {
-    background-color: #c0392b; /* Darker color on hover */
+    background-color: #220d0b;
   }
   </style>
   

@@ -12,13 +12,25 @@
 import DashClient from '../components/DashClient.vue';
 import ProfileView from '../components/ProfileView.vue';
 
+import { useAuth0 } from '@auth0/auth0-vue'
+import { useUserStore } from '../stores/userStore'
+
 export default {
   name: "dashboardclient",
   components: {
     DashClient,
     ProfileView
+  },
+  mounted() {
+    const { isAuthenticated, isLoading, user } = useAuth0()
+    const userStore = useUserStore()
+
+    if (!isLoading.value && isAuthenticated.value && user.value) {
+      userStore.setUser(user.value)
+    }
   }
 }
+
 </script>
 
 <style scoped>
