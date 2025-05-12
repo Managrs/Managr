@@ -8,15 +8,6 @@
         </section>
       </section>
   
-      <nav class="sidebar-links">
-        <ul>
-          <li><a href="#">Personal Settings</a></li>
-          <li><a href="#">Notifications</a></li>
-          <li><a href="#">Language</a></li>
-          <li><a href="#">Members</a></li>
-        </ul>
-      </nav>
-  
       <footer class="sidebar-footer">
         <button @click="handleLogout">Logout</button>
       </footer>
