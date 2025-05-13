@@ -9,13 +9,24 @@
   
   <script lang="ts">
   import AdminSide from '../components/AdminSide.vue';
-  
-  export default {
-    name: "dashboardadmin",
-    components: {
-      AdminSide
+import { useAuth0 } from '@auth0/auth0-vue'
+import { useUserStore } from '../stores/userStore'
+
+export default {
+  name: "dashboardadmin",
+  components: {
+    AdminSide
+  },
+  mounted() {
+    const { isAuthenticated, isLoading, user } = useAuth0()
+    const userStore = useUserStore()
+
+    if (!isLoading.value && isAuthenticated.value && user.value) {
+      userStore.setUser(user.value)
     }
   }
+}
+
   </script>
   
   <style scoped>
