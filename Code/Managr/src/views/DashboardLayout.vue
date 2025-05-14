@@ -31,11 +31,12 @@ export default {
     const userStore = useUserStore();
 
     onMounted(() => {
-      if (isAuthenticated.value && !isLoading.value && user.value) {
+      if (!isLoading.value && isAuthenticated.value && user.value) {
+        console.log('User from Auth0:', user.value);
         userStore.setUser({
-          name: user.value.name || '',
-          email: user.value.email || '',
-          avatar: user.value.picture || '../assets/profile.png',
+          name: user.value.name || 'Guest User',
+          email: user.value.email || 'guestuser@gmail.com',
+          avatar: user.value.picture || '/profile.jpg',
         });
       }
     });

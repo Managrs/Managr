@@ -16,7 +16,6 @@ app.use(
 
       authorizationParams: {
         redirect_uri: window.location.origin,
-        audience: `https://dev-7jtzu3jbzi1vm4qi.us.auth0.com/api/v2/`,
         scope: 'openid profile email'
       }
     })
