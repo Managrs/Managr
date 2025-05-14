@@ -60,23 +60,24 @@ export default defineComponent({
     }
   },
   mounted() {
-    fetch("https://managrs-server1.azurewebsites.net/getGig")
+    const backendUrl = import.meta.env.VITE_API_URL;
+    fetch(`${backendUrl}/allgigs`)
       .then(response => {
         if (!response.ok) throw new Error('Failed to fetch gigs');
         return response.json();
       })
       .then(data => {
-        this.categories = data.map((gig: any, index: number) => ({
-          id: index + 1,
-          name: gig.clientName,
-          mail: gig.clientEmail || 'no-email@example.com',
-          image: gig.image,
-          title: gig.gigName,
-          description: gig.gigDescription,
-          category: gig.category,
-          budget: gig.budget,
-          time: gig.gigDue,
-        }));
+        this.categories = data.map((gig: any) => ({
+      id: gig.id, 
+      name: gig.name, 
+      mail: gig.mail, 
+      image: gig.image,
+      title: gig.title,
+      description: gig.description,
+      category: gig.category,
+      budget: gig.budget,
+      time: gig.time,
+    }));
       })
       .catch(error => {
         console.error('Error loading gigs:', error);

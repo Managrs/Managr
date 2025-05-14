@@ -5,7 +5,6 @@ import LandingPage from '../components/LandingPage.vue';
 import DashboardLayout from '../views/DashboardLayout.vue';
 import dashboardadmin from '../views/dashboardadmin.vue';
 import AdminDashboard from '../components/AdminSide.vue';
-//import ClientDashboard from '../components/ClientDashboard.vue';
 
 //admin routers
 import Aauditlogs from '../views/Admin/Aauditlogs.vue';
@@ -16,9 +15,12 @@ import Aprofile from '../views/Admin/Aprofile.vue';
 import Ausers from '../views/Admin/Ausers.vue';
 import Areports from '../views/Admin/Areports.vue';
 import PostGig from '../views/client/postGig.vue';
+import MakeReport from '../views/client/makeReport.vue';
 import ManageGigs from '../views/client/manageGigs.vue';
 import Dashboardclient from '../views/dashboardclient.vue';
 import Documentation from '../views/documentation.vue';
+import ApplyPost from '../views/freelance/applyPost.vue';
+import Chatbox from '../views/client/Chatbox.vue';
 
 const routes = [
   {path: '/', name: 'LandingPage', component: LandingPage },
@@ -42,7 +44,10 @@ const routes = [
     ]
   },
   {path: '/postgig',name: 'postGig', component: PostGig},
-  {path: '/managegig',name: 'manageGig', component: ManageGigs}
+  {path: '/makeReport',name: 'makeReport', component: MakeReport},
+  {path: '/managegig',name: 'manageGig', component: ManageGigs},
+  {path: '/applypost', name: 'applypost', component: ApplyPost},
+  {path: '/chatsystem', name:'chatsystem', component:Chatbox}
   /*
   {
     path: '/client',

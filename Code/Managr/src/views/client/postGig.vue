@@ -8,7 +8,7 @@
       <h2 class="page-title">What Service Are You Looking For?</h2>
       <form @submit.prevent="submitGig">
         <label for="clientName">Client Name</label><br>
-        <input type="text" id="clientName" v-model="gig.clientName" required><br>
+        <input type="text" id="clientName" v-model="gig.clientName" required readonly><br>
   
         <label for="gigName">Gig Title</label><br>
         <input type="text" id="gigName" v-model="gig.gigName" required><br>
@@ -45,6 +45,7 @@
   </template>
   
   <script>
+  import { useUserStore } from '@/stores/userStore';
   export default {
     name: "PostGig",
     data() {
@@ -59,10 +60,15 @@
         }
       };
     },
+    mounted() {
+      const userStore = useUserStore();
+      this.gig.clientName = userStore.name;
+    },
     methods: {
       async submitGig() {
         try {
-          const response = await fetch("https://managrs-server1.azurewebsites.net/newGig", {
+          const backendUrl = import.meta.env.VITE_API_URL;
+          const response = await fetch(`${backendUrl}/newGig`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -78,7 +84,6 @@
           console.log("Gig posted successfully:", data);
           alert("Gig posted successfully!");
   
-          // Optional: reset form
           this.gig = {
             clientName: "",
             gigName: "",

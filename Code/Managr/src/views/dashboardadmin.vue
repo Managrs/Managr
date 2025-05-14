@@ -6,29 +6,34 @@
       </main>
     </section>
   </template>
-  
   <script lang="ts">
-  import AdminSide from '../components/AdminSide.vue';
-import { useAuth0 } from '@auth0/auth0-vue'
-import { useUserStore } from '../stores/userStore'
+import { onMounted } from 'vue';
+import { useAuth0 } from '@auth0/auth0-vue';
+import { useUserStore } from '../stores/userStore';
+import AdminSide from '../components/AdminSide.vue';
 
 export default {
   name: "dashboardadmin",
   components: {
     AdminSide
   },
-  mounted() {
-    const { isAuthenticated, isLoading, user } = useAuth0()
-    const userStore = useUserStore()
-    
-    if (!isLoading.value && isAuthenticated.value && user.value) {
-      userStore.setUser(user.value)
-    }
+  setup() {
+    const { user, isAuthenticated, isLoading } = useAuth0();
+    const userStore = useUserStore();
+
+    onMounted(() => {
+      if (isAuthenticated.value && !isLoading.value && user.value) {
+        userStore.setUser({
+          name: user.value.name || '',
+          email: user.value.email || '',
+          avatar: user.value.picture || '../assets/profile.png',
+        });
+      }
+    });
   }
 }
-
   </script>
-  
+
   <style scoped>
   .dashboard-layout {
     display: flex;

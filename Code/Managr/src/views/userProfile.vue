@@ -7,7 +7,6 @@
           <p>{{ userStore.email }}</p>
         </section>
       </section>
-  
 
       <footer class="sidebar-footer">
         <button @click="handleLogout">Logout</button>
