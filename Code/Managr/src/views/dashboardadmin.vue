@@ -20,7 +20,7 @@ export default {
   mounted() {
     const { isAuthenticated, isLoading, user } = useAuth0()
     const userStore = useUserStore()
-
+    
     if (!isLoading.value && isAuthenticated.value && user.value) {
       userStore.setUser(user.value)
     }
