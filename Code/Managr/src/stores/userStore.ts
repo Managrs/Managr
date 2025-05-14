@@ -5,7 +5,7 @@ import { ref } from 'vue';
 interface User {
   name: string;
   email: string;
-  avatar: string;
+  avatar : string;
 }
 
 export const useUserStore = defineStore('user', () => {
