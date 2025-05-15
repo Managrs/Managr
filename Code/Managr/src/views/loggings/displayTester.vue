@@ -24,7 +24,8 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from '../../stores/userStore'
+import { useUserStore } from '../../stores/userStore';
+import { signOut,getAuth } from 'firebase/auth';
 import { useRouter } from 'vue-router';
 
 const userStore = useUserStore()
@@ -32,8 +33,14 @@ const { name, email, avatar, clearUser } = userStore
 const router = useRouter()
 
 function logout() {
-  clearUser()
-  router.push('/login')
+  signOut(getAuth())
+  .then(() => {
+    clearUser();
+    console.log("User Cleared");
+    router.push('/login');
+    console.log("Sign out done");
+  });
+
 }
 </script>
 

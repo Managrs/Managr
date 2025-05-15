@@ -33,8 +33,8 @@ const routes = [
   {path: '/dashboardfreelance',name: 'DashboardLayout', component: DashboardLayout},
   {path: '/documentation', name: 'documentation', component:Documentation},
 
-  {path: '/loginPage', name: 'loginPage', component:loginPage},
-  {path: '/signupPage', name: 'signupPage', component:signupPage},
+  {path: '/login', name: 'loginPage', component:loginPage},
+  {path: '/signup', name: 'signupPage', component:signupPage},
   {path: '/display', name: 'display', component:display},
 
 
