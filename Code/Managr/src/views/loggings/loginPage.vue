@@ -46,14 +46,13 @@ const password = ref('');
 const errorMsg = ref('');
 
 function login() {
-  // Implement login logic
-  alert(`Logging in as ${email.value}`);
+  //alert(`Logging in as ${email.value}`);
 
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
     .then(async (data) => {
-      console.log("Successfully Login!");
+      console.log("Successfully Logged In!");
       const user = data.user;
-      console.log("User Info:", {
+      console.log("User Info (Auth):", {
         uid: user.uid,
         email: user.email,
         name: user.displayName,
@@ -63,57 +62,60 @@ function login() {
         providerId: user.providerId
       });
 
-      // Fetch user data from Firestore
       const userDocRef = doc(db, "users", user.uid);
       const userDocSnap = await getDoc(userDocRef);
 
-
       if (userDocSnap.exists()) {
-        // Log Firestore user data
-        console.log("User Info (Firestore):", userDocSnap.data());
-
         const userData = userDocSnap.data();
+        console.log("User Info (Firestore):", userData);
 
-        //store user
+        // Store user in Pinia
         userStore.setUser({
-          //name: user.displayName ?? 'No Name',
           name: user.displayName || userData.name || 'No Name',
           email: user.email ?? '',
-          //avatar: user.photoURL ?? '/profile.jpg',
           avatar: user.photoURL || '/profile.jpg',
           role: userData.role ?? 'user'
         });
 
+        // 🔁 Role-based redirect
+        if (userData.role === 'client') {
+          router.push('/dashboardclient');
+        }
+        else if (userData.role === 'freelancer') {
+          router.push('/dashboardfreelance');
+        }
+        else if (userData.role === 'admin') {
+          router.push('/Admindashboard');
+        }
+        else {
+          router.push('/login');
+        }
+
       } else {
         console.log("No user data found in Firestore.");
+        errorMsg.value = "User data not found.";
       }
-
-
-      router.push("/display");
     })
     .catch((error) => {
       console.log(error.message);
       switch (error.code) {
         case "auth/invalid-email":
-          errorMsg.value = "Invaild Email";
+          errorMsg.value = "Invalid Email";
           break;
-
         case "auth/user-not-found":
           errorMsg.value = "No account with email found";
           break;
-
         case "auth/wrong-password":
           errorMsg.value = "Incorrect Password";
           break;
         case "auth/email-already-in-use":
           errorMsg.value = "This email is already used";
           break;
-
         default:
-          errorMsg.value = "Something went wrong check input";
+          errorMsg.value = "Something went wrong. Check input.";
           break;
       }
-    })
+    });
 }
 </script>
 

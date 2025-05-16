@@ -59,8 +59,7 @@ const errorMsg = ref('');
 
 
 function signup() {
-  // Implement signup logic
-  alert(`Signing up as ${email.value} with role: ${role.value}`);
+  //alert(`Signing up as ${email.value} with role: ${role.value}`);
 
   createUserWithEmailAndPassword(getAuth(), email.value, password.value)
     .then(async (data) => {
@@ -76,12 +75,14 @@ function signup() {
         providerId: user.providerId
       });
 
+      // Store user in Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
         role: role.value,
         createdAt: new Date()
       });
 
+      // Store user in Pinia store
       userStore.setUser({
         name: user.displayName ?? 'No Name',
         email: user.email ?? '',
@@ -89,32 +90,46 @@ function signup() {
         role: role.value
       });
 
-      router.push("/display")
+      // Redirect based on role
+      if (role.value === 'client') {
+        router.push('/dashboardclient');
+      }
+      else if (role.value === 'freelancer') {
+        router.push('/dashboardfreelance');
+      }
+      else if (role.value === 'admin') {
+        router.push('/Admindashboard');
+      }
+      else {
+        router.push('/login');
+      }
     })
     .catch((error) => {
       console.log(error.message);
       switch (error.code) {
         case "auth/invalid-email":
-          errorMsg.value = "Invaild Email";
+          errorMsg.value = "Invalid Email";
           break;
 
         case "auth/user-not-found":
-          errorMsg.value = "No account with email found";
+          errorMsg.value = "No account with this email found";
           break;
 
         case "auth/wrong-password":
           errorMsg.value = "Incorrect Password";
           break;
+
         case "auth/email-already-in-use":
-          errorMsg.value = "This email is already used";
+          errorMsg.value = "This email is already in use";
           break;
 
         default:
-          errorMsg.value = "Something went wrong check input";
+          errorMsg.value = "Something went wrong. Please check your input.";
           break;
       }
-    })
+    });
 }
+
 </script>
 
 <style scoped>
