@@ -25,16 +25,15 @@
   
 
 <script lang="ts">
-import { useAuth0 } from '@auth0/auth0-vue';
+import router from '../router';
 
 export default{
   name: 'Documentation',
 
   setup() {
-    const { loginWithRedirect } = useAuth0();
 
     const handleLogin = () => {
-      loginWithRedirect();
+      router.push("/signup");
     };
 
     return {

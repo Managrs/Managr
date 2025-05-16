@@ -27,11 +27,11 @@
     <section class="bottom-profile" @click="toggleSidebar">
     <router-link to="/Aprofile" class="profile-link">
     <img
-      src="https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png"
+      :src="userStore.avatar"
       alt="User Avatar"
       class="avatar-image"
     />
-    <article class="admin-name">name of admin</article>
+    <article class="admin-name">{{ userStore.name }}</article>
     </router-link>
     </section>
     </aside>
@@ -42,7 +42,8 @@
   </template>
   
   <script lang="ts">
-  import UserSidebar from '../views/userProfile.vue'
+  import UserSidebar from '../views/userProfile.vue';
+  import { useUserStore } from '../stores/userStore';
 
   export default {
     name: "Adminside",
@@ -50,8 +51,10 @@
       UserSidebar
     },
     data() {
+      const userStore = useUserStore(); 
       return {
-        isOpen: false // Controls visibility of the sidebar
+        isOpen: false ,
+        userStore
       }
     },
     methods: {

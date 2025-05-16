@@ -1,4 +1,6 @@
 <template>
+import { useUserStore } from '../stores/userStore';
+import { useUserStore } from '../stores/userStore';
     <header class="header">
       <nav class="navigation">
         <!-- Left Side - Logo -->
@@ -32,7 +34,7 @@
         <section class="user-section">
           <figure class="user-avatar"  @click="toggleSidebar">
             <a href="#">
-              <img src="https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png" alt="User Avatar" class="avatar-image" />
+              <img :src="userStore.avatar" alt="User Avatar" class="avatar-image" />
             </a>
           </figure>
         </section>
@@ -42,6 +44,7 @@
 </template>
   
 <script lang="ts">
+import { useUserStore } from '../stores/userStore';
  import UserSidebar from '../views/userProfile.vue'
 
   export default {
@@ -50,8 +53,10 @@
       UserSidebar
     },
     data() {
+      const userStore = useUserStore();
       return {
-        isOpen: false // Controls visibility of the sidebar
+        isOpen: false,
+        userStore
       }
     },
     methods: {

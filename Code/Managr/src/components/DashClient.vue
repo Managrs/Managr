@@ -31,7 +31,7 @@
           </ul>
           <figure class="user-avatar" @click="toggleSidebar">
             <a href="#">
-              <img src="https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png" alt="User Avatar" class="avatar-image" />
+              <img :src="userStore.avatar" alt="User Avatar" class="avatar-image" />
             </a>
           </figure>
         </section>
@@ -42,7 +42,9 @@
 
   
 <script lang="ts">
-  import UserSidebar from '../views/userProfile.vue'
+  import { useUserStore } from '../stores/userStore';
+  import UserSidebar from '../views/userProfile.vue';
+
 
   export default {
     name: 'DashClient',
@@ -50,8 +52,10 @@
       UserSidebar
     },
     data() {
+      const userStore = useUserStore();
       return {
-        isOpen: false
+        isOpen: false,
+        userStore
       }
     },
     methods: {
