@@ -1,29 +1,33 @@
 <template>
   <main>
-    <header>
-      <h2>Login</h2>
-    </header>
+    <div class="card">
+      <header>
+        <img src="../../assets/managr_logo.jpg" alt="Org Logo" class="logo" />
+        <h2>Login</h2>
+      </header>
 
-    <form @submit.prevent="login">
-      <label for="email">Email:</label>
-      <input id="email" type="email" v-model="email" required />
-      <br>
-      <label for="password">Password:</label>
-      <input id="password" type="password" v-model="password" required />
-      <br>
-      <button type="submit">Login</button>
-    </form>
+      <form @submit.prevent="login">
+        <label for="email">Email:</label>
+        <input id="email" type="email" v-model="email" required />
 
-    <p v-if="errorMsg"> {{ errorMsg }} </p>
+        <label for="password">Password:</label>
+        <input id="password" type="password" v-model="password" required />
 
-    <footer>
-      <p>
-        Don't have an account?
-        <router-link to="/signup">Sign up here</router-link>
-      </p>
-    </footer>
+        <button type="submit">Login</button>
+      </form>
+
+      <p v-if="errorMsg" class="error">{{ errorMsg }}</p>
+
+      <footer>
+        <p>
+          Don't have an account?
+          <router-link to="/signup">Sign up here</router-link>
+        </p>
+      </footer>
+    </div>
   </main>
 </template>
+
 
 <script setup>
 import { ref } from 'vue';
@@ -115,8 +119,90 @@ function login() {
 
 <style scoped>
 main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+.card {
+  background-color: #fff;
+  border: 2px solid #f57c00;
+  border-radius: 12px;
+  padding: 2rem;
   max-width: 400px;
-  margin: auto;
-  padding: 1rem;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.logo {
+  width: 80px;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  color: #f57c00;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+  color: #212121;
+  font-weight: bold;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #f57c00;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ef6c00;
+}
+
+.error {
+  color: #e53935;
+  margin-top: 0.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: #212121;
+}
+
+footer a {
+  color: #f57c00;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
 }
 </style>
+
