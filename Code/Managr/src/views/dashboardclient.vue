@@ -9,12 +9,15 @@
 </template>
 
 <script lang="ts">
-import { watchEffect } from 'vue';
-import { useAuth0 } from '@auth0/auth0-vue';
-import { useUserStore } from '../stores/userStore';
+// import { onMounted } from 'vue';
+// import { useAuth0 } from '@auth0/auth0-vue';
+// import { useUserStore } from '../stores/userStore';
 
 import DashClient from '../components/DashClient.vue';
 import ProfileView from '../components/ProfileView.vue';
+
+import { useAuth0 } from '@auth0/auth0-vue'
+import { useUserStore } from '../stores/userStore'
 
 export default {
   name: "dashboardclient",
@@ -22,30 +25,33 @@ export default {
     DashClient,
     ProfileView
   },
-  setup() {
-    const { user, isAuthenticated, isLoading } = useAuth0();
-    const userStore = useUserStore();
+<<<<<<< HEAD
+  mounted() {
+    const { isAuthenticated, isLoading, user } = useAuth0()
+    const userStore = useUserStore()
 
-watchEffect(() => {
-    if (!isLoading.value && isAuthenticated.value && user.value){
-        console.log('loading:', isLoading.value)
-        console.log('auth:', isAuthenticated.value)
-      console.log('User from Auth0:', user.value)
-      userStore.setUser({
-        name: user.value.name || 'Guest User',
-        email: user.value.email || 'guestuser@gmail.com',
-        avatar: user.value.picture || '/profile.jpg',
-      })
-    } else {
-      console.log('⏳ Waiting for Auth0 to load...');
-      console.log('loading:', isLoading.value);
-      console.log('auth:', isAuthenticated.value);
-      console.log('User from Auth0:', user.value);
-  }
-  }
-);
+    if (!isLoading.value && isAuthenticated.value && user.value) {
+      userStore.setUser(user.value)
+    }
+=======
+  setup() {
+    // const { user, isAuthenticated, isLoading } = useAuth0();
+    // const userStore = useUserStore();
+
+    // onMounted(() => {
+    //   if (!isLoading.value && isAuthenticated.value && user.value) {
+    //     console.log('User from Auth0:', user.value);
+    //     userStore.setUser({
+    //       name: user.value.name || 'Guest User',
+    //       email: user.value.email || 'guestuser@gmail.com',
+    //       avatar: user.value.picture || '/profile.jpg' ,
+    //     });
+    //   }
+    // });
+>>>>>>> ae025d5794dcfbb8be0425c90d158cccb8a6debb
   }
 }
+
 </script>
 
 

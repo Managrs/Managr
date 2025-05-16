@@ -7,12 +7,7 @@
       
       <ul class="nav-links">
         <li>
-          <!--<router-link to="/dashboard" class="nav-link">Login</router-link>-->
           <button class="nav-link" @click="handleLogin">Sign in</button>
-        </li>
-        <li>
-          <!--<router-link to="/dashboard" class="nav-link">Sign up</router-link>-->
-          <!--<button class="nav-link" @click="handleLogout" >Log out</button>-->
         </li>
       </ul>
     </nav>
@@ -42,43 +37,20 @@
   
 <script setup lang="ts">
 import { useAuth0 } from '@auth0/auth0-vue';
-import { useUserStore } from '../stores/userStore';
 import { RouterLink } from 'vue-router';
-import { watchEffect } from 'vue';
+import router from '../router';
 
-const { loginWithRedirect, user, isAuthenticated, isLoading} = useAuth0();
+<<<<<<< HEAD
+
+const { loginWithRedirect} = useAuth0();
+=======
+const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
 const userStore = useUserStore();
+>>>>>>> ae025d5794dcfbb8be0425c90d158cccb8a6debb
 
 const handleLogin = () => {
-  loginWithRedirect();
+  router.push("/login");
 };
-
-watchEffect(() => {
-    if (!isLoading.value && isAuthenticated.value && user.value){
-        console.log('loading:', isLoading.value)
-        console.log('auth:', isAuthenticated.value)
-      console.log('User from Auth0:', user.value)
-      userStore.setUser({
-        name: user.value.name || 'Guest User',
-        email: user.value.email || 'guestuser@gmail.com',
-        avatar: user.value.picture || '/profile.jpg',
-      })
-    } else {
-      console.log('⏳ Waiting for Auth0 to load...');
-      console.log('loading:', isLoading.value);
-      console.log('auth:', isAuthenticated.value);
-      console.log('User from Auth0:', user.value);
-  }
-  }
-);
-
-/*const { logout } = useAuth0();
-const handleLogout = () => {
-  logout({  
-    logoutParams:  {returnTo: window.location.origin}
-   });
-};*/
-
 </script>
   
 <style scoped>  

@@ -15,11 +15,7 @@ import { useUserStore } from '../stores/userStore';
           >
         </a>
         
-        <!-- Center - Search Container -->
-        <section class="search-container">
-        <input type="text" placeholder="Search for a gig" class="search-input" />
-        <button class="search-icon" aria-label="Search"></button>
-      </section>
+
   
         <!-- Right Side - Navigation Links -->
         <ul class="nav-links">
@@ -174,6 +170,7 @@ import { useUserStore } from '../stores/userStore';
 /* Right Side - Navigation Links */
 .nav-links {
   display: flex;
+  margin-right: -750px;
   gap: 20px;
   list-style: none;
   padding: 0;

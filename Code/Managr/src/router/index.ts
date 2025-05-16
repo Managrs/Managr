@@ -6,6 +6,10 @@ import DashboardLayout from '../views/DashboardLayout.vue';
 import dashboardadmin from '../views/dashboardadmin.vue';
 import AdminDashboard from '../components/AdminSide.vue';
 
+import loginPage from '../views/loggings/loginPage.vue';
+import signupPage from '../views/loggings/signupPage.vue';
+import display from '../views/loggings/displayTester.vue';
+
 //admin routers
 import Aauditlogs from '../views/Admin/Aauditlogs.vue';
 import Adashboard from '../views/Admin/Adashboard.vue';
@@ -29,7 +33,12 @@ const routes = [
   {path: '/Admindashboard',name: 'AdminDashboard', component: AdminDashboard},
   {path: '/dashboardfreelance',name: 'DashboardLayout', component: DashboardLayout},
   {path: '/documentation', name: 'documentation', component:Documentation},
-  
+
+  {path: '/login', name: 'loginPage', component:loginPage},
+  {path: '/signup', name: 'signupPage', component:signupPage},
+  {path: '/display', name: 'display', component:display},
+
+
   {
     path: '/dashboardadmin',
     component: dashboardadmin,
