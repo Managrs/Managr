@@ -45,12 +45,13 @@ import { useAuth0 } from '@auth0/auth0-vue';
 import { onMounted } from 'vue';
 import { useUserStore } from '../stores/userStore';
 import { RouterLink } from 'vue-router';
+import router from '../router';
 
-const { loginWithRedirect, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
 const userStore = useUserStore();
 
 const handleLogin = () => {
-  loginWithRedirect();
+  router.push("/login");
 };
 
 onMounted(async () => {
