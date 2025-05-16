@@ -24,13 +24,10 @@ import { useUserStore } from '../stores/userStore';
         <!-- Right Side - Navigation Links -->
         <ul class="nav-links">
           <li>
-            <router-link to="/" class="nav-link">Home</router-link>
-          </li>
-          <li>
             <router-link to="/todo" class="nav-link">Earnings</router-link>
           </li>
           <li>
-            <router-link to="/projects" class="nav-link">View Gigs</router-link>
+            <router-link to="/viewgigs" class="nav-link">View Gigs</router-link>
           </li>
           <li>
             <router-link to="/chatsystem" class="nav-link">Messages</router-link>

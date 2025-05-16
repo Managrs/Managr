@@ -2,7 +2,6 @@
   <section class="profile-page">
     <SearchComponent @search="handleSearch" />
     
-    <!-- Profiles section -->
     <section class="profiles-view">
       <h2 class="section-title">Featured Professionals</h2>
       <section class="profiles-container">

@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { onMounted } from 'vue';
+import { watchEffect } from 'vue';
 import { useAuth0 } from '@auth0/auth0-vue';
 import { useUserStore } from '../stores/userStore';
 
@@ -26,16 +26,24 @@ export default {
     const { user, isAuthenticated, isLoading } = useAuth0();
     const userStore = useUserStore();
 
-    onMounted(() => {
-      if (!isLoading.value && isAuthenticated.value && user.value) {
-        console.log('User from Auth0:', user.value);
-        userStore.setUser({
-          name: user.value.name || 'Guest User',
-          email: user.value.email || 'guestuser@gmail.com',
-          avatar: user.value.picture || '/profile.jpg' ,
-        });
-      }
-    });
+watchEffect(() => {
+    if (!isLoading.value && isAuthenticated.value && user.value){
+        console.log('loading:', isLoading.value)
+        console.log('auth:', isAuthenticated.value)
+      console.log('User from Auth0:', user.value)
+      userStore.setUser({
+        name: user.value.name || 'Guest User',
+        email: user.value.email || 'guestuser@gmail.com',
+        avatar: user.value.picture || '/profile.jpg',
+      })
+    } else {
+      console.log('⏳ Waiting for Auth0 to load...');
+      console.log('loading:', isLoading.value);
+      console.log('auth:', isAuthenticated.value);
+      console.log('User from Auth0:', user.value);
+  }
+  }
+);
   }
 }
 </script>

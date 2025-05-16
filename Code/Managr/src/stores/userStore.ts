@@ -8,8 +8,8 @@ interface User {
 }
 
 export const useUserStore = defineStore('user', () => {
-  const name = ref('Guest User');
-  const email = ref('guestuser@gmail.com');
+  const name = ref('User not found');
+  const email = ref('nouser@gmail.com');
   const avatar = ref('/profile.jpg');
 
   // Set user data
@@ -21,8 +21,8 @@ export const useUserStore = defineStore('user', () => {
 
   // Optionally, clear user data (e.g., for logout)
   const clearUser = () => {
-    name.value = 'Guest User';
-    email.value = 'guestuser@gmail.com';
+    name.value = ' ';
+    email.value = ' ';
     avatar.value = '/profile.jpg';
   };
 

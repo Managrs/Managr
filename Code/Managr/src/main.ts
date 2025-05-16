@@ -17,7 +17,10 @@ app.use(
       authorizationParams: {
         redirect_uri: window.location.origin,
         scope: 'openid profile email'
-      }
+      },
+      
+      cacheLocation: 'localstorage',
+      useRefreshTokens: true
     })
   );
   app.mount('#app');

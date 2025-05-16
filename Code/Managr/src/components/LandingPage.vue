@@ -42,46 +42,35 @@
   
 <script setup lang="ts">
 import { useAuth0 } from '@auth0/auth0-vue';
-import { onMounted } from 'vue';
 import { useUserStore } from '../stores/userStore';
 import { RouterLink } from 'vue-router';
+import { watchEffect } from 'vue';
 
-const { loginWithRedirect, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+const { loginWithRedirect, user, isAuthenticated, isLoading} = useAuth0();
 const userStore = useUserStore();
 
 const handleLogin = () => {
   loginWithRedirect();
 };
 
-onMounted(async () => {
-  if (isAuthenticated.value && user.value && !userStore.name) {
-    const backendUrl = import.meta.env.VITE_API_URL;
-
-    const payload = {
-      fullName: user.value.name,
-      email: user.value.email,
-      avatar: user.value.picture,
-      role:  user.value.user_metadata?.role || "CLIENT",
-    };
-
-    try {
-      const res = await fetch(`${backendUrl}/auth/registerOrUpdateUser`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${await getAccessTokenSilently()}`
-        },
-        body: JSON.stringify(payload)
-      });
-
-      const data = await res.json();
-      userStore.setUser(data);
-      console.log("User synced and saved:", data);
-    } catch (error) {
-      console.error("User sync failed", error);
-    }
+watchEffect(() => {
+    if (!isLoading.value && isAuthenticated.value && user.value){
+        console.log('loading:', isLoading.value)
+        console.log('auth:', isAuthenticated.value)
+      console.log('User from Auth0:', user.value)
+      userStore.setUser({
+        name: user.value.name || 'Guest User',
+        email: user.value.email || 'guestuser@gmail.com',
+        avatar: user.value.picture || '/profile.jpg',
+      })
+    } else {
+      console.log('⏳ Waiting for Auth0 to load...');
+      console.log('loading:', isLoading.value);
+      console.log('auth:', isAuthenticated.value);
+      console.log('User from Auth0:', user.value);
   }
-});
+  }
+);
 
 /*const { logout } = useAuth0();
 const handleLogout = () => {
