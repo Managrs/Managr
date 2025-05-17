@@ -41,19 +41,19 @@
 </template>
   
 <script setup lang="ts">
-import { useAuth0 } from '@auth0/auth0-vue';
-import { onMounted } from 'vue';
-import { useUserStore } from '../stores/userStore';
+// import { useAuth0 } from '@auth0/auth0-vue';
+// import { onMounted } from 'vue';
+// import { useUserStore } from '../stores/userStore';
 import { RouterLink } from 'vue-router';
 import router from '../router';
 
-const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
-const userStore = useUserStore();
+// const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+// const userStore = useUserStore();
 
 const handleLogin = () => {
   router.push("/login");
 };
-
+/*
 onMounted(async () => {
   if (isAuthenticated.value && user.value && !userStore.name) {
     const backendUrl = import.meta.env.VITE_API_URL;
@@ -62,7 +62,7 @@ onMounted(async () => {
       fullName: user.value.name,
       email: user.value.email,
       avatar: user.value.picture,
-      role:  user.value.user_metadata?.role || "CLIENT",
+      role:  user.value.user_metadata?.role || "client",
     };
 
     try {
@@ -76,20 +76,13 @@ onMounted(async () => {
       });
 
       const data = await res.json();
-      userStore.setUser(data);
       console.log("User synced and saved:", data);
     } catch (error) {
       console.error("User sync failed", error);
     }
   }
 });
-
-/*const { logout } = useAuth0();
-const handleLogout = () => {
-  logout({  
-    logoutParams:  {returnTo: window.location.origin}
-   });
-};*/
+*/
 
 </script>
   
