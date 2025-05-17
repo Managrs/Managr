@@ -1,16 +1,10 @@
 <template>
   <section class="proposal-view">
+    <button type="button" class="secondary-btn" @click="goBack">🔙 Back</button>
     <h2 class="view-title">All Proposals</h2>
     <section class="proposal-card">
-      <ProposalCard
-        v-for="item in Proposals"
-        :key="item.id"
-        :name="item.name"
-        :mail="item.mail"
-        :avatar="item.image"
-        :content="item.content"
-        :jobId="item.jobId"
-      />
+      <ProposalCard v-for="item in Proposals" :key="item.id" :name="item.name" :mail="item.mail" :avatar="item.image"
+        :content="item.content" :jobId="item.jobId" />
     </section>
   </section>
 </template>
@@ -59,6 +53,14 @@ export default defineComponent({
         console.error('Error loading applications:', error);
       });
   },
+
+  methods: {
+    goBack() {
+      //  Use this.$router to access the router instance in the Options API
+      // @ts-ignore
+      this.$router.go(-1);  // Navigate back in history
+    }
+  },
 });
 </script>
 
@@ -76,5 +78,21 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+
+.secondary-btn {
+  color: #ffffff;
+  background: #000000;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.secondary-btn:hover {
+  background: #e77e23;
+  color: #ffffff;
 }
 </style>
