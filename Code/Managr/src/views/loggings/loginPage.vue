@@ -74,7 +74,7 @@ function login() {
           name: user.displayName || userData.name || 'No Name',
           email: user.email ?? '',
           avatar: user.photoURL || '/profile.jpg',
-          role: userData.role ?? 'user'
+          role: userData.role ?? 'client'
         });
 
         // 🔁 Role-based redirect
@@ -207,4 +207,3 @@ footer a:hover {
   text-decoration: underline;
 }
 </style>
-
