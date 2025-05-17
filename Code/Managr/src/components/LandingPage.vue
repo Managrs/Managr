@@ -36,17 +36,8 @@
 </template>
   
 <script setup lang="ts">
-import { useAuth0 } from '@auth0/auth0-vue';
 import { RouterLink } from 'vue-router';
 import router from '../router';
-
-<<<<<<< HEAD
-
-const { loginWithRedirect} = useAuth0();
-=======
-const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
-const userStore = useUserStore();
->>>>>>> ae025d5794dcfbb8be0425c90d158cccb8a6debb
 
 const handleLogin = () => {
   router.push("/login");
