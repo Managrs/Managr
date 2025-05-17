@@ -30,18 +30,7 @@ export default {
     const { clearUser } = userStore;
     const router = useRouter();
 
-
-    const isOpen = ref(true);
-    /*const user = {
-      name: 'Dawid Pietrasiak',
-      email: 'dawid@product.com',
-      avatar: 'https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png'
-    };
- 
-    
-    userStore.setUser(user);*/
-
-    const handleLogout = () => {
+const handleLogout = () => {
       signOut(getAuth())
         .then(() => {
           clearUser();
@@ -50,6 +39,9 @@ export default {
           console.log("Sign out done");
         });
     };
+
+    const isOpen = ref(true);
+  
 
     const openSidebar = () => {
       isOpen.value = true;

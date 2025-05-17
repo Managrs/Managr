@@ -36,12 +36,49 @@
 </template>
   
 <script setup lang="ts">
+// import { useAuth0 } from '@auth0/auth0-vue';
+// import { onMounted } from 'vue';
+// import { useUserStore } from '../stores/userStore';
 import { RouterLink } from 'vue-router';
 import router from '../router';
+
+// const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
+// const userStore = useUserStore();
 
 const handleLogin = () => {
   router.push("/login");
 };
+/*
+onMounted(async () => {
+  if (isAuthenticated.value && user.value && !userStore.name) {
+    const backendUrl = import.meta.env.VITE_API_URL;
+
+    const payload = {
+      fullName: user.value.name,
+      email: user.value.email,
+      avatar: user.value.picture,
+      role:  user.value.user_metadata?.role || "client",
+    };
+
+    try {
+      const res = await fetch(`${backendUrl}/auth/registerOrUpdateUser`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${await getAccessTokenSilently()}`
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      console.log("User synced and saved:", data);
+    } catch (error) {
+      console.error("User sync failed", error);
+    }
+  }
+});
+*/
+
 </script>
   
 <style scoped>  

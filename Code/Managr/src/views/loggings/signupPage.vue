@@ -7,6 +7,10 @@
       </header>
 
       <form @submit.prevent="signup">
+
+        <label for="name">Name:</label>
+        <input id="name" type="text" v-model="name" required />
+
         <label for="email">Email:</label>
         <input id="email" type="email" v-model="email" required />
 
@@ -16,7 +20,7 @@
         <fieldset>
           <legend>Select Role:</legend>
           <label>
-            <input type="radio" value="user" v-model="role" />
+            <input type="radio" value="client" v-model="role" />
             Client
           </label>
           <label>
@@ -53,6 +57,7 @@ const userStore = useUserStore();
 const db = getFirestore();
 
 const email = ref('');
+const name = ref('');
 const password = ref('');
 const role = ref('user');
 const errorMsg = ref('');
@@ -78,17 +83,50 @@ function signup() {
       // Store user in Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
+        name: name.value,
         role: role.value,
         createdAt: new Date()
       });
 
       // Store user in Pinia store
       userStore.setUser({
-        name: user.displayName ?? 'No Name',
+        name: user.displayName ?? name.value,
         email: user.email ?? '',
         avatar: user.photoURL ?? '/profile.jpg',
         role: role.value
       });
+
+
+
+      const backendUrl = import.meta.env.VITE_API_URL;
+      console.log("Got back end staring post");
+
+      const payload = {
+        fullName: user.displayName,
+        email: user.email,
+        avatar: user.photoURL || '/profile.jpg',
+        role: role.value || "client",
+      };
+      console.log(`Payload: ${payload}`);
+
+      try {
+        console.log("Beining post");
+
+        const res = await fetch(`${backendUrl}/auth/registerOrUpdateUser`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"/*,
+            Authorization: `Bearer ${await getAccessTokenSilently()}`*/
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        console.log("User synced and saved:", data);
+      } catch (error) {
+        console.error("User sync failed", error);
+      }
+
 
       // Redirect based on role
       if (role.value === 'client') {
@@ -174,7 +212,8 @@ label {
 }
 
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+input[type="text"] {
   width: 100%;
   padding: 0.5rem;
   margin-top: 0.3rem;
@@ -236,4 +275,3 @@ footer a:hover {
   font-weight: bold;
 }
 </style>
-

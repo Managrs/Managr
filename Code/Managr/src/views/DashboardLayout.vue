@@ -10,7 +10,6 @@
 </template>
   
   <script lang="ts">
-
   import DashNavbar from '../components/DashNavbar.vue'
   import CategoryView from '../components/CategoryView.vue'
   import ProfileView from '../components/ProfileView.vue'
@@ -22,6 +21,9 @@ export default {
     DashNavbar,
     CategoryView,
     ProfileView
+  },
+  setup() {
+
   }
 }
   </script>

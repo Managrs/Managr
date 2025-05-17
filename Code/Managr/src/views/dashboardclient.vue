@@ -18,9 +18,11 @@ export default {
   components: {
     DashClient,
     ProfileView
+  },
+  setup() {
+
   }
 }
-
 </script>
 
 
