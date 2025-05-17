@@ -19,18 +19,19 @@
               <router-link to="/managegig" class="nav-link">Manage Gigs</router-link>
             </li>
             <li>
+              <router-link to="/makeReport" class="nav-link">Make Report</router-link>
+            </li>
+            <li>
               <router-link to="/postgig" class="nav-link">Post Gig</router-link>
             </li>
 
             <li>
-              <a href="https://wa.me/+27791465725" class="whatsapp-float" target="_blank">
-                  <button class="nav-link">Messages</button>
-              </a>
+              <router-link to="/chatsystem" class="nav-link">Messages</router-link>
             </li>
           </ul>
           <figure class="user-avatar" @click="toggleSidebar">
             <a href="#">
-              <img src="https://static.codia.ai/custom_image/2025-04-10/182941/user-avatar.png" alt="User Avatar" class="avatar-image" />
+              <img :src="userStore.avatar" alt="User Avatar" class="avatar-image" />
             </a>
           </figure>
         </section>
@@ -41,7 +42,9 @@
 
   
 <script lang="ts">
-  import UserSidebar from '../views/userProfile.vue'
+  import { useUserStore } from '../stores/userStore';
+  import UserSidebar from '../views/userProfile.vue';
+
 
   export default {
     name: 'DashClient',
@@ -49,8 +52,10 @@
       UserSidebar
     },
     data() {
+      const userStore = useUserStore();
       return {
-        isOpen: false // Controls visibility of the sidebar
+        isOpen: false,
+        userStore
       }
     },
     methods: {

@@ -9,8 +9,21 @@
     </section>
 </template>
   
-  <script setup lang="ts">
+  <script lang="ts">
   import DashNavbar from '../components/DashNavbar.vue'
   import CategoryView from '../components/CategoryView.vue'
   import ProfileView from '../components/ProfileView.vue'
+
+  
+export default {
+  name: "dashboardfreelance",
+  components: {
+    DashNavbar,
+    CategoryView,
+    ProfileView
+  },
+  setup() {
+
+  }
+}
   </script>

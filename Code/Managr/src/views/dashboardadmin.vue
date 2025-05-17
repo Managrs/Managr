@@ -6,18 +6,21 @@
       </main>
     </section>
   </template>
-  
   <script lang="ts">
-  import AdminSide from '../components/AdminSide.vue';
-  
-  export default {
-    name: "dashboardadmin",
-    components: {
-      AdminSide
-    }
+
+import AdminSide from '../components/AdminSide.vue';
+
+export default {
+  name: "dashboardadmin",
+  components: {
+    AdminSide
+  },
+  setup() {
+   
   }
+}
   </script>
-  
+
   <style scoped>
   .dashboard-layout {
     display: flex;

@@ -30,7 +30,7 @@
   
   <script>
   import { useUserStore } from '@/stores/userStore';
-
+  
   export default {
     name: "ApplyGig",
     data() {
@@ -48,32 +48,39 @@
       if (prefillClientEmail) {
         this.gig.clientEmail = prefillClientEmail;
       }
-
+  
       this.gig.freelancerEmail = userStore.email;
     },
     methods: {
       async submitGig() {
         try {
           const backendUrl = import.meta.env.VITE_API_URL;
-          const response = await fetch(`${backendUrl}/messages`, {
+  
+          const messagePayload = {
+            senderId: this.gig.freelancerEmail,
+            receiverId: this.gig.clientEmail,
+            content: this.gig.gigDescription,
+          };
+  
+          const response = await fetch(`${backendUrl}/application`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(this.gig),
+            body: JSON.stringify(messagePayload),
           });
   
-          if (!response.ok) throw new Error("Failed to submit application");
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to submit application");
+          }
   
           const data = await response.json();
           console.log("Application sent successfully:", data);
           alert("Application sent successfully!");
   
-          this.gig = {
-            clientEmail: "",
-            freelancerEmail: "",
-            gigDescription: "",
-          };
+          this.gig.gigDescription = "";
+  
         } catch (error) {
           console.error("Error submitting gig application:", error);
           alert("An error occurred while sending your application.");
@@ -81,7 +88,7 @@
       },
     },
   };
-  </script>
+  </script>  
   
   <style scoped>
   .post-page {

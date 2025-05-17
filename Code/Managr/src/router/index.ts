@@ -7,6 +7,10 @@ import DashboardLayout from '../views/DashboardLayout.vue';
 import dashboardadmin from '../views/dashboardadmin.vue';
 import AdminDashboard from '../components/AdminSide.vue';
 
+import loginPage from '../views/loggings/loginPage.vue';
+import signupPage from '../views/loggings/signupPage.vue';
+import display from '../views/loggings/displayTester.vue';
+
 //admin routers
 import Aauditlogs from '../views/Admin/Aauditlogs.vue';
 import Adashboard from '../views/Admin/Adashboard.vue';
@@ -16,10 +20,12 @@ import Aprofile from '../views/Admin/Aprofile.vue';
 import Ausers from '../views/Admin/Ausers.vue';
 import Areports from '../views/Admin/Areports.vue';
 import PostGig from '../views/client/postGig.vue';
+import MakeReport from '../views/client/makeReport.vue';
 import ManageGigs from '../views/client/manageGigs.vue';
 import Dashboardclient from '../views/dashboardclient.vue';
 import Documentation from '../views/documentation.vue';
 import ApplyPost from '../views/freelance/applyPost.vue';
+import Chatbox from '../views/client/Chatbox.vue';
 
 const routes = [
   {path: '/', name: 'LandingPage', component: LandingPage },
@@ -27,9 +33,12 @@ const routes = [
   {path: '/Admindashboard',name: 'AdminDashboard', component: AdminDashboard},
   {path: '/dashboardfreelance',name: 'DashboardLayout', component: DashboardLayout},
   {path: '/documentation', name: 'documentation', component:Documentation},
-  
-  
-  
+
+  {path: '/login', name: 'loginPage', component:loginPage},
+  {path: '/signup', name: 'signupPage', component:signupPage},
+  {path: '/display', name: 'display', component:display},
+
+
   {
     path: '/dashboardadmin',
     component: dashboardadmin,
@@ -45,8 +54,10 @@ const routes = [
     ]
   },
   {path: '/postgig',name: 'postGig', component: PostGig},
+  {path: '/makeReport',name: 'makeReport', component: MakeReport},
   {path: '/managegig',name: 'manageGig', component: ManageGigs},
-  {path: '/applypost', name: 'applypost', component: ApplyPost}
+  {path: '/applypost', name: 'applypost', component: ApplyPost},
+  {path: '/chatsystem', name:'chatsystem', component:Chatbox}
   /*
   {
     path: '/client',
