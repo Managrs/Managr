@@ -79,5 +79,78 @@
 </script>
 
 <styles>
+.report-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
 
+.filter-controls fieldset {
+  border: 1px solid #e0e0e0;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.report-list {
+  list-style: none;
+  padding: 0;
+}
+
+.report-item {
+  border: 1px solid #eee;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.report-item details {
+  padding: 1rem;
+}
+
+.report-item summary {
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: center;
+}
+
+.report-item mark {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.status-reviewing {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.status-resolved {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.admin-comments {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 4px;
+}
+
+.report-actions {
+  margin-top: 1rem;
+  border-top: 1px dashed #ccc;
+  padding-top: 1rem;
+}
+
+.report-actions textarea {
+  width: 100%;
+  min-height: 80px;
+  margin: 0.5rem 0;
+}
 </styles>
