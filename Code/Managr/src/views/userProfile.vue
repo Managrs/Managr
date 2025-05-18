@@ -6,6 +6,10 @@
         <h2>{{ userStore.name }}</h2>
         <p>{{ userStore.email }}</p>
       </section>
+      
+      <router-link to="/editprofile">
+        <button class="Remove"> Edit Profile </button>
+      </router-link>
     </section>
 
     <footer class="sidebar-footer">
@@ -104,6 +108,21 @@ const handleLogout = () => {
   text-align: center;
   font-size: 1.2rem;
   color: #777;
+}
+
+.Remove{
+    color: #ffffff;
+    background: #000000;
+    padding: 0.55rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+.Remove:hover{
+    background: #e77e23;
+    color: #ffffff;
 }
 
 .sidebar-footer {

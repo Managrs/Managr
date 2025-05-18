@@ -22,7 +22,6 @@ export const useUserStore = defineStore('user', () => {
     localStorage.setItem('user', JSON.stringify(userData));
   };
 
-  // Clear user data (e.g., for logout)
   const clearUser = () => {
     name.value = 'NO USER';
     email.value = 'NO EMAIL';
@@ -31,7 +30,6 @@ export const useUserStore = defineStore('user', () => {
     localStorage.removeItem('user');
   };
 
-  // 👉 Initialize from localStorage (only once when store is created)
   const storedUser = localStorage.getItem('user');
   if (storedUser) {
     try {

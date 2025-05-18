@@ -90,16 +90,11 @@ function signup() {
 
       // Store user in Pinia store
       userStore.setUser({
-        name: user.displayName ?? name.value,
-        email: user.email ?? '',
-        avatar: user.photoURL ?? '/profile.jpg',
-        role: role.value
+        name: user.displayName || name.value || 'Lebo Bug',
+        email: user.email || '',
+        avatar: user.photoURL || '/profile.jpg',
+        role: role.value || 'CLIENT'
       });
-
-
-
-      const backendUrl = import.meta.env.VITE_API_URL;
-      console.log("Got back end staring post");
 
       const payload = {
         fullName: user.displayName,
@@ -110,15 +105,18 @@ function signup() {
       console.log(`Payload: ${payload}`);
 
       try {
-        console.log("Beining post");
-
-        const res = await fetch(`${backendUrl}/auth/registerOrUpdateUser`, {
+        const backendUrl = import.meta.env.VITE_API_URL;
+        const res = await fetch(`${backendUrl}/newUser`, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"/*,
-            Authorization: `Bearer ${await getAccessTokenSilently()}`*/
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({
+            fullName: userStore.name,
+            email: userStore.email,
+            avatar: userStore.avatar,
+            role: userStore.role.toUpperCase() // we have an uppercase conv problem, the model has uppercase apyload has lowcase
+          })
         });
 
         const data = await res.json();
@@ -126,6 +124,33 @@ function signup() {
       } catch (error) {
         console.error("User sync failed", error);
       }
+
+      //skuva, this is to update as per database
+      try {
+        const backendUrl = import.meta.env.VITE_API_URL;
+        const res = await fetch(`${backendUrl}/user/${userStore.email}`, {
+          method: "GET", 
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || "Failed to fetch user");
+
+        userStore.setUser({
+          name: data.user.fullName,
+          email: data.user.email,
+          avatar: data.user.avatar,
+          role: data.user.role,
+        });
+
+        console.log("User synced and saved:", data);
+      } catch (error) {
+        console.error("User sync failed", error);
+      }
+
 
 
       // Redirect based on role
