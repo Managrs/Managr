@@ -97,7 +97,6 @@ function signup() {
       });
 
 
-
       const backendUrl = import.meta.env.VITE_API_URL;
       console.log("Got back end staring post");
 
