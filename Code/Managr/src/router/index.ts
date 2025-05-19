@@ -25,6 +25,7 @@ import Dashboardclient from '../views/dashboardclient.vue';
 import Documentation from '../views/documentation.vue';
 import ApplyPost from '../views/freelance/applyPost.vue';
 import Chatbox from '../views/client/Chatbox.vue';
+import profileSettings from '../views/profileSettings/profileSettings.vue';
 import Viewgigs from '../views/freelance/viewgigs.vue';
 import EditProfile from '../views/editProfile.vue';
 
@@ -38,6 +39,7 @@ const routes = [
   {path: '/login', name: 'loginPage', component:loginPage},
   {path: '/signup', name: 'signupPage', component:signupPage},
   {path: '/display', name: 'display', component:display},
+  {path: '/profileSettings', name: 'profileSettings', component:profileSettings},
 
 
   {

@@ -95,7 +95,7 @@ function signup() {
         avatar: user.photoURL || '/profile.jpg',
         role: role.value || 'CLIENT'
       });
-
+      
       const payload = {
         fullName: user.displayName,
         email: user.email,
