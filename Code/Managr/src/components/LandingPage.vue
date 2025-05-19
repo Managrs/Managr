@@ -7,12 +7,7 @@
       
       <ul class="nav-links">
         <li>
-          <!--<router-link to="/dashboard" class="nav-link">Login</router-link>-->
           <button class="nav-link" @click="handleLogin">Sign in</button>
-        </li>
-        <li>
-          <!--<router-link to="/dashboard" class="nav-link">Sign up</router-link>-->
-          <!--<button class="nav-link" @click="handleLogout" >Log out</button>-->
         </li>
       </ul>
     </nav>

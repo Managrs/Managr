@@ -1,15 +1,15 @@
 <template>
   <section class="proposal-view">
-    <h2 class="view-title">All Proposals</h2>
+    <h2 class="view-title">Applications</h2>
     <section class="proposal-card">
-      <ProposalCard
+      <ViewgigCard
         v-for="item in Proposals"
         :key="item.id"
         :name="item.name"
         :mail="item.mail"
         :avatar="item.image"
         :content="item.content"
-        :jobId="item.jobId"
+        :status="item.status"
       />
     </section>
   </section>
@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import ProposalCard from './proposalCard.vue';
+import ViewgigCard from './viewgigCard.vue';
 
 interface ProposalItem {
   id: number;
@@ -25,13 +25,13 @@ interface ProposalItem {
   mail: string;
   image: string;
   content: string;
-  jobId?: string;
+  status: string;
 }
 
 export default defineComponent({
   name: 'ManageGigs',
   components: {
-    ProposalCard,
+    ViewgigCard,
   },
   data() {
     return {
@@ -52,7 +52,7 @@ export default defineComponent({
           mail: gig.sender,
           image: gig.avatar,
           content: gig.content,
-          jobId: gig.jobId,
+          status: gig.status,
         }));
       })
       .catch(error => {
@@ -69,7 +69,7 @@ export default defineComponent({
 
 .view-title {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .proposal-card {

@@ -15,22 +15,15 @@ import { useUserStore } from '../stores/userStore';
           >
         </a>
         
-        <!-- Center - Search Container -->
-        <section class="search-container">
-        <input type="text" placeholder="Search for a gig" class="search-input" />
-        <button class="search-icon" aria-label="Search"></button>
-      </section>
+
   
         <!-- Right Side - Navigation Links -->
         <ul class="nav-links">
           <li>
-            <router-link to="/" class="nav-link">Home</router-link>
-          </li>
-          <li>
             <router-link to="/todo" class="nav-link">Earnings</router-link>
           </li>
           <li>
-            <router-link to="/projects" class="nav-link">View Gigs</router-link>
+            <router-link to="/viewgigs" class="nav-link">View Gigs</router-link>
           </li>
           <li>
             <router-link to="/chatsystem" class="nav-link">Messages</router-link>
@@ -177,6 +170,7 @@ import { useUserStore } from '../stores/userStore';
 /* Right Side - Navigation Links */
 .nav-links {
   display: flex;
+  margin-right: -750px;
   gap: 20px;
   list-style: none;
   padding: 0;
