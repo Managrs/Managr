@@ -20,6 +20,7 @@ describe('ManageGigs', () => {
     vi.stubEnv('VITE_API_URL', 'http://test-api.com');
     
     // Mock fetch API
+    //@ts-ignore
     global.fetch = vi.fn(() => 
       Promise.resolve({
         ok: true,
@@ -46,6 +47,7 @@ describe('ManageGigs', () => {
   });
 
   // Reset mocks after each test
+  //@ts-ignore
   afterEach(() => {
     vi.unstubAllEnvs();
     vi.resetAllMocks();
@@ -146,6 +148,7 @@ describe('ManageGigs', () => {
     console.error = vi.fn();
     
     // Override fetch to simulate an error
+    //@ts-ignore
     global.fetch = vi.fn(() => 
       Promise.resolve({
         ok: false,
