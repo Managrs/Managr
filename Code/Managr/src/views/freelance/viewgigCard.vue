@@ -1,26 +1,27 @@
 <template>
-    <article class="card">
-        <section class="freelancer-info">
-            <img class="freelancer-avatar" :src="avatar"/>
-            <section class="freelancer-details">
-                <p class="freelancer-name">{{ name }}</p>
-                <p class="freelancer-mail"> {{ mail }}</p>
-            </section>
-        </section>
+  <article class="card">
+    <section class="freelance-info">
+      <img class="freelancer-avatar" :src="avatar" alt="Freelancer Avatar" />
+      <section class="freelancer-details">
+        <p class="freelancer-name">{{ name }}</p>
+        <p class="freelancer-mail">{{ mail }}</p>
+      </section>
+    </section>
 
-        <section class="application-content">
-            <h3 class="application-message"> {{ content }}</h3>
-        </section>
+    <section class="application-content">
+      <h3 class="application-message">{{ content }}</h3>
+      <p class="application-status">Status: {{ status }}</p>
+    </section>
 
-        <button class="hire-button" @click="Hire"> Hire </button>
-    </article>
+    <button class="hire-button" >Message</button>
+  </article>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    name: 'ProposalCard',
+    name: 'viewgigCard',
     props: {
         name: {
       type: String,
@@ -37,6 +38,10 @@ export default defineComponent({
     content: {
         type:String,
         required: true,
+    },
+    status: {
+    type: String,
+    default: 'Submitted for Approval' 
     }
     },
     methods: {
@@ -57,13 +62,13 @@ export default defineComponent({
 </script>
 
 <style scoped>
-  .card {
+.card {
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 1rem;
     background-color: white;
     margin-bottom: 0.2rem;
-  }
+}
 
 .freelancer-info{
   width: 100%;
@@ -85,7 +90,8 @@ export default defineComponent({
 
 .freelancer-details {
   line-height: 0.5%;
-  text-align: center;
+    margin-left: 6%;
+    margin-top: -5%;
 }
 
 .freelancer-name{
@@ -97,6 +103,12 @@ export default defineComponent({
 .freelancer-mail{
   font:italic;
   font-size: 10px;;
+}
+
+.application-status {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 8px;
 }
 
 .hire-button{

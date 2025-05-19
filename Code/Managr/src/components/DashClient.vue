@@ -60,7 +60,7 @@
     },
     methods: {
       toggleSidebar() {
-        this.isOpen = !this.isOpen; // Toggle sidebar visibility
+        this.isOpen = !this.isOpen; 
       }
     }
   }

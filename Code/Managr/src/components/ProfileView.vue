@@ -1,10 +1,11 @@
 <template>
   <section class="profile-page">
-    <SearchComponent @search="handleSearch" />
-    
-    <!-- Profiles section -->
-    <section class="profiles-view">
+    <div class="sticky-header">
+      <SearchComponent @search="handleSearch" />
       <h2 class="section-title">Featured Professionals</h2>
+    </div>
+
+    <section class="scrollable-profiles">
       <section class="profiles-container">
         <ProfileCard
           v-for="profile in filteredProfiles"
@@ -41,15 +42,24 @@ export default defineComponent({
       profiles: [] as Profile[],
       searchQuery: '',
       loading: true,
+      showAll: false,
+      initialLimit: 10,
     };
   },
   computed: {
+    visibleProfiles(): Profile[] {
+      return this.showAll
+        ? this.profiles
+        : this.profiles.slice(0, this.initialLimit);
+    },
     filteredProfiles(): Profile[] {
-      if (!this.searchQuery.trim()) return this.profiles;
-      return this.profiles.filter((p) =>
-        p.name.toLowerCase().includes(this.searchQuery) ||
-        p.job.toLowerCase().includes(this.searchQuery)
-      );
+      return this.visibleProfiles.filter((p) => {
+        const query = this.searchQuery.toLowerCase();
+        return (
+          p.name.toLowerCase().includes(query) ||
+          p.job.toLowerCase().includes(query)
+        );
+      });
     },
   },
   methods: {
@@ -85,43 +95,55 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
 }
 
-.profiles-view {
-  padding: 2rem 1rem;
+.sticky-header {
+  background-color: white;
   width: 100%;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
 }
 
 .section-title {
   font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-  padding-left: 1rem;
+  margin-top: 0.5rem;
+}
+
+.scrollable-profiles {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  padding: 1rem;
+  width: 100%;
 }
 
 .profiles-container {
   display: flex;
-  overflow-x: auto;
-  padding: 1rem;
+  flex-direction: row;
+  flex-wrap: nowrap;
   gap: 20px;
-  scrollbar-width: thin;
-  scrollbar-color: #007BFF #f1f1f1;
 }
 
-.profiles-container::-webkit-scrollbar {
-  height: 8px;
+.toggle-button {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
 
-.profiles-container::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.profiles-container::-webkit-scrollbar-thumb {
-  background: #007BFF;
-  border-radius: 10px;
-}
-
-.profiles-container::-webkit-scrollbar-thumb:hover {
-  background: #0056b3;
+.toggle-button:hover {
+  background-color: #0056b3;
 }
 </style>
