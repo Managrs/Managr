@@ -1,6 +1,6 @@
 # Managrs - Revolutionizing Freelance Collaboration
 
-<img src="logo.png" alt="Managrs Logo" width="200"/>
+<img src="/Code/Managr/src/assets/m_logo.jpg" alt="Managrs Logo" width="200"/>
 
 [![Build Status](https://img.shields.io/travis/managrs/platform/master.svg)](https://travis-ci.org/managrs/platform)
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/managrs/platform/releases)
