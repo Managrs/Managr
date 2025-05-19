@@ -13,7 +13,7 @@
       <p class="application-status">Status: {{ status }}</p>
     </section>
 
-    <button class="hire-button" @click="goToChat">Message</button>
+    <button class="hire-button" >Message</button>
   </article>
 </template>
 
