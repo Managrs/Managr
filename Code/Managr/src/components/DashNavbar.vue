@@ -1,48 +1,49 @@
 <template>
-  <header class="header">
-    <nav class="navigation">
-      <!-- Left Side - Logo -->
+import { useUserStore } from '../stores/userStore';
+import { useUserStore } from '../stores/userStore';
+    <header class="header">
+      <nav class="navigation">
+        <!-- Left Side - Logo -->
+  
+        <a href="#" class="logo-link" aria-label="Managr - Home">
+          <img 
+            src="/brandlogo.png" 
+            alt="Managr" 
+            class="logo-image"
+            width="120" 
+            height="40"
+          >
+        </a>
+        
 
-      <a href="#" class="logo-link" aria-label="Managr - Home">
-        <img src="/brandlogo.png" alt="Managr" class="logo-image" width="120" height="40">
-      </a>
-
-      <!-- Center - Search Container -->
-      <section class="search-container">
-        <input type="text" placeholder="Search for a gig" class="search-input" />
-        <button class="search-icon" aria-label="Search"></button>
-      </section>
-
-      <!-- Right Side - Navigation Links -->
-      <ul class="nav-links">
-        <li>
-          <router-link to="/" class="nav-link">Home</router-link>
-        </li>
-        <li>
-          <router-link to="/todo" class="nav-link">Earnings</router-link>
-        </li>
-        <li>
-          <router-link to="/projects" class="nav-link">View Gigs</router-link>
-        </li>
-        <li>
-          <router-link to="/makeReport" class="nav-link">Make Report</router-link>
-        </li>
-        <li>
-          <router-link to="/chatsystem" class="nav-link">Messages</router-link>
-        </li>
-      </ul>
-
-      <!-- User Section - Avatar and Dropdown -->
-      <section class="user-section">
-        <figure class="user-avatar" @click="toggleSidebar">
-          <a href="#">
-            <img :src="userStore.avatar" alt="User Avatar" class="avatar-image" />
-          </a>
-        </figure>
-      </section>
-    </nav>
-  </header>
-  <UserSidebar v-if="isOpen" @close="toggleSidebar" />
+  
+        <!-- Right Side - Navigation Links -->
+        <ul class="nav-links">
+          <li>
+            <router-link to="/todo" class="nav-link">Earnings</router-link>
+          </li>
+          <li>
+            <router-link to="/viewgigs" class="nav-link">View Gigs</router-link>
+          </li>
+          <li>
+            <router-link to="/makeReport" class="nav-link">Make Report</router-link>
+          </li>
+          <li>
+            <router-link to="/chatsystem" class="nav-link">Messages</router-link>
+          </li>
+        </ul>
+  
+        <!-- User Section - Avatar and Dropdown -->
+        <section class="user-section">
+          <figure class="user-avatar"  @click="toggleSidebar">
+            <a href="#">
+              <img :src="userStore.avatar" alt="User Avatar" class="avatar-image" />
+            </a>
+          </figure>
+        </section>
+      </nav>
+    </header>
+    <UserSidebar v-if="isOpen" @close="toggleSidebar" />
 </template>
 
 <script lang="ts">
@@ -181,6 +182,7 @@ export default {
 /* Right Side - Navigation Links */
 .nav-links {
   display: flex;
+  margin-right: -750px;
   gap: 20px;
   list-style: none;
   padding: 0;

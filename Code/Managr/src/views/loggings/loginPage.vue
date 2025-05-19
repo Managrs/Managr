@@ -71,11 +71,37 @@ function login() {
 
         // Store user in Pinia
         userStore.setUser({
-          name: user.displayName || userData.name || 'No Name',
+          fullName: user.displayName || userData.name || 'No Name',
           email: user.email ?? '',
           avatar: user.photoURL || '/profile.jpg',
           role: userData.role ?? 'client'
         });
+
+        try {
+          const backendUrl = import.meta.env.VITE_API_URL;
+          const res = await fetch(`${backendUrl}/user/${userStore.email}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || "Failed to fetch user");
+
+        userStore.setUser({
+          name: data.user.fullName,
+          email: data.user.email,
+          avatar: data.user.avatar,
+          role: data.user.role,
+        });
+
+          console.log("User synced and saved:", data);
+        } catch (error) {
+          console.error("User sync failed", error);
+        }
+
 
         // 🔁 Role-based redirect
         if (userData.role === 'client') {

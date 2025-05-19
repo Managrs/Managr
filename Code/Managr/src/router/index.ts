@@ -26,6 +26,8 @@ import Documentation from '../views/documentation.vue';
 import ApplyPost from '../views/freelance/applyPost.vue';
 import Chatbox from '../views/client/Chatbox.vue';
 import profileSettings from '../views/profileSettings/profileSettings.vue';
+import Viewgigs from '../views/freelance/viewgigs.vue';
+import EditProfile from '../views/editProfile.vue';
 
 const routes = [
   {path: '/', name: 'LandingPage', component: LandingPage },
@@ -57,8 +59,10 @@ const routes = [
   {path: '/postgig',name: 'postGig', component: PostGig},
   {path: '/makeReport',name: 'makeReport', component: MakeReport},
   {path: '/managegig',name: 'manageGig', component: ManageGigs},
+  {path: '/viewgigs',name: 'viewgigs', component: Viewgigs},
   {path: '/applypost', name: 'applypost', component: ApplyPost},
-  {path: '/chatsystem', name:'chatsystem', component:Chatbox}
+  {path: '/chatsystem', name:'chatsystem', component:Chatbox},
+  {path: '/editprofile', name:'editprofile', component:EditProfile}
   /*
   {
     path: '/client',

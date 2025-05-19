@@ -9,12 +9,11 @@ interface User {
 }
 
 export const useUserStore = defineStore('user', () => {
-  const name = ref('Guest User');
-  const email = ref('guestuser@gmail.com');
+  const name = ref('User not found');
+  const email = ref('nouser@gmail.com');
   const avatar = ref('/profile.jpg');
   const role = ref('user');
 
-  // Set user data
   const setUser = (userData: User) => {
     name.value = userData.name;
     email.value = userData.email;
@@ -23,7 +22,6 @@ export const useUserStore = defineStore('user', () => {
     localStorage.setItem('user', JSON.stringify(userData));
   };
 
-  // Clear user data (e.g., for logout)
   const clearUser = () => {
     name.value = 'NO USER';
     email.value = 'NO EMAIL';
@@ -32,7 +30,6 @@ export const useUserStore = defineStore('user', () => {
     localStorage.removeItem('user');
   };
 
-  // 👉 Initialize from localStorage (only once when store is created)
   const storedUser = localStorage.getItem('user');
   if (storedUser) {
     try {
