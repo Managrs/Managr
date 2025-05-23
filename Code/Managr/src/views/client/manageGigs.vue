@@ -5,6 +5,7 @@
       <ProposalCard
         v-for="item in Proposals"
         :key="item.id"
+        :id="item.id"
         :name="item.name"
         :mail="item.mail"
         :avatar="item.image"
@@ -13,14 +14,15 @@
       />
     </section>
   </section>
-</template>
+</template> 
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useUserStore } from '../../stores/userStore';
 import ProposalCard from './proposalCard.vue';
 
 interface ProposalItem {
-  id: number;
+  id: string;
   name: string;
   mail: string;
   image: string;
@@ -38,9 +40,11 @@ export default defineComponent({
       Proposals: [] as ProposalItem[],
     };
   },
+
   mounted() {
+    const userStore = useUserStore();
     const backendUrl = import.meta.env.VITE_API_URL;
-    fetch(`${backendUrl}/applications`)
+    fetch(`${backendUrl}/jobRequests/${userStore.email}`)
       .then(response => {
         if (!response.ok) throw new Error('Failed to fetch applications');
         return response.json();
@@ -52,7 +56,6 @@ export default defineComponent({
           mail: gig.sender,
           image: gig.avatar,
           content: gig.content,
-          jobId: gig.jobId,
         }));
       })
       .catch(error => {

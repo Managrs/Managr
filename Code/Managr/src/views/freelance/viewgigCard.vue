@@ -13,7 +13,7 @@
       <p class="application-status">Status: {{ status }}</p>
     </section>
 
-    <button class="hire-button" >Message</button>
+    <button class="hire-button" v-if="status === 'Approved'" >Message</button>
   </article>
 </template>
 
@@ -23,6 +23,10 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     name: 'viewgigCard',
     props: {
+        id: {
+        type: String,
+        required: true,
+      },
         name: {
       type: String,
       required: true,
@@ -40,12 +44,12 @@ export default defineComponent({
         required: true,
     },
     status: {
-    type: String,
-    default: 'Submitted for Approval' 
+      type: String,
+      required: true, 
     }
     },
     methods: {
-        async Hire(){
+        async Message(){
             try {
                 const res = await fetch(`${import.meta.env.VITE_API_URL}/application`, {
                     method: "PUT"
