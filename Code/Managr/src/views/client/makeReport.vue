@@ -1,8 +1,6 @@
 <template>
   <nav>
-    <router-link to="/DashboardClient">
-      <button type="button" class="secondary-btn">Back to Recent Gigs</button>
-    </router-link>
+    <button type="button" class="secondary-btn" @click="goBack">🔙 Back</button>
   </nav>
 
   <section class="post-page">
@@ -28,6 +26,8 @@
 
 <script>
 import { useUserStore } from '@/stores/userStore';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 export default {
   name: "PostReport",
@@ -45,6 +45,12 @@ export default {
     this.report.clientName = userStore.name;
   },
   methods: {
+    goBack() {
+      // Use this.$router to access the router instance in the Options API
+      this.$router.go(-1);  // Navigate back in history
+    },
+//       router.history.back();
+
     async submitReport() {
       try {
         const backendUrl = import.meta.env.VITE_API_URL;

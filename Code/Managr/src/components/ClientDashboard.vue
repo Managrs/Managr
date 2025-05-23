@@ -1,14 +1,14 @@
   <template>
   <header>
     <section class="logo">
-      <img src="/logo2.png" alt="Managr Logo" />
+      <img src="../assets/logo2.jpg" alt="Managr Logo" />
     </section>
     <nav>
       <button class="post-btn">Post Project</button>
       <button class="messages-btn">Messages</button>
       <button class=""></button>
       <section class="profile-picture">
-        <img src="/noprofile.png" alt="Profile Picture" />
+        <img src="../assets/noprofile.jpg" alt="Profile Picture" />
       </section>
     </nav>
   </header>
@@ -54,7 +54,7 @@
         >
           <section class="profile-header">
             <img
-              src="/noprofile.png"
+              src="../assets/noprofile.jpg"
               alt="Profile Picture"
               class="profile-pic"
             />

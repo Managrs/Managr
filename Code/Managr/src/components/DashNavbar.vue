@@ -15,24 +15,19 @@ import { useUserStore } from '../stores/userStore';
           >
         </a>
         
-        <!-- Center - Search Container -->
-        <section class="search-container">
-        <input type="text" placeholder="Search for a gig" class="search-input" />
-        <button class="search-icon" aria-label="Search"></button>
-      </section>
+
   
         <!-- Right Side - Navigation Links -->
         <ul class="nav-links">
-          <li>
-            <router-link to="/" class="nav-link">Home</router-link>
-          </li>
-
           <li>
             <router-link to="/todo" class="nav-link">Earnings</router-link>
           </li>
           
           <li>
-            <router-link to="/projects" class="nav-link">View Gigs</router-link>
+            <router-link to="/viewgigs" class="nav-link">View Gigs</router-link>
+          </li>
+          <li>
+            <router-link to="/makeReport" class="nav-link">Make Report</router-link>
           </li>
           <li>
             <router-link to="/chatsystem" class="nav-link">Messages</router-link>
@@ -51,31 +46,31 @@ import { useUserStore } from '../stores/userStore';
     </header>
     <UserSidebar v-if="isOpen" @close="toggleSidebar" />
 </template>
-  
+
 <script lang="ts">
 import { useUserStore } from '../stores/userStore';
- import UserSidebar from '../views/userProfile.vue'
+import UserSidebar from '../views/userProfile.vue'
 
-  export default {
-    name: "DashNavbar",
-    components: {
-      UserSidebar
-    },
-    data() {
-      const userStore = useUserStore();
-      return {
-        isOpen: false,
-        userStore
-      }
-    },
-    methods: {
-      toggleSidebar() {
-        this.isOpen = !this.isOpen; // Toggle sidebar visibility
-      }
+export default {
+  name: "DashNavbar",
+  components: {
+    UserSidebar
+  },
+  data() {
+    const userStore = useUserStore();
+    return {
+      isOpen: false,
+      userStore
+    }
+  },
+  methods: {
+    toggleSidebar() {
+      this.isOpen = !this.isOpen; // Toggle sidebar visibility
     }
   }
+}
 </script>
-  
+
 <style scoped>
 /* Global Variables */
 :root {
@@ -89,11 +84,14 @@ import { useUserStore } from '../stores/userStore';
 /* Header Styling */
 .header {
   display: flex;
-  justify-content: center; /* Centers the content */
+  justify-content: center;
+  /* Centers the content */
   align-items: center;
   position: relative;
-  height: 80px; /* Increased height for better spacing */
-  padding: 0 30px; /* Increased padding */
+  height: 80px;
+  /* Increased height for better spacing */
+  padding: 0 30px;
+  /* Increased padding */
   background: var(--color-white);
   border-bottom: 1px solid var(--color-border);
 }
@@ -115,8 +113,10 @@ import { useUserStore } from '../stores/userStore';
 
 .nav-divider {
   height: 1px;
-  background-color: #e0e0e0; /* Light gray - adjust as needed */
-  margin: 0 16px; /* Optional side margins */
+  background-color: #e0e0e0;
+  /* Light gray - adjust as needed */
+  margin: 0 16px;
+  /* Optional side margins */
 }
 
 
@@ -135,11 +135,13 @@ import { useUserStore } from '../stores/userStore';
 
 /* Left Side - Logo */
 .logo {
-  font-size: 24px; /* Increased font size for better visibility */
+  font-size: 24px;
+  /* Increased font size for better visibility */
   font-weight: 700;
   color: var(--color-dark-gray);
   text-decoration: none;
-  flex-shrink: 0; /* Prevent shrinking */
+  flex-shrink: 0;
+  /* Prevent shrinking */
 }
 
 /* Center - Search Container */
@@ -148,7 +150,8 @@ import { useUserStore } from '../stores/userStore';
   align-items: center;
   flex: 1;
   max-width: 500px;
-  margin: 0 2rem; /* Add spacing so it doesn’t stick to logo or nav links */
+  margin: 0 2rem;
+  /* Add spacing so it doesn’t stick to logo or nav links */
 }
 
 .search-icon {
@@ -164,7 +167,8 @@ import { useUserStore } from '../stores/userStore';
 
 .search-input {
   flex-grow: 1;
-  font-size: 16px; /* Increased font size */
+  font-size: 16px;
+  /* Increased font size */
   color: var(--color-dark-gray);
   padding: 8px 18px;
   border: 1px solid #000000;
@@ -179,6 +183,7 @@ import { useUserStore } from '../stores/userStore';
 /* Right Side - Navigation Links */
 .nav-links {
   display: flex;
+  margin-right: -750px;
   gap: 20px;
   list-style: none;
   padding: 0;
@@ -186,11 +191,13 @@ import { useUserStore } from '../stores/userStore';
 
 .nav-link {
   display: inline-block;
-  padding: 8px 18px; /* Increased padding */
+  padding: 8px 18px;
+  /* Increased padding */
   border: 1px solid black;
   border-radius: 6px;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  font-size: 16px; /* Increased font size */
+  font-size: 16px;
+  /* Increased font size */
   font-weight: 500;
   text-decoration: none;
   color: #ffffff;
@@ -207,7 +214,8 @@ import { useUserStore } from '../stores/userStore';
 .user-section {
   display: flex;
   align-items: center;
-  gap: 12px; /* Increased gap between user avatar and icon */
+  gap: 12px;
+  /* Increased gap between user avatar and icon */
 }
 
 .user-avatar {
@@ -223,6 +231,4 @@ import { useUserStore } from '../stores/userStore';
   height: 100%;
   object-fit: cover;
 }
-
 </style>
-  

@@ -23,7 +23,7 @@ const io = new Server (server,  {
   }
 });
 
-app.use(express.json());
+app.use(express.json( {limit: '10mb'} ));
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
 
@@ -85,14 +85,70 @@ io.on('connection', (socket) => {
 
 app.post('/newUser', async (req, res) => {
   try {
-    const user = await User.create(req.body);
-    res.status(201).json(user);
+    const { email, fullName, avatar, role } = req.body;
+
+    if (!email || !fullName || !role) {
+      return res.status(400).json({ error: 'Missing required fields: email, fullName, or role' });
+    }
+
+    const existing = await User.findOne({ email });
+    if (existing) {
+            return res.status(200).json({ message: 'User already exists', existing});
+    }
+
+    const user = await User.create({
+      fullName,
+      email,
+      avatar: avatar || '/profile.jpg',
+      role,
+    });
+
+    res.status(201).json( {message: 'User created', user});
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
 
-app.post('/auth/registerOrUpdateUser', async (req, res) => {
+app.put('/editprofile/:email', async (req, res) => {
+  const Email = req.params.email;
+  const newAvatar = req.body.avatar;
+
+  try {
+    const updatedUser = await User.findOneAndUpdate({ email: Email }, { avatar: newAvatar }, { new: true });
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    res.status(200).json({ message: 'User updated successfully', user: updatedUser });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+app.get('/user/:email', async (req, res) => {
+  const Email = req.params.email;
+
+  try {
+    const user = await User.findOne({ email: Email });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const thisUser = {
+      fullName: user.fullName,
+      avatar: user.avatar,
+      role: user.role,
+      email: user.email
+    };
+
+    res.status(200).json({ user: thisUser });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+/*app.post('/auth/registerOrUpdateUser', async (req, res) => {
   try {
     const { fullName, email, avatar, role } = req.body;
 
@@ -112,7 +168,7 @@ app.post('/auth/registerOrUpdateUser', async (req, res) => {
     console.error(err);
     res.status(500).json({ error: 'Failed to sync user' });
   }
-});
+});*/
 
 
 app.post('/newGig', async (req, res) => {
