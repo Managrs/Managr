@@ -13,6 +13,9 @@
     </section>
 
     <footer class="sidebar-footer">
+      <p id="settings">
+        <router-link to="/profileSettings">Profile Settings</router-link>
+      </p>
       <button @click="handleLogout">Logout</button>
     </footer>
   </aside>
@@ -34,7 +37,7 @@ export default {
     const { clearUser } = userStore;
     const router = useRouter();
 
-const handleLogout = () => {
+    const handleLogout = () => {
       signOut(getAuth())
         .then(() => {
           clearUser();
@@ -45,7 +48,7 @@ const handleLogout = () => {
     };
 
     const isOpen = ref(true);
-  
+
 
     const openSidebar = () => {
       isOpen.value = true;
@@ -143,5 +146,20 @@ const handleLogout = () => {
 
 .sidebar-footer button:hover {
   background-color: #220d0b;
+
+}
+
+#settings{
+  text-align: center;
+}
+
+#settings a{
+  text-align: center;
+  color: #f57c00;
+  text-decoration: none;
+}
+
+#settings a:hover {
+  text-decoration: underline;
 }
 </style>
