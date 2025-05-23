@@ -281,6 +281,48 @@ app.get('/messages', async (req, res) => {
   }
 });
 
+app.get('/admin/reports', async (req, res) => {
+  try {
+    const { status, category } = req.query;
+    const filter = {};
+    
+    if (status) filter.status = status;
+    if (category) filter.category = category;
+
+    const reports = await Report.find(filter)
+      .sort({ createdAt: -1 });
+    res.json(reports);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.patch('/admin/reports/:id', async (req, res) => {
+  try {
+    const update = {
+      status: req.body.status,
+      ...(req.body.status === 'resolved' && { resolvedAt: new Date() }),
+      ...(req.body.comment && { 
+        $push: { 
+          adminComments: {
+            comment: req.body.comment,
+            adminId: req.user._id // From auth middleware
+          }
+        }
+      })
+    };
+
+    const report = await Report.findByIdAndUpdate(
+      req.params.id,
+      update,
+      { new: true }
+    );
+    res.json(report);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
