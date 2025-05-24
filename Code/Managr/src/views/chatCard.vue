@@ -14,7 +14,7 @@
     name: 'ChatCard',
     props: {
       user: {
-        type: Object as PropType<{ id: number; name: string; avatar: string }>,
+        type: Object as PropType<{ id: number; email:string; name: string; avatar: string }>,
         required: true
       }
     }

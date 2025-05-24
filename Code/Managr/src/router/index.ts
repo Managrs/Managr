@@ -9,6 +9,11 @@ import AdminDashboard from '../components/AdminSide.vue';
 import loginPage from '../views/loggings/loginPage.vue';
 import signupPage from '../views/loggings/signupPage.vue';
 import display from '../views/loggings/displayTester.vue';
+import freelanceTrack from '../views/tracking/freelanceTracking.vue';
+import clientTrack from '../views/tracking/clientTracking.vue';
+
+import freelanceprogress from '../views/tracking/freelanceprogress.vue';
+import clientprogress from '../views/tracking/clientprogress.vue';
 
 //admin routers
 import Aauditlogs from '../views/Admin/Aauditlogs.vue';
@@ -48,6 +53,11 @@ const routes = [
   {path: '/signup', name: 'signupPage', component:signupPage},
   {path: '/display', name: 'display', component:display},
   {path: '/profileSettings', name: 'profileSettings', component:profileSettings},
+  {path: '/freelanceprogress', name: 'freelanceprogress', component:freelanceprogress},
+  {path: '/clientprogress', name: 'clientprogress', component:clientprogress},
+
+  {path: '/freelanceTrack', name: 'freelanceTrack', component:freelanceTrack},
+  {path: '/clientTrack', name: 'clientTrack', component:clientTrack},
 
 
   {

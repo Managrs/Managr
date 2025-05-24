@@ -1,8 +1,10 @@
 // applyPost.test.ts
 import { mount, flushPromises } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import applyPost from '../../../src/views/freelance/applyPost.vue';
 import { createPinia, setActivePinia } from 'pinia';
+//@ts-ignore
+import applyPost from '../../../src/views/freelance/applyPost.vue';
+
 
 // Mock the userStore
 vi.mock('@/stores/userStore', () => ({
@@ -131,6 +133,7 @@ describe('applyPost', () => {
 
   it('handles API errors correctly', async () => {
     // Override the fetch mock to simulate an error
+    //@ts-ignore
     global.fetch = vi.fn(() => 
       Promise.resolve({
         ok: false,
