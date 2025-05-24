@@ -1,13 +1,12 @@
 
+
 ---
 
 # **Managrs – Revolutionizing Freelance Collaboration**
 
 <img src="./Code/Managr/src/assets/m_logo.jpg" alt="Managrs Logo" width="200"/>
 
-[![Build Status](https://img.shields.io/travis/managrs/platform/master.svg)](https://travis-ci.org/managrs/platform)
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/managrs/platform/releases)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/managrs/platform/releases)
 
 ---
 
@@ -81,6 +80,19 @@ A secure three-tiered system designed for transparency and accountability:
 ## 🛠️ Getting Started
 
 👉 Check out the [Documentation](./Documentation/Running%20App.md) to set up Managrs on your local machine.
+
+---
+
+## 👥 Project Owners
+
+* **Lebo Kharafu** - 2577390
+* **Dimpho Matea** - 2678460
+* **Lemohang Motsapi** - 2655576
+* **Kagiso Kotu** - 2664847
+* **Bhavan Domun** - 2601109
+* **Kgaugelo Lebelo** - 2689690
+
+*For any questions or collaboration, please reach out to the project owners.*
 
 ---
 
