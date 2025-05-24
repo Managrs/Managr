@@ -331,6 +331,17 @@ app.get('/allusers', async (req, res) => {
   }
 });
 
+app.post('/newMessage', async (req, res) => {
+  const { senderId, receiverId, content } = req.body;
+  try {
+    const message = new Message({ senderId, receiverId, content });
+    await message.save();
+    res.status(201).json(message);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.delete('/deleteUser/:id', async (req, res) => {
   const userId = req.params.id;
 
@@ -353,23 +364,44 @@ app.get('/messages', async (req, res) => {
         { senderId: user1, receiverId: user2 },
         { senderId: user2, receiverId: user1 }
       ]
-    }).sort({ createdAt: 1 });
+    }); /*.sort({ createdAt: 1 });*/
     res.json(messages);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-app.post('/newMessage', async (req, res) => {
-  const { senderId, receiverId, content } = req.body;
+app.get('/contacts', async (req, res) => {
+  const { email } = req.query;
+  if (!email) return res.status(400).json({ error: 'Email is required' });
+
   try {
-    const message = new Message({ senderId, receiverId, content });
-    await message.save();
-    res.status(201).json(message);
+    const messages = await Message.find({
+      $or: [{ senderId: email }, { receiverId: email }]
+    });
+    const contactEmails = new Set();
+
+    messages.forEach(msg => {
+      if (msg.senderId !== email) contactEmails.add(msg.senderId);
+      if (msg.receiverId !== email) contactEmails.add(msg.receiverId);
+    });
+
+    const contacts = await User.find({ email: { $in: Array.from(contactEmails) } });
+
+    const response = contacts.map((user, index) => ({
+      id: index + 1,
+      fullName: user.fullName,
+      avatar: user.avatar,
+      email: user.email
+    }));
+
+    res.json(response);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
+
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

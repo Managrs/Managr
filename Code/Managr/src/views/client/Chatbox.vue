@@ -1,25 +1,52 @@
 <template>
   <main class="chat-app">
-    <aside class="sidebar">
-      <header class="sidebar-header">
+  <aside class="sidebar">
+    <header class="sidebar-header">
+      <button type="button" class="user-btn" @click="goBack">Back</button>
+      <h2>Messages</h2>
+      <input v-model="search" type="text" placeholder="Search" class="search" />
+    </header>
 
-        <button type="button" class="secondary-btn" @click="goBack">🔙 Back</button>
-        <h2>Messages</h2>
-        <input v-model="search" type="text" placeholder="Search" class="search" />
-      </header>
+    <section v-if="filteredContacts.length > 0" class="message-list">
+      <ChatCard
+        v-for="item in filteredContacts"
+        :key="item.id"
+        :user="item"
+        @select="selectUser"
+      />
+    </section>
 
-      <section v-if="categories.length > 0" class="message-list">
-        <ChatCard v-for="item in filteredCategories" :key="item.id" :user="item" @select="selectUser" />
-      </section>
+    <section v-if="filteredCategories.length > 0" class="toggle-categories">
+      <button type="button" class="user-btn" @click="toggleCategories">
+        {{ showCategories ? 'Hide Users' : 'All Users' }}
+      </button>
+    </section>
 
-      <section v-else class="empty-state">
-        <p>No users available</p>
-      </section>
-    </aside>
+    <section
+      v-if="showCategories && filteredCategories.length > 0"
+      class="message-list"
+    >
+      <ChatCard
+        v-for="item in filteredCategories"
+        :key="item.id"
+        :user="item"
+        @select="selectUser"
+      />
+    </section>
+
+    <section
+      v-if="filteredContacts.length === 0 && filteredCategories.length === 0"
+      class="empty-state"
+    >
+      <p v-if="search">No users match your search.</p>
+      <p v-else>No users available.</p>
+    </section>
+  </aside>
+
 
     <section class="chat-area">
-      <ChatThread v-if="selectedUser" :userName="selectedUser.name" :avatar="selectedUser.avatar"
-        :messages="chatHistory[selectedUser.id] || []" @send-message="handleSendMessage" />
+      <ChatThread v-if="selectedUser" :userName="selectedUser.name" :avatar="selectedUser.avatar" :receiverMail="selectedUser.email"
+       />
       <p v-else class="empty-state">Select a chat to start messaging</p>
     </section>
   </main>
@@ -29,7 +56,7 @@
 import { defineComponent } from 'vue';
 import ChatCard from '../chatCard.vue';
 import ChatThread from '../messageCard.vue';
-
+import { useUserStore } from '../../stores/userStore';
 
 interface ChatItem {
   id: number;
@@ -47,27 +74,53 @@ export default defineComponent({
   data() {
     return {
       search: '',
+      showCategories: false,
+      contacts: [] as ChatItem[],
       categories: [] as ChatItem[],
-      selectedUser: null as ChatItem | null,
-      chatHistory: {} as Record<number, any[]>
+      selectedUser: null as ChatItem | null
     };
   },
   computed: {
     filteredCategories(): ChatItem[] {
       return this.categories.filter((item) =>
-        item.name.toLowerCase().includes(this.search.toLowerCase())
+        (item.name?.toLowerCase() ?? '').includes(this.search.toLowerCase())
+      );
+    },
+    filteredContacts(): ChatItem[] {
+      return this.contacts.filter((item) =>
+        (item.name?.toLowerCase() ?? '').includes(this.search.toLowerCase())
       );
     }
+
   },
   mounted() {
+    this.fetchContacts();
     this.fetchChats();
   },
   methods: {
     goBack() {
-      // @ts-ignore
       this.$router.go(-1);
     },
-    async fetchChats() {
+
+    toggleCategories() {
+      this.showCategories = !this.showCategories;
+    },
+
+    async fetchContacts(){
+      const userStore = useUserStore();
+      const backendUrl = import.meta.env.VITE_API_URL;
+      const response = await fetch(`${backendUrl}/contacts?email=${userStore.email}`);
+      const data = await response.json();
+
+      this.contacts = data.map((user: any) => ({
+        id: user.id,
+        name: user.fullName,
+        avatar: user.avatar,
+        email: user.email
+      }));
+    },
+
+    async fetchChats(){
       const backendUrl = import.meta.env.VITE_API_URL;
       const response = await fetch(`${backendUrl}/allusers`);
       const data = await response.json();
@@ -76,49 +129,14 @@ export default defineComponent({
         id: user.id,
         name: user.fullName,
         avatar: user.avatar,
-        email: user.email // include email for querying messages
+        email: user.email
       }));
-    },
-
-    async fetchMessages(user: ChatItem) {
-      const backendUrl = import.meta.env.VITE_API_URL;
-      const queryParam = encodeURIComponent(user.email);
-      const response = await fetch(`${backendUrl}/messages?userId=${queryParam}`);
-      const messages = await response.json();
-
-      const chatMap: Record<number, any[]> = {};
-
-      messages.forEach((msg: any) => {
-        const otherUserId = msg.senderId === user.id ? msg.receiverId : msg.senderId;
-        if (!chatMap[otherUserId]) {
-          chatMap[otherUserId] = [];
-        }
-        chatMap[otherUserId].push({
-          sender: msg.senderId === user.id ? 'me' : msg.senderName,
-          content: '[message content missing in your current schema]'
-        });
-      });
-
-      this.chatHistory = chatMap;
     },
 
     async selectUser(user: ChatItem) {
       this.selectedUser = user;
-      await this.fetchMessages(user);
-    },
-
-    handleSendMessage(msg: string) {
-      if (!this.selectedUser) return;
-      if (!this.chatHistory[this.selectedUser.id]) {
-        this.chatHistory[this.selectedUser.id] = [];
-      }
-      this.chatHistory[this.selectedUser.id].push({
-        sender: 'me',
-        content: msg
-      });
     }
   }
-
 });
 </script>
 
@@ -176,6 +194,13 @@ export default defineComponent({
   padding: 1rem;
 }
 
+.toggle-categories {
+  padding: 0.5rem 1rem;
+  border-top: 1px solid #eee;
+  background-color: #f5f5f5;
+  text-align: center;
+}
+
 .empty-state {
   flex: 1;
   display: flex;
@@ -187,7 +212,6 @@ export default defineComponent({
   text-align: center;
 }
 
-/* Optional styling if your ChatCard or avatars have images */
 .avatar {
   width: 50px;
   height: 50px;
@@ -243,6 +267,22 @@ export default defineComponent({
 .secondary-btn:hover {
   background: #e77e23;
   color: #ffffff;
+}
+
+.user-btn {
+  color: #181f1b;
+  background: #5baf7e;
+  padding: 0.55rem 1.0rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.user-btn:hover {
+  background:  #07e061;
+  color: #181f1b;
 }
 
 </style>
