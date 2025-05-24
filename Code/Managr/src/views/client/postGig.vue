@@ -9,6 +9,9 @@
       <form @submit.prevent="submitGig">
         <label for="clientName">Client Name</label><br>
         <input type="text" id="clientName" v-model="gig.clientName" required readonly><br>
+
+        <label for="clientEmail">Client Email</label><br>
+        <input type="text" id="clientEmail" v-model="gig.clientEmail" required readonly><br>
   
         <label for="gigName">Gig Title</label><br>
         <input type="text" id="gigName" v-model="gig.gigName" required><br>
@@ -52,6 +55,7 @@
       return {
         gig: {
           clientName: "",
+          clientEmail: "",
           gigName: "",
           gigDescription: "",
           budget: null,
@@ -63,6 +67,7 @@
     mounted() {
       const userStore = useUserStore();
       this.gig.clientName = userStore.name;
+      this.gig.clientEmail = userStore.email;
     },
     methods: {
       async submitGig() {
@@ -85,7 +90,6 @@
           alert("Gig posted successfully!");
   
           this.gig = {
-            clientName: "",
             gigName: "",
             gigDescription: "",
             budget: null,
