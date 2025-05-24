@@ -16,7 +16,7 @@
         <article class="budget-price"> {{ formatCurrency(budget) }} </article>
         <article class="time-est"> {{ formatTime(time) }}</article>
       </section>
-      <router-link :to="{ path: '/applypost', query: { clientEmail: mail } }">
+      <router-link :to="{ path: '/applypost', query: { clientEmail: mail, jobTitle: title, jobBudget: budget, jobDesc: description } }">
         <button class="apply-button">Apply for Gig</button>
       </router-link>
     </section>

@@ -1,25 +1,40 @@
 <template>
   <section class="proposal-view">
-    <button type="button" class="secondary-btn" @click="goBack">🔙 Back</button>
+    <button type="button" class="secondary-btn" @click="goBack"> Back</button>
     <h2 class="view-title">All Proposals</h2>
     <section class="proposal-card">
-      <ProposalCard v-for="item in Proposals" :key="item.id" :name="item.name" :mail="item.mail" :avatar="item.image"
-        :content="item.content" :jobId="item.jobId" />
+      <ProposalCard
+        v-for="item in Proposals"
+        :key="item.id"
+        :id="item.id"
+        :ClientName="item.ClientName"
+        :mail="item.mail"
+        :avatar="item.image"
+        :status="item.status"
+        :content="item.content"
+        :jobTitle="item.jobTitle"
+        :jobDesc="item.jobDesc"
+        :jobBudget="Number(item.jobBudget)"
+      />
     </section>
   </section>
-</template>
+</template> 
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useUserStore } from '../../stores/userStore';
 import ProposalCard from './proposalCard.vue';
 
 interface ProposalItem {
-  id: number;
-  name: string;
+  id: string;
+  ClientName: string;
   mail: string;
   image: string;
+  status: string;
   content: string;
-  jobId?: string;
+  jobTitle:string;
+  jobDesc: string;
+  jobBudget: Number;
 }
 
 export default defineComponent({
@@ -32,9 +47,11 @@ export default defineComponent({
       Proposals: [] as ProposalItem[],
     };
   },
+
   mounted() {
+    const userStore = useUserStore();
     const backendUrl = import.meta.env.VITE_API_URL;
-    fetch(`${backendUrl}/applications`)
+    fetch(`${backendUrl}/jobRequests/${userStore.email}`)
       .then(response => {
         if (!response.ok) throw new Error('Failed to fetch applications');
         return response.json();
@@ -42,11 +59,14 @@ export default defineComponent({
       .then(data => {
         this.Proposals = data.map((gig: any) => ({
           id: gig.id,
-          name: gig.name,
+          ClientName: gig.name,
           mail: gig.sender,
           image: gig.avatar,
           content: gig.content,
-          jobId: gig.jobId,
+          jobTitle:gig.jobTitle,
+          jobDesc: gig.jobDesc,
+          status: gig.status,
+          jobBudget: gig.jobBudget,
         }));
       })
       .catch(error => {

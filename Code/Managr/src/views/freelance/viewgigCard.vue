@@ -8,12 +8,18 @@
       </section>
     </section>
 
-    <section class="application-content">
-      <h3 class="application-message">{{ content }}</h3>
+    <section class="card-content">
+      <h4 class="card-category">{{ jobTitle }}</h4>
+      <p class="card-description">{{ jobDesc }}</p>
+      <article class="budget-price"> {{ formatCurrency(jobBudget) }} </article>
+      <h4 class="application-message"> Application Message: {{ content }}</h4>
       <p class="application-status">Status: {{ status }}</p>
     </section>
 
-    <button class="hire-button" >Message</button>
+      <router-link :to="{ path: '/freelanceprogress', query: { clientName:name, clientEmail: mail, jobTitle: jobTitle, jobDesc: jobDesc } }">
+           <button class="hire-button" v-if="status === 'Approved'" > Track Progress </button>
+      </router-link>
+
   </article>
 </template>
 
@@ -23,6 +29,10 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     name: 'viewgigCard',
     props: {
+        id: {
+        type: String,
+        required: true,
+      },
         name: {
       type: String,
       required: true,
@@ -35,29 +45,36 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    jobTitle:{
+      type: String,
+      required: true,     
+    },
+    jobDesc: {
+      type: String,
+      required: true,
+    },
+    jobBudget:  {
+      type: Number,
+      required: true,
+    },
     content: {
         type:String,
         required: true,
     },
     status: {
-    type: String,
-    default: 'Submitted for Approval' 
+      type: String,
+      required: true, 
     }
     },
     methods: {
-        async Hire(){
-            try {
-                const res = await fetch(`${import.meta.env.VITE_API_URL}/application`, {
-                    method: "PUT"
-                });
-                const data = await res.json();
-                console.log(data.message);
-            } catch(err){
-                console.error('Error:', err);
-            }
+        formatCurrency(value: number) {
+          return new Intl.NumberFormat('en-ZA', {
+            style: 'currency',
+            currency: 'ZAR',
+            minimumFractionDigits: 2,
+          }).format(value);
         }
     }
-
 });
 </script>
 
@@ -111,19 +128,20 @@ export default defineComponent({
   margin-top: 8px;
 }
 
-.hire-button{
-  display: block;
-  margin-left: 0%;
-  padding: 0.4rem 3.9rem;
-  color: #f4f5f7;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-  background-color: rgb(37, 55, 73);
-  border-radius: 0.275rem;
+.hire-button {
+  padding: 0.5rem 1.2rem;
+  font-size: 14px;
+  background-color: #28a745; 
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  color: #fff;
 }
-.hire-button:hover{
-  background: #202c39;
-  color: #ffffff;
+
+.hire-button:hover {
+  background-color: #218838;
+  transform: scale(1.02);
 }
 </style>

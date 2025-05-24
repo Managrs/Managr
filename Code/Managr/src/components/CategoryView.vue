@@ -14,7 +14,7 @@
         </section>
       </section>
     </section>
-
+    
     <section class="cards-container">
       <CategoryCard
         v-for="item in filteredCategories"

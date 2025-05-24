@@ -3,26 +3,50 @@
         <section class="freelancer-info">
             <img class="freelancer-avatar" :src="avatar"/>
             <section class="freelancer-details">
-                <p class="freelancer-name">{{ name }}</p>
+                <p class="freelancer-name">{{ ClientName }}</p>
                 <p class="freelancer-mail"> {{ mail }}</p>
             </section>
         </section>
 
-        <section class="application-content">
-            <h3 class="application-message"> {{ content }}</h3>
+        <section class="card-content">
+          <h4 class="card-category">{{ jobTitle }}</h4>
+          <p class="card-description">{{ jobDesc }}</p>
+          <article class="budget-price"> {{ formatCurrency(jobBudget) }} </article>
+          <h4 class="application-message"> Application Message: {{ content }}</h4>
         </section>
 
-        <button class="hire-button" @click="Hire"> Hire </button>
+        <section class="proposal-actions">
+          <section v-if="status === 'Submitted'" class="action-buttons">
+            <button class="hire-button" @click="Hire">Hire</button>
+            <button class="reject-button" @click="Reject">Reject</button>
+          </section>
+
+          <section v-else-if="status === 'Approved'" class="action-buttons">
+              <router-link :to="{ path: '/clientprogress', query: {jobTitle: jobTitle, jobDesc: jobDesc,  clientName: ClientName, clientMail:mail } }">
+                  <button class="hire-button">Track Progress</button>
+              </router-link>
+          </section>
+        </section>
+
+
+        <Popup :visible="showPopup" @close="showPopup = false">
+            <p>{{ popupMessage }}</p> 
+        </Popup>
     </article>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue';
+//import Popup from '../freelance/popup.vue';
 
 export default defineComponent({
     name: 'ProposalCard',
     props: {
-        name: {
+      id: {
+        type: String,
+        required: true,
+      },
+      ClientName: {
       type: String,
       required: true,
     },
@@ -34,21 +58,82 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    jobTitle:{
+      type: String,
+      required: true,     
+    },
+    jobDesc: {
+      type: String,
+      required: true,
+    },
+    jobBudget:  {
+      type: Number,
+      required: true,
+    },
     content: {
         type:String,
         required: true,
+    },
+    status: {
+      type: String,
+      required: true, 
     }
     },
+    data() {
+      return {
+        showPopup: false,
+        popupMessage: ''
+      };
+    },
     methods: {
-        async Hire(){
+        formatCurrency(value: number) {
+          return new Intl.NumberFormat('en-ZA', {
+            style: 'currency',
+            currency: 'ZAR',
+            minimumFractionDigits: 2,
+          }).format(value);
+        },
+        async Hire() {
+          console.log("Approving application with ID:", this.id);
+          try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/approve/${this.id}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json"
+              }
+            });
+
+            const data = await res.json(); 
+            if (!res.ok) throw new Error(data.error || "Failed to approve");
+
+            this.popupMessage = "Proposal APPROVED successfully!";
+            this.showPopup = true;
+            setTimeout(() => this.showPopup = false, 1000);
+          } catch (err) {
+            console.error("Error:", err);
+            this.popupMessage = "Failed to approve proposal.";
+            this.showPopup = true;
+            setTimeout(() => this.showPopup = false, 1000);
+          }
+        },
+        async Reject(){
             try {
-                const res = await fetch(`${import.meta.env.VITE_API_URL}/application`, {
-                    method: "PUT"
-                });
-                const data = await res.json();
-                console.log(data.message);
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/reject/${this.id}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json"
+              }
+            });
+
+            const data = await res.json(); 
+            if (!res.ok) throw new Error(data.error);
+                        this.popupMessage = "Proposal has been REJECTED!";
+            this.showPopup = true;
+            setTimeout(() => this.showPopup = false, 1000);
             } catch(err){
                 console.error('Error:', err);
+                    this.popupMessage = "Failed to REJECT proposal.";
+                    this.showPopup = true;
             }
         }
     }
@@ -99,19 +184,33 @@ export default defineComponent({
   font-size: 10px;;
 }
 
-.hire-button{
-  display: block;
-  margin-left: 0%;
-  padding: 0.4rem 3.9rem;
-  color: #f4f5f7;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-  background-color: rgb(37, 55, 73);
-  border-radius: 0.275rem;
+.hire-button,
+.reject-button {
+  padding: 0.5rem 1.2rem;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  color: #fff;
 }
-.hire-button:hover{
-  background: #202c39;
-  color: #ffffff;
+
+.hire-button {
+  background-color: #28a745; /* Bootstrap-style green */
+}
+
+.hire-button:hover {
+  background-color: #218838;
+  transform: scale(1.02);
+}
+
+.reject-button {
+  background-color: #dc3545; /* Bootstrap-style red */
+}
+
+.reject-button:hover {
+  background-color: #c82333;
+  transform: scale(1.02);
 }
 </style>
