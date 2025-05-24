@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import CurrentJobCard from './currentJobCard.vue';
+import CurrentJobCard from './clientprogress.vue';
 
 export default {
   name: 'clientTrack',

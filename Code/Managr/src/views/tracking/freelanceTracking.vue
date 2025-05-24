@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import ProjectCard from './projectCard.vue';
+import ProjectCard from './freelanceprogress.vue';
 
 export default {
   name: 'FreelanceTrack',
