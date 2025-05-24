@@ -30,6 +30,14 @@ import profileSettings from '../views/profileSettings/profileSettings.vue';
 import Viewgigs from '../views/freelance/viewgigs.vue';
 import EditProfile from '../views/editProfile.vue';
 
+//Client router
+import Contractform from '../views/client/Contractform.vue';
+import feedbackModel from '../views/freelance/FeedbackModal.vue';
+
+//Payment router
+import Paymentbutton from '../views/Paymentbutton.vue';
+
+
 const routes = [
   {path: '/', name: 'LandingPage', component: LandingPage },
   {path: '/Dashboardclient' , name: 'Dashboardclient' , component: Dashboardclient},
@@ -63,7 +71,11 @@ const routes = [
   {path: '/viewgigs',name: 'viewgigs', component: Viewgigs},
   {path: '/applypost', name: 'applypost', component: ApplyPost},
   {path: '/chatsystem', name:'chatsystem', component:Chatbox},
-  {path: '/editprofile', name:'editprofile', component:EditProfile}
+  {path: '/editprofile', name:'editprofile', component:EditProfile},
+  {path: '/contractform', name:'contractform', component:Contractform},
+  {path: '/feedbackmodel', name:'feedbackmodel', component:feedbackModel},
+  {path: '/paymentbutton', name:'paymentbutton', component:Paymentbutton}
+
   /*
   {
     path: '/client',

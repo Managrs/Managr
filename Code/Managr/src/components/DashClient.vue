@@ -25,6 +25,10 @@
               <router-link to="/postgig" class="nav-link">Post Gig</router-link>
             </li>
 
+            <li> 
+              <router-link to="/contractform" class="nav-link"> Contract</router-link>
+            </li>
+
             <li>
               <router-link to="/chatsystem" class="nav-link">Messages</router-link>
             </li>

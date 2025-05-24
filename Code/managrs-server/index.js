@@ -226,6 +226,37 @@ app.post("/application", async (req, res) => {
   }
 });
 
+app.get('/admin/statuses', async (req, res) => {
+  try {
+    const applications = await db.collection('applications').find({}).toArray();
+    
+    const gigIds = applications.map(app => new ObjectId(app.gigId));
+    const gigs = await db.collection('gigs').find({
+      _id: { $in: gigIds }
+    }).toArray();
+    
+    const statuses = applications.map(app => {
+      const gig = gigs.find(g => g._id.toString() === app.gigId.toString());
+      return {
+        _id: app._id,
+        freelancerEmail: app.senderId,
+        clientEmail: app.receiverId,
+        content: app.content,
+        status: app.status,
+        applicationDate: app.createdAt || new Date(),
+        gigName: gig?.gigName || 'Deleted Gig',
+        clientName: gig?.clientName || 'Unknown',
+        budget: gig?.budget || 0,
+        category: gig?.category || 'Unknown'
+      };
+    });
+    
+    res.json(statuses);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 app.get("/applications", async (req, res) => {
   try {
     const Messages = await Message.find();
