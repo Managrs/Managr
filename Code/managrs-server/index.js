@@ -218,48 +218,91 @@ app.get('/allgigs', async (req, res) => {
 });
 
 app.post("/application", async (req, res) => {
-  try{
-    const message = await Message.create(req.body);
+  try {
+    const message = await Message.create({
+      ...req.body,
+      isApplication: true,
+      status: 'Pending' // Default status
+    });
     res.status(201).json(message);
-  } catch(err){
+  } catch(err) {
     res.status(400).json({ error: err.message });
   }
 });
 
 app.get('/admin/statuses', async (req, res) => {
   try {
-    const applications = await db.collection('applications').find({}).toArray();
+    // Get all application messages (either flagged as applications or with gigId)
+    const applications = await Message.find({
+      $or: [
+        { isApplication: true },
+        { gigId: { $exists: true } }
+      ]
+    })
+    .sort({ createdAt: -1 })
+    .lean();
+
+    // Get all unique gig IDs from applications
+    const gigIds = [...new Set(applications
+      .map(app => app.gigId)
+      .filter(id => id)
+    )];
+
+    // Find all related gigs and users
+    const [gigs, users] = await Promise.all([
+      Gig.find({ _id: { $in: gigIds } }).lean(),
+      User.find().lean()
+    ]);
+
+    // Create lookup maps
+    const gigMap = {};
+    const userMap = {};
     
-    const gigIds = applications.map(app => new ObjectId(app.gigId));
-    const gigs = await db.collection('gigs').find({
-      _id: { $in: gigIds }
-    }).toArray();
+    gigs.forEach(gig => {
+      gigMap[gig._id.toString()] = gig;
+    });
     
+    users.forEach(user => {
+      userMap[user.email] = user;
+    });
+
+    // Map applications to statuses with complete data
     const statuses = applications.map(app => {
-      const gig = gigs.find(g => g._id.toString() === app.gigId.toString());
+      const gig = app.gigId ? gigMap[app.gigId.toString()] : null;
+      const client = userMap[app.receiverId];
+      const freelancer = userMap[app.senderId];
+
       return {
         _id: app._id,
         freelancerEmail: app.senderId,
+        freelancerName: freelancer?.fullName || 'Unknown Freelancer',
         clientEmail: app.receiverId,
-        content: app.content,
-        status: app.status,
-        applicationDate: app.createdAt || new Date(),
+        clientName: client?.fullName || gig?.clientName || 'Unknown Client',
+        gigId: app.gigId,
         gigName: gig?.gigName || 'Deleted Gig',
-        clientName: gig?.clientName || 'Unknown',
+        category: gig?.category || 'Unknown',
         budget: gig?.budget || 0,
-        category: gig?.category || 'Unknown'
+        content: app.content,
+        status: app.status || 'Pending',
+        applicationDate: app.createdAt || new Date()
       };
     });
-    
+
     res.json(statuses);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Error in /admin/statuses:', error);
+    res.status(500).json({ 
+      success: false,
+      message: 'Failed to fetch application statuses',
+      error: error.message 
+    });
   }
 });
 
 app.get("/applications", async (req, res) => {
   try {
     const Messages = await Message.find();
+    // In your route handler, add logging:
     const users = await User.find();
     const userMap = {};
     users.forEach(user => {
@@ -315,15 +358,19 @@ app.get('/allusers', async (req, res) => {
   }
 });
 
-app.delete('/deleteUser/:id', async (req, res) => {
-  const userId = req.params.id;
+app.delete('/deleteUser', async (req, res) => {
+  const { email } = req.body;
+  if (!email){
+     return res.status(400).json({ error: 'Email is required' });
+  }
 
   try {
-    const deletedUser = await User.findByIdAndDelete(userId);
+    const deletedUser = await User.findOneAndDelete({email: email});
     if (!deletedUser) {
       return res.status(404).json({ error: 'User not found' });
     }
     res.status(200).json({ message: 'User deleted successfully' });
+    
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

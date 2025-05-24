@@ -38,7 +38,7 @@
             <td class="email">{{ user.email }}</td>
             <td class="role">{{ user.role }}</td>
             <td class="action-cell">
-              <button @click="deleteUser(user._id)" class="delete-btn">Delete</button>
+              <button @click="deleteUser(user.email)" class="delete-btn">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -101,18 +101,28 @@
     return filteredUsers.value.slice(start, start + perPage.value);
   });
 
-  const deleteUser = async (userId) => {
+  const deleteUser = async (userEmail) => {
     if (!confirm('Are you sure you want to delete this user?')) return;
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/deleteUser/${userId}`, {
-        method: 'DELETE'
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/deleteUser`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: userEmail })
       });
-      if (!response.ok) throw new Error('Failed to delete user');
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to delete user');
+      }
+      
       await fetchUsers(); // Refresh the list
     } catch (err) {
       error.value = err.message;
       console.error('Error:', err);
+      alert(err.message); // Show error to user
     }
   };
 

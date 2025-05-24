@@ -58,15 +58,40 @@ export default {
   setup() {
     const statuses = ref([]);
     const loading = ref(true);
+    const error = ref(null); // Added an error ref for user feedback
     const searchQuery = ref('');
     const statusFilter = ref('');
 
     const fetchStatuses = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/admin/statuses`);
-        statuses.value = response.data;
-      } catch (error) {
-        console.error('Error fetching statuses:', error);
+        loading.value = true;
+        error.value = null; // Clear previous errors
+        const apiUrl = `${import.meta.env.VITE_API_URL}/admin/statuses`;
+
+
+        const response = await axios.get(apiUrl);
+
+        if (Array.isArray(response.data)) {
+          statuses.value = response.data;
+        } else {
+          console.error('Error: API response is not an array.', response.data);
+          statuses.value = []; // Default to an empty array to prevent further errors
+          error.value = 'Received unexpected data format from server.';
+        }
+      } catch (err) {
+        console.error('Error fetching statuses:', err);
+        statuses.value = []; // Default to an empty array on error
+        if (err.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          error.value = `Error ${err.response.status}: ${err.response.data?.message || err.message}`;
+        } else if (err.request) {
+          // The request was made but no response was received
+          error.value = 'Network error: Could not connect to the server.';
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          error.value = `Error: ${err.message}`;
+        }
       } finally {
         loading.value = false;
       }
@@ -74,21 +99,39 @@ export default {
 
     const formatDate = (dateString) => {
       if (!dateString) return 'N/A';
-      const options = { year: 'numeric', month: 'short', day: 'numeric' };
-      return new Date(dateString).toLocaleDateString(undefined, options);
+      try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) {
+            return 'Invalid Date';
+        }
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return date.toLocaleDateString(undefined, options);
+      } catch (e) {
+        console.error("Error formatting date:", dateString, e);
+        return 'Invalid Date';
+      }
     };
 
     const filteredStatuses = computed(() => {
-      return statuses.value.filter(status => {
-        const matchesSearch = 
-          status.clientEmail.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-          status.freelancerEmail.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-          status.gigName.toLowerCase().includes(searchQuery.value.toLowerCase());
+      if (!Array.isArray(statuses.value)) return [];
+
+      const query = searchQuery.value.toLowerCase().trim();
+      const status = statusFilter.value;
+
+      return statuses.value.filter(app => {
+        // Check status filter
+        if (status && app.status !== status) return false;
         
-        const matchesStatus = statusFilter.value ? 
-          status.status === statusFilter.value : true;
+        // Check search query
+        if (!query) return true;
         
-        return matchesSearch && matchesStatus;
+        return (
+          (app.clientEmail?.toLowerCase().includes(query)) ||
+          (app.clientName?.toLowerCase().includes(query)) ||
+          (app.freelancerEmail?.toLowerCase().includes(query)) ||
+          (app.freelancerName?.toLowerCase().includes(query)) ||
+          (app.gigName?.toLowerCase().includes(query))
+        );
       });
     });
 
@@ -97,6 +140,7 @@ export default {
     return {
       statuses,
       loading,
+      error, // Expose error ref
       searchQuery,
       statusFilter,
       filteredStatuses,

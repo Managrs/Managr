@@ -13,6 +13,9 @@ const MessageSchema = new mongoose.Schema({
     lowercase: true,
     trim: true
   },
+  isApplication: { type: Boolean, default: false },
+  gigId: { type: mongoose.Schema.Types.ObjectId, ref: 'Gig' },
+  status: { type: String, enum: ['Pending', 'Approved', 'Rejected'], default: 'Pending'},
   content: {
     type: String,
     required: true
