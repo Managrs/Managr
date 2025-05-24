@@ -10,8 +10,11 @@
         :name="item.name"
         :mail="item.mail"
         :avatar="item.image"
+        :status="item.status"
         :content="item.content"
-        :jobId="item.jobId"
+        :jobTitle="item.jobTitle"
+        :jobDesc="item.jobDesc"
+        :jobBudget="Number(item.jobBudget)"
       />
     </section>
   </section>
@@ -27,8 +30,11 @@ interface ProposalItem {
   name: string;
   mail: string;
   image: string;
+  status: string;
   content: string;
-  jobId?: string;
+  jobTitle:string;
+  jobDesc: string;
+  jobBudget: Number;
 }
 
 export default defineComponent({
@@ -57,6 +63,10 @@ export default defineComponent({
           mail: gig.sender,
           image: gig.avatar,
           content: gig.content,
+          jobTitle:gig.jobTitle,
+          jobDesc: gig.jobDesc,
+          status: gig.status,
+          jobBudget: gig.jobBudget,
         }));
       })
       .catch(error => {

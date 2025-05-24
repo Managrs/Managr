@@ -227,6 +227,10 @@ app.get("/jobRequests/:email", async (req, res) => {
         content: msg.content,
         name: user?.fullName || "Unknown",
         avatar: user?.avatar || null,
+        status: msg.status || "Submitted",
+        jobTitle:msg.jobTitle,
+        jobDesc: msg.jobDesc,
+        jobBudget: msg.jobBudget,
       };
     });
 
@@ -262,6 +266,9 @@ app.get("/myApplications/:email", async (req, res) => {
         name: user?.fullName || "Unknown",
         avatar: user?.avatar,
         status: msg.status || "Submitted",
+        jobTitle:msg.jobTitle,
+        jobDesc: msg.jobDesc,
+        jobBudget: msg.jobBudget,
       };
     });
 
@@ -400,8 +407,6 @@ app.get('/contacts', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

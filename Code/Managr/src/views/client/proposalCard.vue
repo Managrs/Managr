@@ -8,15 +8,28 @@
             </section>
         </section>
 
-        <section class="application-content">
-            <h3 class="application-message"> {{ content }}</h3>
+        <section class="card-content">
+          <h4 class="card-category">{{ jobTitle }}</h4>
+          <p class="card-description">{{ jobDesc }}</p>
+          <article class="budget-price"> {{ formatCurrency(jobBudget) }} </article>
+          <h4 class="application-message"> Application Message: {{ content }}</h4>
+        </section>
+
+        <section class="proposal-actions">
+          <section v-if="status === 'Submitted'" class="action-buttons">
+            <button class="hire-button" @click="Hire">Hire</button>
+            <button class="reject-button" @click="Reject">Reject</button>
+          </section>
+
+          <section v-else-if="status === 'Approved'" class="action-buttons">
+              <router-link :to="{ path: '/clientprogress', query: { clientEmail: mail, jobTitle: jobTitle, jobDesc: jobDesc } }">
+                  <button class="hire-button">Track Progress</button>
+              </router-link>
+          </section>
         </section>
 
 
-        <button class="hire-button" @click="Hire"> Hire </button>
-        <button class="reject-button" @click="Reject"> Reject </button>
-
-                <Popup :visible="showPopup" @close="showPopup = false">
+        <Popup :visible="showPopup" @close="showPopup = false">
             <p>{{ popupMessage }}</p> 
         </Popup>
     </article>
@@ -45,9 +58,25 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    jobTitle:{
+      type: String,
+      required: true,     
+    },
+    jobDesc: {
+      type: String,
+      required: true,
+    },
+    jobBudget:  {
+      type: Number,
+      required: true,
+    },
     content: {
         type:String,
         required: true,
+    },
+    status: {
+      type: String,
+      required: true, 
     }
     },
     data() {
@@ -57,7 +86,15 @@ export default defineComponent({
       };
     },
     methods: {
+        formatCurrency(value: number) {
+          return new Intl.NumberFormat('en-ZA', {
+            style: 'currency',
+            currency: 'ZAR',
+            minimumFractionDigits: 2,
+          }).format(value);
+        },
         async Hire() {
+          console.log("Approving application with ID:", this.id);
           try {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/approve/${this.id}`, {
               method: "PUT",
@@ -149,19 +186,31 @@ export default defineComponent({
 
 .hire-button,
 .reject-button {
-  padding: 0.4rem 2rem;
-  color: #f4f5f7;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-  background-color: rgb(37, 55, 73);
-  border-radius: 0.275rem;
+  padding: 0.5rem 1.2rem;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  color: #fff;
 }
 
-.hire-button:hover,
+.hire-button {
+  background-color: #28a745; /* Bootstrap-style green */
+}
+
+.hire-button:hover {
+  background-color: #218838;
+  transform: scale(1.02);
+}
+
+.reject-button {
+  background-color: #dc3545; /* Bootstrap-style red */
+}
+
 .reject-button:hover {
-  background: #202c39;
-  color: #ffffff;
+  background-color: #c82333;
+  transform: scale(1.02);
 }
 </style>
