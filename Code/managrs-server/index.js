@@ -278,7 +278,6 @@ app.get("/myApplications/:email", async (req, res) => {
   }
 });
 
-
 app.put("/approve/:applicationId", async (req, res) => {
   try {
     const  messageId = req.params.applicationId;
@@ -349,11 +348,11 @@ app.post('/newMessage', async (req, res) => {
   }
 });
 
-app.delete('/deleteUser/:id', async (req, res) => {
-  const userId = req.params.id;
+app.delete('/deleteUser/:email', async (req, res) => {
+  const userId = req.params.email;
 
   try {
-    const deletedUser = await User.findByIdAndDelete(userId);
+    const deletedUser = await User.findOneAndDelete(userId);
     if (!deletedUser) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -403,6 +402,66 @@ app.get('/contacts', async (req, res) => {
     }));
 
     res.json(response);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/getprogress', async (req, res) => {
+  const  { email, Title, Description } = req.query;
+
+  try {
+    const trackings = await Application.find({
+      $and: [
+        { senderId: email},
+        { jobTitle: Title},
+        { jobDesc: Description}
+      ]
+    });
+    res.json(trackings);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+
+});
+
+app.put('/setprogress', async (req, res) => {
+
+  try {
+    const  { progressid,progress} = req.body;
+
+    const updatedApp = await Application.findByIdAndUpdate(
+      progressid,
+      { progress: progress },
+      { new: true }
+    );
+
+    if (!updatedApp) {
+      return res.status(404).json({ error: 'Application not found' });
+    }
+
+    res.json({ message: 'Progress updated', application: updatedApp });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.put('/setmilestone', async (req, res) => {
+
+  try {
+    const  { progressid, Amountdue} = req.body;
+
+    const updatedApp = await Application.findByIdAndUpdate(
+      progressid,
+      { Amountdue: Amountdue },
+      { new: true }
+    );
+
+    if (!updatedApp) {
+      return res.status(404).json({ error: 'Application not found' });
+    }
+
+    res.json({ message: 'Amount updated', application: updatedApp });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

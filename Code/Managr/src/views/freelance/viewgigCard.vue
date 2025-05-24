@@ -16,7 +16,7 @@
       <p class="application-status">Status: {{ status }}</p>
     </section>
 
-      <router-link :to="{ path: '/freelanceprogress', query: { clientEmail: mail, jobTitle: jobTitle, jobDesc: jobDesc } }">
+      <router-link :to="{ path: '/freelanceprogress', query: { clientName:name, clientEmail: mail, jobTitle: jobTitle, jobDesc: jobDesc } }">
            <button class="hire-button" v-if="status === 'Approved'" > Track Progress </button>
       </router-link>
 

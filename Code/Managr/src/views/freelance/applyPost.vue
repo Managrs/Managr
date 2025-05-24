@@ -51,6 +51,7 @@
           clientEmail: "",
           freelancerEmail: "",
           gigMessage: "",
+          gigAmount:"",
         },
       };
     },
@@ -60,6 +61,7 @@
       this.gig.gigTitle = this.$route.query.jobTitle;
       this.gig.gigBug =this.$route.query.jobBudget;
       this.gig.gigDesc = this.$route.query.jobDesc;
+      this.gig.gigAmount = this.gig.gigBug;
 
       this.gig.clientEmail = this.$route.query.clientEmail;
       this.gig.freelancerEmail = userStore.email;
@@ -73,10 +75,10 @@
             senderId: this.gig.freelancerEmail,
             receiverId: this.gig.clientEmail,
             content: this.gig.gigMessage,
-            //new here
             jobTitle:this.gig.gigTitle,
             jobBudget:this.gig.gigBug,
             jobDesc:this.gig.gigDesc,
+            Amountdue:this.gig.gigAmount,
           };
   
           const response = await fetch(`${backendUrl}/application`, {

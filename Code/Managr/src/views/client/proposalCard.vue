@@ -3,7 +3,7 @@
         <section class="freelancer-info">
             <img class="freelancer-avatar" :src="avatar"/>
             <section class="freelancer-details">
-                <p class="freelancer-name">{{ name }}</p>
+                <p class="freelancer-name">{{ ClientName }}</p>
                 <p class="freelancer-mail"> {{ mail }}</p>
             </section>
         </section>
@@ -22,7 +22,7 @@
           </section>
 
           <section v-else-if="status === 'Approved'" class="action-buttons">
-              <router-link :to="{ path: '/clientprogress', query: { clientEmail: mail, jobTitle: jobTitle, jobDesc: jobDesc } }">
+              <router-link :to="{ path: '/clientprogress', query: {jobTitle: jobTitle, jobDesc: jobDesc,  clientName: ClientName, clientMail:mail } }">
                   <button class="hire-button">Track Progress</button>
               </router-link>
           </section>
@@ -42,11 +42,11 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     name: 'ProposalCard',
     props: {
-        id: {
+      id: {
         type: String,
         required: true,
       },
-        name: {
+      ClientName: {
       type: String,
       required: true,
     },

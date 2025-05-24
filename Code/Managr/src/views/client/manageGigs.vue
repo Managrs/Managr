@@ -7,7 +7,7 @@
         v-for="item in Proposals"
         :key="item.id"
         :id="item.id"
-        :name="item.name"
+        :ClientName="item.ClientName"
         :mail="item.mail"
         :avatar="item.image"
         :status="item.status"
@@ -27,7 +27,7 @@ import ProposalCard from './proposalCard.vue';
 
 interface ProposalItem {
   id: string;
-  name: string;
+  ClientName: string;
   mail: string;
   image: string;
   status: string;
@@ -59,7 +59,7 @@ export default defineComponent({
       .then(data => {
         this.Proposals = data.map((gig: any) => ({
           id: gig.id,
-          name: gig.name,
+          ClientName: gig.name,
           mail: gig.sender,
           image: gig.avatar,
           content: gig.content,

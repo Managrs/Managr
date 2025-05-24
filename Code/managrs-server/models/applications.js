@@ -43,7 +43,8 @@ const ApplicationSchema = new mongoose.Schema({
   },
   Amountdue: {
     type: Number,
-    required: true   
+    required: false,
+    default: 0
   }
 });
 
