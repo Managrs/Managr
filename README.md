@@ -83,7 +83,7 @@ A secure three-tiered system designed for transparency and accountability:
 
 ---
 
-## 👥 Project Owners
+## 👥 Project Owners: **Group 52**
 
 * **Lebo Kharafu** - 2577390
 * **Dimpho Matea** - 2678460
