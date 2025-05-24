@@ -1,10 +1,11 @@
 <template>
     <main class="client-dashboard">
+        <button type="button" class="secondary-btn" @click="goBack">🔙 Back</button>
         <header class="dashboard-header">
             <h1>Client Dashboard</h1>
             <p>Manage your projects and payments</p>
         </header>
-
+        
         <section class="projects-container">
             <article v-for="project in projects" :key="project.id" class="project-card">
                 <header class="project-header">
@@ -187,6 +188,10 @@ export default {
         }
     },
     methods: {
+        goBack() {
+      // @ts-ignore
+      this.$router.go(-1);
+    },
         canMakePayment(project) {
             return project.paymentAmount > 0 &&
                 project.paymentAmount <= (project.totalPrice - project.paidAmount) &&
@@ -824,4 +829,21 @@ export default {
         flex-direction: column;
     }
 }
+
+.secondary-btn {
+  color: #ffffff;
+  background: #000000;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.secondary-btn:hover {
+  background: #e77e23;
+  color: #ffffff;
+}
+
 </style>

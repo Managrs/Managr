@@ -1,4 +1,5 @@
 <template>
+    <button type="button" class="secondary-btn" @click="goBack">🔙 Back</button>
   <main class="freelancer-dashboard">
     <header class="dashboard-header">
       <h1>Project Dashboard</h1>
@@ -143,6 +144,10 @@ export default {
     }
   },
   methods: {
+    goBack() {
+      // @ts-ignore
+      this.$router.go(-1);
+    },
     updateProgress(projectId, newProgress) {
       const project = this.projects.find(p => p.id === projectId);
       if (project) {
@@ -663,5 +668,21 @@ export default {
   .save-btn, .export-btn {
     width: 100%;
   }
+}
+
+.secondary-btn {
+  color: #ffffff;
+  background: #000000;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.secondary-btn:hover {
+  background: #e77e23;
+  color: #ffffff;
 }
 </style>
