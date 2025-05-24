@@ -99,7 +99,7 @@
 
 <script>
 export default {
-  name: 'FreelancerDashboard',
+  name: 'FreelanceTrack',
   data() {
     return {
       projects: [
