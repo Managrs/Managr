@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
+const mongoose = require("mongoose");
 
 const { Server } = require('socket.io');
 
@@ -8,6 +9,7 @@ const connectToDB = require('./db/connect');
 const User = require('./models/user'); 
 const Gig = require('./models/gigs'); 
 const Report = require('./models/report'); 
+const Application = require('./models/applications');
 const Message = require('./models/messages');
 
 require('dotenv').config();
@@ -67,7 +69,7 @@ io.on('connection', (socket) => {
 
   // Handle sending messages
   socket.on('sendMessage', async ({ roomId, senderId, receiverId, content }) => {
-    const message = new Message({ senderId, receiverId, content });
+    const message = new Application({ senderId, receiverId, content });
     await message.save();
 
     io.to(roomId).emit('receiveMessage', {
@@ -148,29 +150,6 @@ app.get('/user/:email', async (req, res) => {
   }
 });
 
-/*app.post('/auth/registerOrUpdateUser', async (req, res) => {
-  try {
-    const { fullName, email, avatar, role } = req.body;
-
-    let user = await User.findOne({ email });
-
-    if (!user) {
-      user = new User({ fullName, email, avatar, role });
-      await user.save();
-    } else {
-      user.fullName = fullName;
-      user.avatar = avatar;
-      await user.save();
-    }
-
-    res.status(200).json({ message: 'User synced' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to sync user' });
-  }
-});*/
-
-
 app.post('/newGig', async (req, res) => {
   try {
     const gig = await Gig.create(req.body);
@@ -219,50 +198,118 @@ app.get('/allgigs', async (req, res) => {
 
 app.post("/application", async (req, res) => {
   try{
-    const message = await Message.create(req.body);
-    res.status(201).json(message);
+    const application = await Application.create(req.body);
+    res.status(201).json(application);
   } catch(err){
     res.status(400).json({ error: err.message });
   }
 });
 
-app.get("/applications", async (req, res) => {
+app.get("/jobRequests/:email", async (req, res) => {
+  const email = req.params.email;
+
   try {
-    const Messages = await Message.find();
-    const users = await User.find();
+    const applicationsRaw = await Application.find({ receiverId: email });
+
+    const senderIds = [...new Set(applicationsRaw.map(msg => msg.senderId))];
+    const users = await User.find({ email: { $in: senderIds } });
     const userMap = {};
     users.forEach(user => {
       userMap[user.email] = user;
     });
-    const messages = Messages.map((msg, index) => {
+
+    const applications = applicationsRaw.map(msg => {
       const user = userMap[msg.senderId];
       return {
-        id: index + 1,
+        id: msg._id.toString(),
         sender: msg.senderId,
         receiver: msg.receiverId,
         content: msg.content,
-        name: user.fullName,
-        avatar: user.avatar,  
+        name: user?.fullName || "Unknown",
+        avatar: user?.avatar || null,
       };
     });
-    res.json(messages);
+
+    res.json(applications);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
 
-app.get('/messages', async (req, res) => {
-  const { user1, user2 } = req.query;
+app.get("/myApplications/:email", async (req, res) => {
+  const email = req.params.email;
+  console.log("Fetching applications for:", email);
+
   try {
-    const messages = await Message.find({
-      $or: [
-        { senderId: user1, receiverId: user2 },
-        { senderId: user2, receiverId: user1 }
-      ]
-    }).sort({ timestamp: 1 });
-    res.json(messages);
+    const applicationsRaw = await Application.find({ senderId: email });
+
+    const receiverIds = [...new Set(applicationsRaw.map(msg => msg.receiverId))];
+
+    const users = await User.find({ email: { $in: receiverIds } });
+
+    const userMap = {};
+    users.forEach(user => {
+      userMap[user.email] = user;
+    });
+
+    const applications = applicationsRaw.map(msg => {
+      const user = userMap[msg.receiverId];
+      return {
+        id: msg._id.toString(),
+        sender: msg.senderId,
+        receiver: msg.receiverId,
+        content: msg.content,
+        name: user?.fullName || "Unknown",
+        avatar: user?.avatar,
+        status: msg.status || "Submitted",
+      };
+    });
+
+    res.json(applications);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(400).json({ error: err.message });
+  }
+});
+
+
+app.put("/approve/:applicationId", async (req, res) => {
+  try {
+    const  messageId = req.params.applicationId;
+    const objectId = new mongoose.Types.ObjectId(messageId);
+    const updatedMessage = await Application.findByIdAndUpdate(
+      objectId,
+      { status: "Approved" },
+      { new: true }
+    );
+
+    if (!updatedMessage) {
+      return res.status(404).json({ error: "Message not found" });
+    }
+
+    res.json({ message: "Status updated to Approved", data: updatedMessage });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+app.put("/reject/:applicationId", async (req, res) => {
+
+  try {
+    const  messageId = req.params.applicationId;
+    const objectId = new mongoose.Types.ObjectId(messageId);
+    const updatedMessage = await Application.findByIdAndUpdate(
+      objectId,
+      { status: "Rejected" },
+      { new: true }
+    );
+
+    if (!updatedMessage) {
+      return res.status(404).json({ error: "Message not found" });
+    }
+
+    res.json({ message: "Status updated to Rejected", data: updatedMessage });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 
@@ -284,6 +331,17 @@ app.get('/allusers', async (req, res) => {
   }
 });
 
+app.post('/newMessage', async (req, res) => {
+  const { senderId, receiverId, content } = req.body;
+  try {
+    const message = new Message({ senderId, receiverId, content });
+    await message.save();
+    res.status(201).json(message);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.delete('/deleteUser/:id', async (req, res) => {
   const userId = req.params.id;
 
@@ -299,43 +357,51 @@ app.delete('/deleteUser/:id', async (req, res) => {
 });
 
 app.get('/messages', async (req, res) => {
+  const { user1, user2 } = req.query;
   try {
-    const userEmail = req.query.userId;
-
-    if (!userEmail) {
-      return res.status(400).json({ error: 'Missing userId (email) query parameter' });
-    }
-
-    const users = await User.find();
-    const currentUser = users.find(u => u.email === userEmail);
-
-    if (!currentUser) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
     const messages = await Message.find({
-      $or: [{ senderId: currentUser._id.toString() }, { receiverId: currentUser._id.toString() }]
-    });
-
-    const formattedMessages = messages.map((msg, index) => {
-      const sender = users.find(u => u._id.toString() === msg.senderId);
-      const receiver = users.find(u => u._id.toString() === msg.receiverId);
-      return {
-        id: index + 1,
-        senderId: msg.senderId,
-        senderName: sender?.fullName,
-        senderAvatar: sender?.avatar,
-        receiverId: msg.receiverId,
-        receiverName: receiver?.fullName,
-        receiverAvatar: receiver?.avatar,
-        content: msg.content
-      };
-    });
-    res.json(formattedMessages);
+      $or: [
+        { senderId: user1, receiverId: user2 },
+        { senderId: user2, receiverId: user1 }
+      ]
+    }); /*.sort({ createdAt: 1 });*/
+    res.json(messages);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
+
+app.get('/contacts', async (req, res) => {
+  const { email } = req.query;
+  if (!email) return res.status(400).json({ error: 'Email is required' });
+
+  try {
+    const messages = await Message.find({
+      $or: [{ senderId: email }, { receiverId: email }]
+    });
+    const contactEmails = new Set();
+
+    messages.forEach(msg => {
+      if (msg.senderId !== email) contactEmails.add(msg.senderId);
+      if (msg.receiverId !== email) contactEmails.add(msg.receiverId);
+    });
+
+    const contacts = await User.find({ email: { $in: Array.from(contactEmails) } });
+
+    const response = contacts.map((user, index) => ({
+      id: index + 1,
+      fullName: user.fullName,
+      avatar: user.avatar,
+      email: user.email
+    }));
+
+    res.json(response);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

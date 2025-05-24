@@ -5,6 +5,7 @@
       <ViewgigCard
         v-for="item in Proposals"
         :key="item.id"
+        :id="item.id"
         :name="item.name"
         :mail="item.mail"
         :avatar="item.image"
@@ -17,10 +18,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useUserStore } from '../../stores/userStore';
 import ViewgigCard from './viewgigCard.vue';
 
 interface ProposalItem {
-  id: number;
+  id: string;
   name: string;
   mail: string;
   image: string;
@@ -39,17 +41,18 @@ export default defineComponent({
     };
   },
   mounted() {
+    const userStore = useUserStore();
     const backendUrl = import.meta.env.VITE_API_URL;
-    fetch(`${backendUrl}/applications`)
+    fetch(`${backendUrl}/myApplications/${userStore.email}`)
       .then(response => {
         if (!response.ok) throw new Error('Failed to fetch applications');
         return response.json();
       })
       .then(data => {
         this.Proposals = data.map((gig: any) => ({
-          id: gig.id,
+          id: gig._id,
           name: gig.name,
-          mail: gig.sender,
+          mail: gig.receiver,
           image: gig.avatar,
           content: gig.content,
           status: gig.status,
