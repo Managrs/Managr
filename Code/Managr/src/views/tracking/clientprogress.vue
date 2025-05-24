@@ -10,7 +10,7 @@
     <section class="project-details">
       <dl class="project-info">
         <dt>Freelancer:</dt>
-        <dd class="freelancer-name">{{ freelancer }}</dd>
+        <dd class="freelancer-name">{{ clientName }}</dd>
 
         <dt>Description:</dt>
         <dd>{{ description }}</dd>
@@ -19,10 +19,10 @@
         <dd class="total-price">${{ totalPrice.toFixed(2) }}</dd>
 
         <dt>Amount Paid:</dt>
-        <dd class="paid-amount">${{ paidAmount.toFixed(2) }}</dd>
+        <dd class="paid-amount">${{ (totalPrice - Amountdue).toFixed(2) }}</dd>
 
         <dt>Amount Due:</dt>
-        <dd class="due-amount">${{ amountDue.toFixed(2) }}</dd>
+        <dd class="due-amount">${{ Amountdue.toFixed(2) }}</dd>
       </dl>
     </section>
 
@@ -40,71 +40,32 @@
 
     <section 
       class="payment-section" 
-      v-if="amountDue > 0"
+      v-if="Amountdue > 0"
     >
       <h3>Make Payment</h3>
+      <form @submit.prevent="submitGig">
+        <label for="paymentAmount" class="payment-label">Enter Amount</label><br>
+            <input
+              id="paymentAmount"
+              type="number"
+              v-model.number="paymentAmount"
+              :max="Amountdue"
+              min="100"
+              required
+              step="100"
+              placeholder="Payment amount"
+              class="payment-input"
+            /><br>
 
-      <fieldset class="payment-form">
-        <legend>Payment Details</legend>
+        <button class="hire-button" type="submit" :disabled="paymentAmount <= 0 || paymentAmount > Amountdue">
+          Pay
+        </button>
+      </form>
 
-        <label for="payment-amount">Payment Amount:</label>
-        <input 
-          id="payment-amount" 
-          type="number" 
-          :max="amountDue" 
-          min="0"
-          step="0.01" 
-          :value="paymentAmount" 
-          @input="updatePaymentAmount($event.target.value)"
-          class="payment-input"
-          :placeholder="`Max: $${amountDue.toFixed(2)}`"
-        >
-
-        <label for="payment-method">Payment Method:</label>
-        <select 
-          id="payment-method" 
-          :value="selectedPaymentMethod" 
-          @change="updatePaymentMethod($event.target.value)"
-          class="payment-select"
-        >
-          <option value="">Select payment method</option>
-          <option 
-            v-for="method in paymentMethods" 
-            :key="method.value" 
-            :value="method.value"
-          >
-            {{ method.label }}
-          </option>
-        </select>
-
-      </fieldset>
-
-      <button 
-        @click="makePayment" 
-        :disabled="!canMakePayment" 
-        class="payment-btn"
-      >
-        Make Payment of ${{ (paymentAmount || 0).toFixed(2) }}
-      </button>
-    </section>
-
-    <section class="payment-status-section" v-else>
-      <h3 class="paid-status">✓ Project Fully Paid</h3>
-      <p>All payments have been completed for this project.</p>
-    </section>
-
-    <section class="communication-section">
-      <h3>Project Communication</h3>
-      <button @click="contactFreelancer" class="contact-btn">
-        Contact {{ freelancer }}
-      </button>
-      <button @click="requestUpdate" class="update-btn">
-        Request Progress Update
-      </button>
     </section>
 
     <footer class="project-actions">
-      <button @click="exportToPDF" class="invoice-btn">
+      <button @click="exportToPDF" class="hire-button">
         Export to PDF
       </button>
     </footer>
@@ -114,78 +75,85 @@
 <script>
 export default {
   name: 'ClientProjectCard',
-  props: {
-    projectId: {
-      type: [String, Number],
-      required: true
-    },
-    title: {
-      type: String,
-      required: true
-    },
-    freelancer: {
-      type: String,
-      required: true
-    },
-    description: {
-      type: String,
-      required: true
-    },
-    totalPrice: {
-      type: Number,
-      required: true
-    },
-    paidAmount: {
-      type: Number,
-      required: true
-    },
-    progress: {
-      type: Number,
-      required: true
-    },
-    /*startDate: {
-      type: String,
-      required: true
-    },*/
-    paymentAmount: {
-      type: [Number, String],
-      default: 0
-    },
-    selectedPaymentMethod: {
-      type: String,
-      default: ''
-    },
-    paymentMethods: {
-      type: Array,
-      default: () => [
-        { value: 'EFT', label: 'EFT' },
-        { value: 'paypal', label: 'PayPal' }
-      ]
-    }
+  
+    data() {
+    return {
+      id: "",
+      title: this.$route.query.jobTitle,
+      clientName: this.$route.query.clientName,
+      description: this.$route.query.jobDesc,
+      totalPrice: 0,
+      Amountdue: 0,
+      paymentAmount: 0,
+      progress: 0,
+      loaded: false
+    };
+
   },
 
-  emits: [
-    'make-payment',
-    'contact-freelancer',
-    'request-update',
-    'export-pdf',
-    'update-payment-amount',
-    'update-payment-method',
-    'update-payment-note'
-  ],
+  methods: {
+      async fetchProject() {
+      try {
+        const backendUrl = import.meta.env.VITE_API_URL;
+        const response = await fetch(`${backendUrl}/getprogress?email=${this.$route.query.clientMail}&Title=${this.title}&Description=${this.description}`);
+        if (!response.ok) throw new Error('Failed to fetch progress');
+        const data = await response.json();
 
-  computed: {
-    amountDue() {
-      return this.totalPrice - this.paidAmount;
+        if (data.length === 0) {
+          console.warn('No project found');
+          return;
+        }
+
+        const project = data[0];
+        this.id = project._id;
+        this.totalPrice = project.jobBudget ;
+        this.Amountdue = project.Amountdue;
+        this.progress = project.progress ;
+        this.loaded = true;
+      } catch (err) {
+        console.error('Error fetching project:', err);
+      }
+    },
+    
+    async submitGig() {
+        try {
+        const payload = {
+          progressid: this.id,
+          Amountdue: this.Amountdue - this.paymentAmount
+        };
+
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/setmilestone`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) throw new Error(data.error || 'Failed to update progress');
+
+        alert('Due Amount updated successfully!'); 
+
+      } catch (err) {
+        console.error('Error updating progress:', err);
+        alert('Failed to update progress: ' + err.message);
+      }
     },
 
+    exportToPDF() {
+      this.$emit('export-pdf', this.projectId);
+    },
+  },
+
+  computed: {
     progressStatusClass() {
       if (this.progress >= 90) return 'status-complete';
       if (this.progress >= 70) return 'status-near-complete';
       if (this.progress >= 40) return 'status-in-progress';
       return 'status-just-started';
     },
-
     progressStatusText() {
       if (this.progress >= 90) return 'Nearly Complete';
       if (this.progress >= 70) return 'Well Underway';
@@ -193,56 +161,11 @@ export default {
       if (this.progress >= 10) return 'Getting Started';
       return 'Just Started';
     },
-
-    canMakePayment() {
-      return (
-        this.paymentAmount > 0 &&
-        this.paymentAmount <= this.amountDue &&
-        this.selectedPaymentMethod
-      );
-    }
   },
-
-  methods: {
-    makePayment() {
-      if (this.canMakePayment) {
-        this.$emit('make-payment', {
-          projectId: this.projectId,
-          amount: parseFloat(this.paymentAmount),
-          method: this.selectedPaymentMethod,
-          note: this.paymentNote
-        });
-      }
-    },
-
-    contactFreelancer() {
-      this.$emit('contact-freelancer', this.projectId);
-    },
-
-    requestUpdate() {
-      this.$emit('request-update', this.projectId);
-    },
-
-    exportToPDF() {
-      this.$emit('export-pdf', this.projectId);
-    },
-
-    updatePaymentAmount(value) {
-      this.$emit('update-payment-amount', parseFloat(value) || 0);
-    },
-
-    updatePaymentMethod(value) {
-      this.$emit('update-payment-method', value);
-    },
-
-    formatDate(dateString) {
-      const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
-    }
+  
+  mounted() {
+    this.paymentAmount = 0;
+    this.fetchProject();
   }
 }
 </script>
@@ -541,6 +464,61 @@ export default {
 .invoice-btn:hover {
   background: #1a252f;
   transform: translateY(-1px);
+}
+
+.hire-button{
+  padding: 0.5rem 5.2rem;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  color: #fff;
+}
+
+.hire-button {
+  background-color: #28a745; /* Bootstrap-style green */
+}
+
+.hire-button:hover {
+  background-color: #218838;
+  transform: scale(1.02);
+}
+
+.payment-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 20px;
+  max-width: 300px;
+  font-family: Arial, sans-serif;
+}
+
+.payment-label {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.payment-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.payment-input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.payment-input::placeholder {
+  color: #999;
 }
 
 @media (max-width: 768px) {

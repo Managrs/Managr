@@ -16,12 +16,36 @@ const ApplicationSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-status: {
+  jobTitle:{
+    type: String,
+    required: true
+  },
+  jobBudget:{
+    type: Number,
+    required: true
+  },
+  jobDesc:{
+      type: String,
+      required: true
+  },
+  status: {
   type: String,
   required: true,
   enum: ["Submitted", "Approved", "Rejected"],
   default: "Submitted"
-}
+  },
+  progress: {
+    type: Number,
+    required: true,
+    default: 0,
+    min: 0,
+    max: 100
+  },
+  Amountdue: {
+    type: Number,
+    required: false,
+    default: 0
+  }
 });
 
 module.exports = mongoose.model("Application", ApplicationSchema);

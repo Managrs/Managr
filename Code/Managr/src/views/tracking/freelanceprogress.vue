@@ -1,16 +1,13 @@
 <template>
-  <article class="project-card">
+  <article class="project-card" v-if="loaded">
     <header class="project-header">
       <h2>{{ title }}</h2>
-      <!--<time class="due-date" :datetime="dueDate">
-        Due: {{ formatDate(dueDate) }}
-      </time>-->
     </header>
 
     <section class="project-details">
       <dl class="project-info">
         <dt>Client:</dt>
-        <dd>{{ client }}</dd>
+        <dd>{{ clientName }}</dd>
 
         <dt>Description:</dt>
         <dd>{{ description }}</dd>
@@ -18,11 +15,11 @@
         <dt>Total Price:</dt>
         <dd class="price">${{ totalPrice.toFixed(2) }}</dd>
 
-        <dt>Paid Amount:</dt>
-        <dd class="paid-amount">${{ paidAmount.toFixed(2) }}</dd>
-
         <dt>Remaining:</dt>
-        <dd class="remaining-amount">${{ (totalPrice - paidAmount).toFixed(2) }}</dd>
+        <dd class="paid-amount">${{ Amountdue.toFixed(2) }}</dd>
+
+        <dt>Paid Amount:</dt>
+        <dd class="remaining-amount">${{(totalPrice - Amountdue).toFixed(2)}}</dd>
       </dl>
     </section>
 
@@ -35,7 +32,7 @@
         :value="progress"
         @input="updateProgress($event.target.value)"
         class="progress-slider"
-      >
+      />
       <output class="progress-display">{{ progress }}%</output>
 
       <progress
@@ -47,248 +44,144 @@
       </progress>
     </section>
 
-    <section class="payment-section">
-      <fieldset class="payment-status">
-        <legend>Payment Status</legend>
-
-        <button
-          @click="confirmPayment"
-          :class="paymentButtonClass"
-          :disabled="isPaymentFullyConfirmed"
-          class="payment-confirm-btn"
-        >
-          {{ paymentButtonText }}
-        </button>
-
-        <p class="payment-info">
-          {{ paymentStatusMessage }}
-        </p>
-      </fieldset>
-    </section>
-
     <footer class="project-actions">
-      <button @click="saveProject" class="save-btn">
-        Save Changes
-      </button>
-      <button @click="exportToPDF" class="export-btn">
-        Export to PDF
-      </button>
+      <button @click="saveProject" class="save-btn">Save Changes</button>
+      <button @click="exportToPDF" class="export-btn">Export to PDF</button>
     </footer>
   </article>
 </template>
 
 <script>
+import { useUserStore } from '../../stores/userStore';
+
 export default {
-  name: 'ProjectCard',
-  props: {
-    id: Number,
-    title: String,
-    /*dueDate: String,*/
-    client: String,
-    description: String,
-    totalPrice: Number,
-    paidAmount: Number,
-    paymentsConfirmed: Number,
-    progress: Number
-  },
-  emits: ['update-progress', 'confirm-payment', 'save-project', 'export-pdf'],
+  name: 'SingleProjectCard',
 
-  computed: {
-    isPaymentFullyConfirmed() {
-      return this.paymentsConfirmed >= this.totalPrice;
-    },
+  data() {
+    return {
+      id: "",
+      title: this.$route.query.jobTitle,
+      clientName: this.$route.query.clientName,
+      description: this.$route.query.jobDesc,
+      totalPrice: 0,
+      Amountdue: 0,
+      progress: 0,
+      loaded: false
+    };
 
-    paymentButtonClass() {
-      if (this.isPaymentFullyConfirmed) {
-        return 'payment-confirmed-complete';
-      } else if (this.paidAmount > this.paymentsConfirmed) {
-        return 'payment-pending-confirmation';
-      } else {
-        return 'payment-waiting';
-      }
-    },
-
-    paymentButtonText() {
-      if (this.isPaymentFullyConfirmed) {
-        return '✓ All Payments Confirmed';
-      } else if (this.paidAmount > this.paymentsConfirmed) {
-        const pendingAmount = this.paidAmount - this.paymentsConfirmed;
-        return `Confirm Payment ($${pendingAmount.toFixed(2)})`;
-      } else {
-        return 'Waiting for Payment';
-      }
-    },
-
-    paymentStatusMessage() {
-      const remaining = this.totalPrice - this.paidAmount;
-
-      if (this.isPaymentFullyConfirmed) {
-        return 'All payments have been received and confirmed.';
-      } else if (this.paidAmount > this.paymentsConfirmed) {
-        return `$${(this.paidAmount - this.paymentsConfirmed).toFixed(2)} payment received, awaiting confirmation.`;
-      } else if (remaining > 0) {
-        return `Waiting for $${remaining.toFixed(2)} payment from client.`;
-      } else {
-        return 'No pending payments.';
-      }
-    }
   },
 
   methods: {
-    updateProgress(newProgress) {
-      this.$emit('update-progress', this.id, parseInt(newProgress));
+    async fetchProject() {
+      const userStore = useUserStore();
+      try {
+        const backendUrl = import.meta.env.VITE_API_URL;
+        const response = await fetch(`${backendUrl}/getprogress?email=${userStore.email}&Title=${this.title}&Description=${this.description}`);
+        if (!response.ok) throw new Error('Failed to fetch progress');
+        const data = await response.json();
+
+        if (data.length === 0) {
+          console.warn('No project found');
+          return;
+        }
+
+        const project = data[0];
+        this.id = project._id;
+        this.totalPrice = project.jobBudget ;
+        this.Amountdue = project.Amountdue;
+        this.progress = project.progress ;
+        this.loaded = true;
+      } catch (err) {
+        console.error('Error fetching project:', err);
+      }
     },
 
-    confirmPayment() {
-      this.$emit('confirm-payment', this.id);
+    updateProgress(value) {
+      this.progress = parseInt(value);
     },
 
-    saveProject() {
-      this.$emit('save-project', this.id);
+    async saveProject() {
+      try {
+        const payload = {
+          progressid: this.id,
+          progress: this.progress
+        };
+
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/setprogress`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) throw new Error(data.error || 'Failed to update progress');
+
+        alert('Progress updated successfully!'); 
+
+      } catch (err) {
+        console.error('Error updating progress:', err);
+        alert('Failed to update progress: ' + err.message);
+      }
     },
 
     exportToPDF() {
-      this.$emit('export-pdf', this.id);
-    },
-
-    formatDate(dateString) {
-      const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
+      alert('Export to PDF logic goes here');
     }
+  },
+
+  mounted() {
+    this.fetchProject();
   }
-}
+};
 </script>
 
+
 <style scoped>
+/* Add your scoped styles here */
 .project-card {
-  background-color: #ffffff; /* White */
-  border: 2px solid #001f3f; /* Navy */
-  border-radius: 10px;
+  border: 1px solid #ccc;
   padding: 1.5rem;
-  color: #000000; /* Black text */
-  max-width: 700px;
-  margin: 2rem auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', sans-serif;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .project-header h2 {
-  margin: 0;
-  font-size: 1.75rem;
-  color: #001f3f; /* Navy heading */
-}
-
-.due-date {
-  font-size: 0.9rem;
-  color: #666666;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .project-info dt {
   font-weight: bold;
-  margin-top: 0.5rem;
-  color: #000000;
 }
 
 .project-info dd {
-  margin: 0 0 0.5rem 0;
-  color: #333333;
-}
-
-.price,
-.paid-amount,
-.remaining-amount {
-  font-weight: bold;
+  margin-bottom: 0.75rem;
 }
 
 .progress-section {
   margin-top: 1.5rem;
 }
 
-.progress-slider {
-  width: 100%;
-  margin: 0.5rem 0;
-  accent-color: #ffa500; /* Orange accent for slider */
-}
-
-.progress-display {
-  display: inline-block;
-  margin-left: 0.5rem;
-  font-weight: bold;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 10px;
-  margin-top: 0.5rem;
-  background-color: #e0e0e0;
-  border-radius: 5px;
-  color: #000000;
-}
-
-.payment-section {
-  margin-top: 1.5rem;
-}
-
-.payment-status legend {
-  font-weight: bold;
-  color: #001f3f; /* Navy */
-}
-
-.payment-confirm-btn {
-  padding: 0.5rem 1rem;
-  margin-top: 0.5rem;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  color: #ffffff;
-  background-color: #ffa500; /* Orange */
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.payment-confirmed-complete {
-  background-color: #2c3e50; /* Dark navy */
-}
-
-.payment-pending-confirmation {
-  background-color: #ffa500; /* Orange */
-}
-
-.payment-waiting {
-  background-color: #888888;
-}
-
-.payment-info {
-  margin-top: 0.5rem;
-  font-size: 0.95rem;
-  color: #333;
-}
-
 .project-actions {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   display: flex;
   gap: 1rem;
 }
 
-.save-btn,
-.export-btn {
+.save-btn, .export-btn {
   padding: 0.5rem 1rem;
   font-weight: bold;
-  color: #ffffff;
-  background-color: #001f3f; /* Navy */
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  background-color: #007bff;
+  color: white;
 }
 
-.save-btn:hover,
-.export-btn:hover {
-  background-color: #003366; /* Deeper navy on hover */
+.export-btn {
+  background-color: #28a745;
 }
 </style>
-

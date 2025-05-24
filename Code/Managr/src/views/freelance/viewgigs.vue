@@ -11,6 +11,9 @@
         :avatar="item.image"
         :content="item.content"
         :status="item.status"
+        :jobTitle="item.jobTitle"
+        :jobDesc="item.jobDesc"
+        :jobBudget="Number(item.jobBudget)"
       />
     </section>
   </section>
@@ -28,6 +31,9 @@ interface ProposalItem {
   image: string;
   content: string;
   status: string;
+  jobTitle:string;
+  jobDesc: string;
+  jobBudget: Number;
 }
 
 export default defineComponent({
@@ -56,6 +62,9 @@ export default defineComponent({
           image: gig.avatar,
           content: gig.content,
           status: gig.status,
+          jobTitle:gig.jobTitle,
+          jobDesc: gig.jobDesc,
+          jobBudget: gig.jobBudget,
         }));
       })
       .catch(error => {
