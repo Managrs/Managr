@@ -7,6 +7,7 @@
 <img src="./Code/Managr/src/assets/m_logo.jpg" alt="Managrs Logo" width="200"/>
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/managrs/platform/releases)
+[![Codecov](https://codecov.io/gh/Managrs/Managr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Managrs/Managr)
 
 ---
 

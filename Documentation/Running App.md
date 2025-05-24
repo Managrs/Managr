@@ -125,5 +125,12 @@ Tests are located in the `/test` directory and mirror the structure of the `/src
 You can access the live version of the app here:
 🔗 [https://jolly-bush-0f6975910.6.azurestaticapps.net/](https://jolly-bush-0f6975910.6.azurestaticapps.net/)
 
+## 📊 Code Coverage
+
+[![Codecov](https://codecov.io/gh/Managrs/Managr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Managrs/Managr)
+
+You can view the detailed code coverage reports here:  
+🔗 [https://app.codecov.io/gh/Managrs/Managr](https://app.codecov.io/gh/Managrs/Managr)
+
 ---
 
