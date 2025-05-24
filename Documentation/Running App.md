@@ -90,9 +90,40 @@ VITE_API_URL=http://localhost:8080
 
 ---
 
+## ✅ Testing (Frontend)
+
+This project uses [Vitest](https://vitest.dev/) for unit and component testing.
+
+### Running Tests
+
+* To run all tests:
+
+  ```bash
+  npm run test
+  ```
+
+* To run tests in UI mode (with auto-reload):
+
+  ```bash
+  npm run test:ui
+  ```
+
+* To generate a test coverage report:
+
+  ```bash
+  npm run coverage
+  ```
+
+Tests are located in the `/test` directory and mirror the structure of the `/src` directory for maintainability.
+
+> ✅ Be sure to install dependencies (`npm install`) before running tests, and confirm you're using a supported Node.js version.
+
+---
+
 ## 🌐 Online Version
 
 You can access the live version of the app here:
 🔗 [https://jolly-bush-0f6975910.6.azurestaticapps.net/](https://jolly-bush-0f6975910.6.azurestaticapps.net/)
 
 ---
+
