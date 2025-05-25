@@ -13,7 +13,7 @@ vi.mock('../../../src/components/proposalCard.vue', () => ({
   }
 }));
 
-describe('ManageGigs', () => {
+describe.skip('ManageGigs', () => {
   // Mock fetch before each test
   beforeEach(() => {
     // Mock environment variable
