@@ -19,31 +19,29 @@
       </form>
     </header>
 
-    <div class="container">
-      <table class="user-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="user in paginatedUsers" :key="user.id">
-            <td class="name-cell">
-              <img :src="user.avatar || '/default-avatar.png'" alt="Avatar" class="avatar" />
-              <span class="user-name">{{ user.fullName }}</span>
-            </td>
-            <td class="email">{{ user.email }}</td>
-            <td class="role">{{ user.role }}</td>
-            <td class="action-cell">
-              <button @click="deleteUser(user.email)" class="delete-btn">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="user in paginatedUsers" :key="user.id">
+          <td class="name-cell">
+            <img :src="user.avatar || '/default-avatar.png'" alt="Avatar" class="avatar" />
+            {{ user.fullName }}
+          </td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <button @click="deleteUser(user.email)" class="delete-btn">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
     <nav class="pagination" v-if="totalPages > 1">
       <button 
@@ -118,11 +116,11 @@
         throw new Error(errorData.error || 'Failed to delete user');
       }
       
-      await fetchUsers(); // Refresh the list
+      await fetchUsers();
     } catch (err) {
       error.value = err.message;
       console.error('Error:', err);
-      alert(err.message); // Show error to user
+      alert(err.message);
     }
   };
 
@@ -209,20 +207,7 @@
     object-fit: cover;
   }
 
-  .user-name {
-    font-weight: 500;
-  }
-
-  .email {
-    color: #666;
-  }
-
-  .role {
-    text-transform: capitalize;
-    font-weight: 500;
-  }
-
-  .action-cell .delete-btn {
+  .delete-btn {
     background-color: #ffebee;
     color: #d32f2f;
     border: none;
@@ -232,7 +217,7 @@
     transition: background-color 0.2s;
   }
 
-  .action-cell .delete-btn:hover {
+  .delete-btn:hover {
     background-color: #ffcdd2;
   }
 
