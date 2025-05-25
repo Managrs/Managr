@@ -1,102 +1,194 @@
 <template>
-  <header class="user-head">
-    <h1>Orders</h1>
-  </header>
+  <section class="user-management">
+    <header class="controls">
+      <h1> Orders Management </h1>
+    </header>
 
-  <main>
-    <section class="filter-by">Filter</section>
-
-    <table class="approval-table">
-      <thead>
-        <tr>
-          <th>Order ID</th>
-          <th>Freelancer</th>
-          <th>Client</th>
-          <th>Product</th>
-          <th>Delivered</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="order in orders" :key="order.orderId">
-          <td>{{ order.orderId }}</td>
-          <td>{{ order.freelancer }}</td>
-          <td>{{ order.client }}</td>
-          <td>{{ order.product }}</td>
-          <td>{{ order.delivered ? "Yes" : "No" }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </main>
+    <section class="container">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th> Client Email</th>
+            <th> Freelancer Email</th>
+            <th> Order Title</th>
+            <th> Order Budget</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="user in users" :key="user.id">
+            <td class="name-cell"> {{ user.receiver }} </td>
+            <td class="email">{{ user.sender }}</td>
+            <td class="role">{{ user.jobTitle }}</td>
+            <td class="role">{{ user.jobBudget }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </section>
 </template>
 
-<script>
-export default {
-  name: "Aorders",
-  data() {
-    return {
-      orders: [
-        {
-          orderId: "#ORD12345",
-          freelancer: "Olivia Rhye",
-          client: "Phoenix Baker",
-          product: "Landing Page Design",
-          delivered: true
-        },
-        {
-          orderId: "#ORD12346",
-          freelancer: "Lana Steiner",
-          client: "Demi Howard",
-          product: "E-commerce Setup",
-          delivered: false
-        },
-        {
-          orderId: "#ORD12347",
-          freelancer: "Alex Johnson",
-          client: "Jessie Walton",
-          product: "Mobile App UI",
-          delivered: true
-        }
-      ]
-    };
-  }
-};
+<script setup>
+  import { ref, computed, onMounted } from 'vue';
+
+  const users = ref([]);
+  const isLoading = ref(false);
+  const error = ref(null);
+
+  const fetchUsers = async () => {
+    isLoading.value = true;
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/approvedApplications`);
+      if (!response.ok) throw new Error('Failed to fetch users');
+      const data = await response.json();
+      users.value = data;
+    } catch (err) {
+      error.value = err.message;
+      console.error('Error:', err);
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
+  onMounted(fetchUsers);
 </script>
 
 <style scoped>
-.user-head {
-  padding: 16px;
-  font-size: 24px;
-  font-weight: bold;
-}
+  .apply-btn {
+    padding: 8px 16px;
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
 
-.filter-by {
-  margin: 12px 0;
-  font-weight: 500;
-  color: #4b5563;
-}
+  .apply-btn:hover {
+    background-color: #4338ca;
+  }
 
-.approval-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: Arial, sans-serif;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  border-radius: 6px;
-  overflow: hidden;
-}
+  .user-management {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 
-.approval-table th,
-.approval-table td {
-  text-align: left;
-  padding: 12px 16px;
-  border-bottom: 1px solid #e5e7eb;
-}
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
 
-.approval-table thead {
-  background-color: #f9fafb;
-  color: #374151;
-}
+  .filters {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
 
-.approval-table tbody tr:hover {
-  background-color: #f3f4f6;
-}
+  input, select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .user-table th {
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+  }
+
+  .user-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .name-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .user-name {
+    font-weight: 500;
+  }
+
+  .email {
+    color: #666;
+  }
+
+  .role {
+    text-transform: capitalize;
+    font-weight: 500;
+  }
+
+  .action-cell .delete-btn {
+    background-color: #ffebee;
+    color: #d32f2f;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .action-cell .delete-btn:hover {
+    background-color: #ffcdd2;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 20px;
+  }
+
+  .pagination button {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .pagination button.active {
+    background-color: #1976d2;
+    color: white;
+    border-color: #1976d2;
+  }
+
+  @media (max-width: 768px) {
+    .controls {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .filters {
+      width: 100%;
+      flex-direction: column;
+    }
+    
+    input, select {
+      width: 100%;
+    }
+  }
 </style>

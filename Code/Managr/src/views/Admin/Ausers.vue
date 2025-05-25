@@ -19,31 +19,29 @@
       </form>
     </header>
 
-    <div class="container">
-      <table class="user-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="user in paginatedUsers" :key="user.id">
-            <td class="name-cell">
-              <img :src="user.avatar || '/default-avatar.png'" alt="Avatar" class="avatar" />
-              <span class="user-name">{{ user.fullName }}</span>
-            </td>
-            <td class="email">{{ user.email }}</td>
-            <td class="role">{{ user.role }}</td>
-            <td class="action-cell">
-              <button @click="deleteUser(user._id)" class="delete-btn">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="user in paginatedUsers" :key="user.id">
+          <td class="name-cell">
+            <img :src="user.avatar || '/default-avatar.png'" alt="Avatar" class="avatar" />
+            {{ user.fullName }}
+          </td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <button @click="deleteUser(user.email)" class="delete-btn">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
     <nav class="pagination" v-if="totalPages > 1">
       <button 
@@ -101,18 +99,28 @@
     return filteredUsers.value.slice(start, start + perPage.value);
   });
 
-  const deleteUser = async (userId) => {
+  const deleteUser = async (userEmail) => {
     if (!confirm('Are you sure you want to delete this user?')) return;
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/deleteUser/${userId}`, {
-        method: 'DELETE'
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/deleteUser`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: userEmail })
       });
-      if (!response.ok) throw new Error('Failed to delete user');
-      await fetchUsers(); // Refresh the list
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to delete user');
+      }
+      
+      await fetchUsers();
     } catch (err) {
       error.value = err.message;
       console.error('Error:', err);
+      alert(err.message);
     }
   };
 
@@ -199,20 +207,7 @@
     object-fit: cover;
   }
 
-  .user-name {
-    font-weight: 500;
-  }
-
-  .email {
-    color: #666;
-  }
-
-  .role {
-    text-transform: capitalize;
-    font-weight: 500;
-  }
-
-  .action-cell .delete-btn {
+  .delete-btn {
     background-color: #ffebee;
     color: #d32f2f;
     border: none;
@@ -222,7 +217,7 @@
     transition: background-color 0.2s;
   }
 
-  .action-cell .delete-btn:hover {
+  .delete-btn:hover {
     background-color: #ffcdd2;
   }
 

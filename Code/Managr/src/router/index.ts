@@ -14,8 +14,6 @@ import freelanceprogress from '../views/tracking/freelanceprogress.vue';
 import clientprogress from '../views/tracking/clientprogress.vue';
 
 //admin routers
-import Aauditlogs from '../views/Admin/Aauditlogs.vue';
-import Adashboard from '../views/Admin/Adashboard.vue';
 import Aorders from '../views/Admin/Aorders.vue';
 import Aproducts from '../views/Admin/Aproducts.vue';
 import Aprofile from '../views/Admin/Aprofile.vue';
@@ -51,9 +49,6 @@ const routes = [
     path: '/dashboardadmin',
     component: dashboardadmin,
     children: [
-      { path: '' ,name: 'Adashboard', redirect: '/Adashboard' },
-      { path: '/Adashboard' ,name: 'Adashboard', component: Adashboard },
-      { path: '/Aauditlogs' ,name: 'Aauditlogs', component: Aauditlogs },
       { path: '/Ausers' ,name: 'Ausers', component: Ausers },
       { path: '/Areports' ,name: 'Areports', component: Areports },
       { path: '/Aproducts' ,name: 'Aproducts', component: Aproducts },
