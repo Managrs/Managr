@@ -348,11 +348,14 @@ app.post('/newMessage', async (req, res) => {
   }
 });
 
-app.delete('/deleteUser/:email', async (req, res) => {
-  const userId = req.params.email;
+app.delete('/deleteUser', async (req, res) => {
+  const { email } = req.body;
+  if(!email){
+    return res.status(400).json({ error: 'Email is required' });
+  }
 
   try {
-    const deletedUser = await User.findOneAndDelete(userId);
+    const deletedUser = await User.findOneAndDelete({email});
     if (!deletedUser) {
       return res.status(404).json({ error: 'User not found' });
     }
