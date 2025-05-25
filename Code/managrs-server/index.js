@@ -315,6 +315,10 @@ app.delete('/deleteUser', async (req, res) => {
 
   try {
     const deletedUser = await User.findOneAndDelete({email: email});
+<<<<<<< HEAD
+    if (!deletedUser) {
+      return res.status(404).json({ error: 'User not found' });
+=======
     if (deletedUser) {
        await Gig.deleteMany({ clientEmail: email });
        await Message.deleteMany({ clientEmail: email }); 
@@ -322,6 +326,7 @@ app.delete('/deleteUser', async (req, res) => {
        await  Application.deleteMany({ clientEmail: email });
     } else {
       console.log('User not found');
+>>>>>>> main
     }
     res.status(200).json({ message: 'User deleted successfully' });
     

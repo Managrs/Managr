@@ -1,12 +1,12 @@
 <template>
   <article class="profile-card">
-    <div class="profile-image-container">
+    <section class="profile-image-container">
       <img :src="image"  class="profile-image">
-    </div>
-    <div class="profile-content">
+    </section>
+    <section class="profile-content">
       <h3 class="profile-name">{{ name }}</h3>
       <p class="profile-job">{{ job }}</p>
-    </div>
+    </section>
   </article>
 </template>
 

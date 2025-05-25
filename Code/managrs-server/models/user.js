@@ -20,8 +20,21 @@ const userSchema = new mongoose.Schema({
 
   role: {
     type: String,
-    enum: ['CLIENT','FREELANCER', 'ADMIN'],
-    default: 'FREELANCER'
+    enum: ['freelancer','client', 'admin'],
+    default: 'freelancer'
+  },
+
+  status:{
+    type: String,
+    enum:['active', 'suspended'],
+    default: 'active'
+
+  },
+  
+  verificationStatus: { 
+    type: String, 
+    enum: ['verified', 'pending', 'suspended'], 
+    default: 'pending' 
   }
 });
 

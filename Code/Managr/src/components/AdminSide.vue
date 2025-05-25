@@ -1,6 +1,5 @@
 <template>
     <aside class="sidebar">
-      <!-- Logo -->
       <figure class="project-logo">
         <img
           src="/brandlogo.png"
@@ -11,7 +10,6 @@
         />
       </figure>
   
-      <!-- Navigation Links -->
       <section class="admin-section">
         <ul class="nav-links">
           <li><router-link to="/Ausers" class="nav-link">Users</router-link></li>
@@ -34,9 +32,6 @@
     </section>
     </aside>
     <UserSidebar v-if="isOpen" @close="toggleSidebar" />
-    <!--<main class="main-view">-->
-      <!--<router-view />-->
-    <!--</main>-->
   </template>
   
   <script lang="ts">
