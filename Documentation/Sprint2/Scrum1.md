@@ -2,10 +2,10 @@
 
 ## Objectives
 
-- Revisit Sprint 1 outcomes  
-- Outline Sprint 2 goals  
-- Assign tasks based on team capacity and backlog priority  
-- Set up development and testing goals  
+1. Revisit Sprint 1 outcomes  
+2. Outline Sprint 2 goals  
+3. Assign tasks based on team capacity and backlog priority  
+4. Set up development and testing goals  
 
 ---
 
