@@ -1,122 +1,128 @@
-🧾 Sprint 2 - Scrum 5
-🎯 Objectives
+# Sprint 2 - Scrum 5
 
-Final sprint check-in before closing Sprint 2
+## Objectives
 
-Confirm readiness for user acceptance testing (UAT)
+1. Final sprint check-in before closing Sprint 2  
+2. Confirm readiness for user acceptance testing (UAT)  
+3. Ensure all features are merged into the main branch and deployed  
+4. Address any remaining blockers or performance issues  
 
-Ensure all features are merged into the main branch and deployed
+---
 
-Address any remaining blockers or performance issues
+## Team Stand-Up Summary
 
-📝 Team Stand-Up Summary
+### Lebo – Job Posting & Jest Testing
 
-🔨 Lebo – Job Posting & Jest Testing
+**Progress:**
 
-Progress:
+- All core job posting functionalities (create, delete, mark as tracked) are live  
+- Jest tests fully integrated into the CI pipeline  
+- Test results are now passing on all required branches  
 
-All core job posting functionalities (create, delete, mark as tracked) are live
+**Next:**
 
-Jest tests fully integrated into the CI pipeline
+- Final cleanup of test cases for edge scenarios  
 
-Test results are now passing on all required branches
+**Blockers:**
 
-Next:
+- Minor timing issues in Jest tests on the CI pipeline — awaiting feedback from CI admin  
 
-Final cleanup of test cases for edge scenarios
+---
 
-Blockers:
+### Lemohang – WhatsApp Message Button
 
-Minor timing issues in Jest tests on the CI pipeline — awaiting feedback from CI admin
+**Progress:**
 
-💬 Lemohang – WhatsApp Message Button
+- WhatsApp redirection working flawlessly on all devices  
+- No new issues identified during UAT testing  
 
-Progress:
+**Next:**
 
-WhatsApp redirection working flawlessly on all devices
+- Final confirmation of link generation for live profiles  
 
-No new issues identified during UAT testing
+**Blockers:**
 
-Next:
+- None  
 
-Final confirmation of link generation for live profiles
+---
 
-Blockers:
+### Bhavan – Search Bar & Price Filter
 
-None
+**Progress:**
 
-🔍 Bhavan – Search Bar & Price Filter
+- Search bar working efficiently, price filter stable under load  
+- Issues with multi-filtering resolved after frontend fix  
 
-Progress:
+**Next:**
 
-Search bar working efficiently, price filter stable under load
+- Perform full performance testing (under load)  
 
-Issues with multi-filtering resolved after frontend fix
+**Blockers:**
 
-Next:
+- None  
 
-Perform full performance testing (under load)
+---
 
-Blockers:
+### Kagiso – API Integration
 
-None
+**Progress:**
 
-⚙️ Kagiso – API Integration
+- All APIs are fully functional and secured  
+- API documentation pushed to repo and finalized  
 
-Progress:
+**Next:**
 
-All APIs are fully functional and secured
+- Begin reviewing API responses with Dimpho’s updated database  
 
-API documentation pushed to repo and finalized
+**Blockers:**
 
-Next:
+- None  
 
-Begin reviewing API responses with Dimpho’s updated database
+---
 
-Blockers:
+### Kgaugelo – UML Finalization
 
-None
+**Progress:**
 
-📊 Kgaugelo – UML Finalization
+- Final UML diagrams integrated into project documentation  
+- README updated with comprehensive architecture overview  
 
-Progress:
+**Next:**
 
-Final UML diagrams integrated into project documentation
+- Ensure diagrams are fully aligned with backend implementation  
 
-README updated with comprehensive architecture overview
+**Blockers:**
 
-Next:
+- None  
 
-Ensure diagrams are fully aligned with backend implementation
+---
 
-Blockers:
+### Dimpho – Database Integration
 
-None
+**Progress:**
 
-🗃️ Dimpho – Database Integration
+- Database optimized and verified with real data in staging environment  
+- Frontend successfully fetching data from API  
 
-Progress:
+**Next:**
 
-Database optimized and verified with real data in staging environment
+- Support Kagiso with API endpoint testing  
 
-Frontend successfully fetching data from API
+**Blockers:**
 
-Next:
+- None  
 
-Support Kagiso with API endpoint testing
+---
 
-Blockers:
+## Summary & Action Points
 
-None
+- All main features are complete and merged to the main branch  
+- UAT feedback to be reviewed in next sprint  
+- CI/CD pipeline functioning well; minor adjustments may be needed  
+- Ready for deployment to production  
 
-🔍 Summary & Action Points
+---
 
-All main features are complete and merged to the main branch
+## Status
 
-UAT feedback to be reviewed in next sprint
-
-CI/CD pipeline functioning well; minor adjustments may be needed
-
-Ready for deployment to production
-
-📍 Status: 🟢 Complete — Sprint 2 features are ready for UAT and deployment
+**Complete — Sprint 2 features are ready for UAT and deployment**
