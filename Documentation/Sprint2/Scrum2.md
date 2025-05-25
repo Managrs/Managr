@@ -1,104 +1,107 @@
-🧾 Sprint 2 - Scrum 2
-🎯 Objectives
+# Sprint 2 - Scrum 2
 
-Provide progress updates on assigned tasks
+## Objectives
 
-Share blockers and request support where needed
+1. Provide progress updates on assigned tasks  
+2. Share blockers and request support where needed
+3. Begin early testing where features are partially complete  
+4. Sync database and frontend work  
 
-Begin early testing where features are partially complete
+---
 
-Sync database and frontend work
+## Team Updates & Progress
 
-📝 Team Updates & Progress
+### Lebo – Job Posting & Testing
 
-🔨 Lebo – Job Posting & Testing
+**Progress:**
 
-Progress:
+- Job posting form functional (Create + Delete working)  
+- "Mark as Tracked" logic implemented but incomplete  
+- Jest testing suite initialized and sample test cases added  
 
-Job posting form functional (Create + Delete working)
+**Blockers:**
 
-"Mark as Tracked" logic implemented but incomplete
+- Minor issues with post status updates persisting across refresh  
+- Needs help linking test results to CI pipeline  
 
-Jest testing suite initialized and sample test cases added
+---
 
-Blockers:
+### Lemohang – Message Button
 
-Minor issues with post status updates persisting across refresh
+**Progress:**
 
-Needs help linking test results to CI pipeline
+- WhatsApp redirection working on desktop  
+- Uses dynamic number assignment based on freelancer profile  
 
-💬 Lemohang – Message Button
+**Blockers:**
 
-Progress:
+- Behavior on mobile browsers inconsistent  
+- Testing required across devices  
 
-WhatsApp redirection working on desktop
+---
 
-Uses dynamic number assignment based on freelancer profile
+### Bhavan – Search and Filter
 
-Blockers:
+**Progress:**
 
-Behavior on mobile browsers inconsistent
+- Search bar filters freelancers by name  
+- Price range filter functional with test data  
 
-Testing required across devices
+**Blockers:**
 
-🔍 Bhavan – Search and Filter
+- Needs clearer client-side validation rules  
+- UI layout breaks slightly on smaller screen sizes  
 
-Progress:
+---
 
-Search bar filters freelancers by name
+### Kagiso – API Development
 
-Price range filter functional with test data
+**Progress:**
 
-Blockers:
+- GET and POST endpoints for job listing implemented  
+- APIs linked to database with dummy data returned successfully  
 
-Needs clearer client-side validation rules
+**Blockers:**
 
-UI layout breaks slightly on smaller screen sizes
+- Needs schema confirmation from Dimpho for production connection  
 
-⚙️ Kagiso – API Development
+---
 
-Progress:
+### Kgaugelo – UML Diagrams
 
-GET and POST endpoints for job listing implemented
+**Progress:**
 
-APIs linked to database with dummy data returned successfully
+- Use-case and sequence diagrams completed  
+- Reviewed by the team during the session  
 
-Blockers:
+**Next:**
 
-Needs schema confirmation from Dimpho for production connection
+- Finalize class diagrams and upload to shared repo  
 
-📊 Kgaugelo – UML Diagrams
+---
 
-Progress:
+### Dimpho – Database Setup
 
-Use-case and sequence diagrams completed
+**Progress:**
 
-Reviewed by the team during the session
+- MongoDB database live and connected to backend  
+- Test entries created via Postman  
 
-Next:
+**Next:**
 
-Finalize class diagrams and upload to shared repo
+- Work with Kagiso to finalize schema adjustments  
 
-🗃️ Dimpho – Database Setup
+---
 
-Progress:
+## Key Takeaways
 
-MongoDB database live and connected to backend
+- Team progressing steadily; minor blockers being handled  
+- Cross-member coordination needed for API and DB integration  
+- Early testing already proving valuable (Jest, Postman)  
+- UML diagrams almost complete and aligning well with implementation  
 
-Test entries created via postman
+---
 
-Next:
+## Status
 
-Work with Kagiso to finalize schema adjustments
-
-📌 Key Takeaways
-
-Team progressing steadily; minor blockers being handled
-
-Cross-member coordination needed for API and DB integration
-
-Early testing already proving valuable (Jest, Postman)
-
-UML diagrams almost complete and aligning well with implementation
-
-📍 Status: 🟡 On Track — Technical blockers under review
+**On Track — Technical blockers under review**
