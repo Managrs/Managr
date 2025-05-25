@@ -1,122 +1,132 @@
-🧾 Sprint 2 - Scrum 4
-🎯 Objectives
+# Sprint 2 - Scrum 4
 
-Review current sprint progress and integrate features into main branch
+## Objectives
 
-Address final blockers before the end of the sprint
+1. Review current sprint progress and integrate features into main branch  
+2. Address final blockers before the end of the sprint  
+3. Test merged features across environments (dev, staging, production)  
+4. Continue monitoring CI/CD pipeline setup  
 
-Test merged features across environments (dev, staging, production)
+---
 
-Continue monitoring CI/CD pipeline setup
+## Team Stand-Up Summary
 
-📝 Team Stand-Up Summary
+### Lebo – Job Posting & Jest Testing
 
-🔨 Lebo – Job Posting & Jest Testing
+**Progress:**
 
-Progress:
+- Completed "Mark as Tracked" and job deletion functionality  
+- Expanded test suite for edge cases, all passing  
 
-Completed "Mark as Tracked" and job deletion functionality
+**Next:**
 
-Expanded test suite for edge cases, all passing
+- Test Jest integration on CI pipeline  
+- Start documenting testing strategy  
 
-Next:
+**Blockers:**
 
-Test Jest integration on CI pipeline
+- CI pipeline still not fully integrated with Jest; needs troubleshooting assistance  
 
-Start documenting testing strategy
+---
 
-Blockers:
+### Lemohang – WhatsApp Message Button
 
-CI pipeline still not fully integrated with Jest; need help troubleshooting
+**Progress:**
 
-💬 Lemohang – WhatsApp Message Button
+- WhatsApp button working across desktop and mobile  
+- Test cases successfully run across common browsers  
 
-Progress:
+**Next:**
 
-WhatsApp button working across desktop and mobile
+- Final testing with user accounts  
 
-Test cases successfully run across common browsers
+**Blockers:**
 
-Next:
+- None at the moment  
 
-Final testing with user accounts
+---
 
-Blockers:
+### Bhavan – Search Bar & Price Filter
 
-None at the moment
+**Progress:**
 
-🔍 Bhavan – Search Bar & Price Filter
+- Search bar and price filter completed with real-time results  
+- Addressed responsive layout issues for smaller devices  
 
-Progress:
+**Next:**
 
-Search bar and price filter completed with real-time results
+- Conduct load testing for search and filtering functionality  
 
-Addressed responsive layout issues for smaller devices
+**Blockers:**
 
-Next:
+- Minor issue with multi-filtering not triggering new search results  
 
-Conduct load testing for search and filtering functionality
+---
 
-Blockers:
+### Kagiso – API Integration
 
-Minor issue with multi-filtering not triggering new search results
+**Progress:**
 
-⚙️ Kagiso – API Integration
+- Added DELETE API route for job posts  
+- Secured endpoints with role-based authentication (JWT)  
 
-Progress:
+**Next:**
 
-Added DELETE API route for job posts
+- Finalize API documentation  
 
-Secured endpoints with role-based authentication (JWT)
+**Blockers:**
 
-Next:
+- Confusion around Auth0 token validation persists; needs review with Lemohang  
 
-Finalize API documentation
+---
 
-Blockers:
+### Kgaugelo – UML Finalization
 
-Confusion around Auth0 token validation persists; need to review with Lemohang
+**Progress:**
 
-📊 Kgaugelo – UML Finalization
+- Final class and sequence diagrams uploaded  
+- Team reviewed and signed off on diagrams  
 
-Progress:
+**Next:**
 
-Final class and sequence diagrams uploaded
+- Update README with UML references and descriptions  
 
-Team reviewed and signed off on diagrams
+**Blockers:**
 
-Next:
+- None  
 
-Update README with UML references and descriptions
+---
 
-Blockers:
+### Dimpho – Database Integration
 
-None
+**Progress:**
 
-🗃️ Dimpho – Database Integration
+- Database schema optimized for speed  
+- All major job posts are now successfully saved and retrieved  
 
-Progress:
+**Next:**
 
-Database schema optimized for speed
+- Coordinate with Kagiso to test real API calls for database entries  
 
-All major job posts are now successfully saved and retrieved
+**Blockers:**
 
-Next:
+- No blockers  
 
-Coordinate with Kagiso to test real API calls for database entries
+---
 
-Blockers:
+## Summary & Action Points
 
-No blockers
+- Majority of functionality is working, but CI/CD issues need resolution  
+- Database, API, and frontend are now fully integrated  
+- Merging to main branch expected soon  
+- Next sprint will focus on user testing and fine-tuning  
 
-🔍 Summary & Action Points
+---
 
-Majority of functionality is working, but CI/CD issues need resolution
+## Status
 
-Database, API, and frontend are now fully integrated
+## Evidence
+![evidence](s24.jpg)
 
-Merging to main branch expected soon
 
-Next sprint will focus on user testing and fine-tuning
-
-📍 Status: 🟢 On Track — Final tests and documentation updates in progress
+**On Track — Final tests and documentation updates in progress**
