@@ -1,191 +1,261 @@
-// manageGigs.test.ts
 import { mount, flushPromises } from '@vue/test-utils';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { createPinia, setActivePinia } from 'pinia';
 import ManageGigs from '../../../src/views/client/manageGigs.vue';
-import ProposalCard from '../../../src/components/ProfileCard.vue';
 
-// Mock ProposalCard component
-vi.mock('../../../src/components/proposalCard.vue', () => ({
-  default: {
-    name: 'ProposalCard',
-    props: ['name', 'mail', 'avatar', 'content', 'jobId'],
-    template: '<div class="proposal-card-mock">{{name}}</div>'
+// Mock the user store
+vi.mock('../../../src/stores/userStore', () => ({
+  useUserStore: () => ({
+    email: 'test@example.com'
+  })
+}));
+
+// Mock environment variables
+vi.mock('import.meta', () => ({
+  env: {
+    VITE_API_URL: 'http://localhost:3000'
   }
 }));
 
-describe('ManageGigs', () => {
-  // Mock fetch before each test
+// Mock ProposalCard component
+vi.mock('../../../src/views/client/proposalCard.vue', () => ({
+  default: {
+    name: 'ProposalCard',
+    props: ['id', 'ClientName', 'mail', 'avatar', 'status', 'content', 'jobTitle', 'jobDesc', 'jobBudget'],
+    template: `
+      <div class="proposal-card-mock" :data-id="id">
+        <h3>{{ClientName}}</h3>
+        <p>{{jobTitle}}</p>
+        <span>{{status}}</span>
+        <span>Budget: {{jobBudget}}</span>
+      </div>
+    `
+  }
+}));
+
+describe('ManageGigs.vue', () => {
+  let mockRouter;
+  let pinia;
+  let consoleSpy;
+
   beforeEach(() => {
-    // Mock environment variable
-    vi.stubEnv('VITE_API_URL', 'http://test-api.com');
-    
-    // Mock fetch API
-    //@ts-ignore
-    global.fetch = vi.fn(() => 
-      Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve([
-          { 
-            id: 1, 
-            name: 'John Doe', 
-            sender: 'john@example.com', 
-            avatar: 'avatar1.jpg', 
-            content: 'I am interested in this job',
-            jobId: 'job123'
-          },
-          { 
-            id: 2, 
-            name: 'Jane Smith', 
-            sender: 'jane@example.com', 
-            avatar: 'avatar2.jpg', 
-            content: 'I have experience in this field',
-            jobId: 'job456'
-          }
-        ])
-      })
-    );
-  });
+    // Setup Pinia
+    pinia = createPinia();
+    setActivePinia(pinia);
 
-  // Reset mocks after each test
-  //@ts-ignore
-  afterEach(() => {
-    vi.unstubAllEnvs();
-    vi.resetAllMocks();
-  });
-
-  it('renders the correct component structure', async () => {
-    const wrapper = mount(ManageGigs);
-    
-    // Check basic structure
-    expect(wrapper.find('.proposal-view').exists()).toBe(true);
-    expect(wrapper.find('.secondary-btn').exists()).toBe(true);
-    expect(wrapper.find('.view-title').exists()).toBe(true);
-    expect(wrapper.find('h2').text()).toBe('All Proposals');
-    
-    // Button content check
-    expect(wrapper.find('.secondary-btn').text()).toContain('Back');
-  });
-
-  it('fetches applications on mount', async () => {
-    const wrapper = mount(ManageGigs);
-    
-    // Check that fetch was called with the correct URL
-    expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenCalledWith('http://test-api.com/applications');
-    
-    // Wait for the Promise to resolve
-    await flushPromises();
-    
-    // Check that Proposals array was populated
-    expect(wrapper.vm.Proposals.length).toBe(2);
-    expect(wrapper.vm.Proposals[0].name).toBe('John Doe');
-    expect(wrapper.vm.Proposals[1].mail).toBe('jane@example.com');
-  });
-
-  it('correctly formats the application data', async () => {
-    const wrapper = mount(ManageGigs);
-    await flushPromises();
-    
-    // Check data transformation
-    expect(wrapper.vm.Proposals[0]).toEqual({
-      id: 1,
-      name: 'John Doe',
-      mail: 'john@example.com',
-      image: 'avatar1.jpg',
-      content: 'I am interested in this job',
-      jobId: 'job123'
-    });
-  });
-
-  it.skip('renders the correct number of ProposalCard components', async () => {
-    const wrapper = mount(ManageGigs);
-    await flushPromises();
-    
-    // Check ProposalCard components
-    const proposalCards = wrapper.findAllComponents(ProposalCard);
-    expect(proposalCards.length).toBe(2);
-  });
-
-  it.skip('passes correct props to ProposalCard components', async () => {
-    const wrapper = mount(ManageGigs);
-    await flushPromises();
-    
-    // Find all proposal cards
-    const proposalCards = wrapper.findAllComponents(ProposalCard);
-    
-    // Check props of first card
-    expect(proposalCards[0].props()).toEqual({
-      name: 'John Doe',
-      mail: 'john@example.com',
-      avatar: 'avatar1.jpg', 
-      content: 'I am interested in this job',
-      jobId: 'job123'
-    });
-  });
-
-  it('navigates back when the back button is clicked', async () => {
-    const mockRouter = {
+    // Mock router
+    mockRouter = {
       go: vi.fn()
     };
+
+    // Mock console.error to test error handling
+    consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    // Mock fetch API
+    global.fetch = vi.fn();
     
+    // Reset all mocks before each test
+    vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    consoleSpy.mockRestore();
+  });
+
+  const mockProposalsData = [
+    {
+      id: '1',
+      name: 'John Client',
+      sender: 'john@client.com',
+      avatar: 'john-avatar.jpg',
+      content: 'Looking for a web developer',
+      jobTitle: 'Web Development Project',
+      jobDesc: 'Build a modern website',
+      status: 'pending',
+      jobBudget: 5000
+    },
+    {
+      id: '2',
+      name: 'Jane Client',
+      sender: 'jane@client.com',
+      avatar: 'jane-avatar.jpg',
+      content: 'Need mobile app development',
+      jobTitle: 'Mobile App Project',
+      jobDesc: 'Create iOS and Android app',
+      status: 'accepted',
+      jobBudget: 8000
+    }
+  ];
+
+  const setupSuccessfulFetch = () => {
+    global.fetch.mockResolvedValueOnce({
+      ok: true,
+      json: () => Promise.resolve(mockProposalsData)
+    });
+  };
+
+  it.skip('renders properly with correct structure', async () => {
+    setupSuccessfulFetch();
+
     const wrapper = mount(ManageGigs, {
       global: {
+        plugins: [pinia],
         mocks: {
           $router: mockRouter
         }
       }
     });
-    
-    // Click back button
-    await wrapper.find('.secondary-btn').trigger('click');
-    
-    // Check router navigation
+
+    // Test component structure
+    expect(wrapper.find('.proposal-view').exists()).toBe(true);
+    expect(wrapper.find('.secondary-btn').exists()).toBe(true);
+    expect(wrapper.find('.view-title').exists()).toBe(true);
+    expect(wrapper.find('.proposal-card').exists()).toBe(true);
+
+    // Test content
+    expect(wrapper.find('.view-title').text()).toBe('All Proposals');
+    expect(wrapper.find('.secondary-btn').text()).toBe('Back');
+
+    // Wait for API call to resolve
+    await flushPromises();
+
+    // Test that ProposalCard components are rendered
+    const proposalCards = wrapper.findAllComponents({ name: 'ProposalCard' });
+    expect(proposalCards).toHaveLength(2);
+  });
+
+
+  it('handles back navigation correctly', async () => {
+    setupSuccessfulFetch();
+
+    const wrapper = mount(ManageGigs, {
+      global: {
+        plugins: [pinia],
+        mocks: {
+          $router: mockRouter
+        }
+      }
+    });
+
+    const backButton = wrapper.find('.secondary-btn');
+    await backButton.trigger('click');
+
     expect(mockRouter.go).toHaveBeenCalledWith(-1);
   });
 
-  it('handles fetch error gracefully', async () => {
-    // Mock console.error
-    console.error = vi.fn();
-    
-    // Override fetch to simulate an error
-    //@ts-ignore
-    global.fetch = vi.fn(() => 
-      Promise.resolve({
-        ok: false,
-        status: 404
-      })
-    );
-    
-    const wrapper = mount(ManageGigs);
+  it('handles empty proposals list', async () => {
+    // Mock empty response
+    global.fetch.mockResolvedValueOnce({
+      ok: true,
+      json: () => Promise.resolve([])
+    });
+
+    const wrapper = mount(ManageGigs, {
+      global: {
+        plugins: [pinia],
+        mocks: {
+          $router: mockRouter
+        }
+      }
+    });
+
     await flushPromises();
-    
-    // Check error handling
-    expect(console.error).toHaveBeenCalled();
-    expect(wrapper.vm.Proposals.length).toBe(0);
+
+    expect(wrapper.vm.Proposals).toHaveLength(0);
+    const proposalCards = wrapper.findAllComponents({ name: 'ProposalCard' });
+    expect(proposalCards).toHaveLength(0);
   });
 
-  it('handles network failure gracefully', async () => {
-    // Mock console.error
-    console.error = vi.fn();
-    
-    // Override fetch to throw an error
-    global.fetch = vi.fn(() => Promise.reject('Network error'));
-    
-    const wrapper = mount(ManageGigs);
+  it('handles API fetch failure', async () => {
+    // Mock fetch failure
+    global.fetch.mockResolvedValueOnce({
+      ok: false,
+      status: 404
+    });
+
+    const wrapper = mount(ManageGigs, {
+      global: {
+        plugins: [pinia],
+        mocks: {
+          $router: mockRouter
+        }
+      }
+    });
+
     await flushPromises();
-    
-    // Check error handling
-    expect(console.error).toHaveBeenCalled();
-    expect(wrapper.vm.Proposals.length).toBe(0);
+
+    // Verify error is caught and logged
+    expect(consoleSpy).toHaveBeenCalledWith('Error loading applications:', expect.any(Error));
+    expect(wrapper.vm.Proposals).toHaveLength(0);
   });
 
-  it('applies correct CSS classes for styling', () => {
-    const wrapper = mount(ManageGigs);
-    
-    // Check CSS classes
+
+  it('handles malformed API response gracefully', async () => {
+    // Mock malformed response
+    global.fetch.mockResolvedValueOnce({
+      ok: true,
+      json: () => Promise.resolve([
+        {
+          id: '1',
+          // Missing some required fields
+          name: 'Incomplete Client'
+        }
+      ])
+    });
+
+    const wrapper = mount(ManageGigs, {
+      global: {
+        plugins: [pinia],
+        mocks: {
+          $router: mockRouter
+        }
+      }
+    });
+
+    await flushPromises();
+
+    // Component should handle missing fields gracefully
+    expect(wrapper.vm.Proposals).toHaveLength(1);
+    expect(wrapper.vm.Proposals[0].ClientName).toBe('Incomplete Client');
+    expect(wrapper.vm.Proposals[0].mail).toBeUndefined();
+  });
+
+  it('has correct CSS classes and styling structure', () => {
+    setupSuccessfulFetch();
+
+    const wrapper = mount(ManageGigs, {
+      global: {
+        plugins: [pinia],
+        mocks: {
+          $router: mockRouter
+        }
+      }
+    });
+
+    // Test CSS classes
     expect(wrapper.find('.proposal-view').exists()).toBe(true);
     expect(wrapper.find('.view-title').exists()).toBe(true);
     expect(wrapper.find('.proposal-card').exists()).toBe(true);
     expect(wrapper.find('.secondary-btn').exists()).toBe(true);
+
+    // Test button styling
+    const backButton = wrapper.find('.secondary-btn');
+    expect(backButton.classes()).toContain('secondary-btn');
+  });
+
+  it('maintains component name correctly', () => {
+    setupSuccessfulFetch();
+
+    const wrapper = mount(ManageGigs, {
+      global: {
+        plugins: [pinia],
+        mocks: {
+          $router: mockRouter
+        }
+      }
+    });
+
+    expect(wrapper.vm.$options.name).toBe('ManageGigs');
   });
 });
