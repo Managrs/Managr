@@ -44,7 +44,6 @@ jobs:
         working-directory: ./Code/Managr
 
       - name: Upload coverage reports to Codecov
-        if: always()
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
