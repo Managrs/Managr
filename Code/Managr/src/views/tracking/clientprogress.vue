@@ -2,9 +2,6 @@
   <article class="project-card">
     <header class="project-header">
       <h2>{{ title }}</h2>
-      <!--<time class="start-date" :datetime="startDate">
-        Started: {{ formatDate(startDate) }}
-      </time>-->
     </header>
 
     <section class="project-details">
@@ -142,9 +139,128 @@ export default {
       }
     },
 
-    exportToPDF() {
-      this.$emit('export-pdf', this.projectId);
-    },
+   exportToPDF() {
+  const html = `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>${this.title || 'Project Report'}</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            color: #000;
+            background: #fff;
+            max-width: 800px;
+            margin: 0 auto;
+          }
+          header {
+            border-bottom: 2px solid #ccc;
+            margin-bottom: 2rem;
+          }
+          header h1 {
+            color: #001f3f;
+            padding-bottom: 1rem;
+            margin: 0;
+          }
+          section {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-left: 4px solid #001f3f;
+            padding-left: 1.5rem;
+          }
+          h2 {
+            margin-top: 0;
+          }
+          p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+          }
+          .highlight {
+            color: #ffa500;
+            font-weight: bold;
+          }
+          .progress-section {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+          }
+          .progress-bar-bg {
+            width: 100%;
+            background: #ddd;
+            border-radius: 10px;
+            height: 20px;
+            margin: 1rem 0;
+          }
+          .progress-bar-fill {
+            width: ${this.progress || 0}%;
+            background: #ffa500;
+            height: 20px;
+            border-radius: 10px;
+          }
+          footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #ccc;
+            padding-top: 1rem;
+          }
+          @media print {
+            body { padding: 1rem; }
+            .no-print { display: none; }
+          }
+        </style>
+      </head>
+      <body>
+        <header>
+          <h1>${this.title || 'Untitled Project'}</h1>
+        </header>
+        <main>
+          <section>
+            <h2>Project Details</h2>
+            <p><strong>Freelancer:</strong> ${this.clientName || 'N/A'}</p>
+            <p><strong>Description:</strong> ${this.description || 'No description provided'}</p>
+          </section>
+          <section>
+            <h2>Financial Summary</h2>
+            <p><strong>Total Project Value:</strong> $${(this.totalPrice || 0).toFixed(2)}</p>
+            <p><strong>Amount Paid:</strong> $${((this.totalPrice || 0) - (this.Amountdue || 0)).toFixed(2)}</p>
+            <p><strong>Amount Due:</strong> <span class="highlight">$${(this.Amountdue || 0).toFixed(2)}</span></p>
+          </section>
+          <section class="progress-section">
+            <h2>Project Progress</h2>
+            <p><strong>Progress:</strong> <span class="highlight">${this.progress || 0}% Complete</span></p>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill"></div>
+            </div>
+          </section>
+        </main>
+        <footer>
+          <p>Report generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+        </footer>
+      </body>
+    </html>
+  `;
+
+  const printWindow = window.open('', '_blank');
+
+  if (printWindow) {
+    printWindow.document.write(html);
+    printWindow.document.close();
+    printWindow.focus();
+
+    setTimeout(() => {
+      printWindow.print();
+    }, 500);
+  } else {
+    alert('Please allow popups to export PDF. You can also try using Ctrl+P to print this page.');
+  }
+}
+,
   },
 
   computed: {
