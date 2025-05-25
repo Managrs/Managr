@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 //import { useAuth0 } from '@auth0/auth0-vue';
 
+
 import LandingPage from '../components/LandingPage.vue';
 import DashboardLayout from '../views/DashboardLayout.vue';
 import dashboardadmin from '../views/dashboardadmin.vue';
@@ -31,6 +32,8 @@ import Chatbox from '../views/client/Chatbox.vue';
 import profileSettings from '../views/profileSettings/profileSettings.vue';
 import Viewgigs from '../views/freelance/viewgigs.vue';
 import EditProfile from '../views/editProfile.vue';
+
+
 
 const routes = [
   {path: '/', name: 'LandingPage', component: LandingPage },
@@ -67,7 +70,8 @@ const routes = [
   {path: '/viewgigs',name: 'viewgigs', component: Viewgigs},
   {path: '/applypost', name: 'applypost', component: ApplyPost},
   {path: '/chatsystem', name:'chatsystem', component:Chatbox},
-  {path: '/editprofile', name:'editprofile', component:EditProfile}
+  {path: '/editprofile', name:'editprofile', component:EditProfile},
+  
   /*
   {
     path: '/client',

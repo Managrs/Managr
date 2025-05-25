@@ -1,106 +1,215 @@
 <template>
-  <header class="user-head">
-    <h1>Products</h1>
-  </header>
+  <section class="admin-statuses">
+    <h2>Client-Freelancer Application Statuses</h2>
+    
+    <section class="controls">
+      <input 
+        type="text" 
+        v-model="searchQuery" 
+        placeholder="Search by client or freelancer email" 
+        class="search-input"
+      >
+      
+      <select v-model="statusFilter" class="status-filter">
+        <option value="">All Statuses</option>
+        <option value="Approved">Approved</option>
+        <option value="Pending">Pending</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+    </section>
 
-  <main>
-    <section class="filter-by">Filter</section>
-
-    <table class="approval-table">
+    <table v-if="!loading" class="statuses-table">
       <thead>
         <tr>
-          <th>Photo</th>
-          <th>Product</th>
-          <th>Description</th>
-          <th>Creator</th>
+          <th>Client</th>
+          <th>Freelancer</th>
+          <th>Gig</th>
+          <th>Category</th>
+          <th>Budget</th>
+          <th>Status</th>
+          <th>Application Date</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="product in products" :key="product.name">
-          <td>
-            <img :src="product.photo" class="avatar" alt="product image" />
+        <tr v-for="status in filteredStatuses" :key="status._id">
+          <td>{{ status.clientEmail }}<br><small>{{ status.clientName }}</small></td>
+          <td>{{ status.freelancerEmail }}</td>
+          <td>{{ status.gigName }}</td>
+          <td>{{ status.category }}</td>
+          <td>R{{ status.budget }}</td>
+          <td :class="`status-${status.status.toLowerCase()}`">
+            {{ status.status }}
           </td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.description }}</td>
-          <td>{{ product.creator }}</td>
+          <td>{{ formatDate(status.applicationDate) }}</td>
         </tr>
       </tbody>
     </table>
-  </main>
+
+    <p v-if="loading">Loading statuses...</p>
+    <p v-if="!loading && statuses.length === 0">No application statuses found</p>
+  </section>
 </template>
 
 <script>
+import { ref, computed, onMounted } from 'vue';
+import axios from 'axios';
+
 export default {
-  name: "Aproducts",
-  data() {
-    return {
-      products: [
-        {
-          name: "Wooden Chair",
-          photo: "https://via.placeholder.com/40",
-          description: "Classic wooden dining chair",
-          creator: "Olivia Rhye"
-        },
-        {
-          name: "Desk Lamp",
-          photo: "https://via.placeholder.com/40",
-          description: "Modern adjustable lamp",
-          creator: "Phoenix Baker"
-        },
-        {
-          name: "Standing Desk",
-          photo: "https://via.placeholder.com/40",
-          description: "Height-adjustable work desk",
-          creator: "Lana Steiner"
+  setup() {
+    const statuses = ref([]);
+    const loading = ref(true);
+    const error = ref(null); // Added an error ref for user feedback
+    const searchQuery = ref('');
+    const statusFilter = ref('');
+
+    const fetchStatuses = async () => {
+      try {
+        loading.value = true;
+        error.value = null; // Clear previous errors
+        const apiUrl = `${import.meta.env.VITE_API_URL}/admin/statuses`;
+
+
+        const response = await axios.get(apiUrl);
+
+        if (Array.isArray(response.data)) {
+          statuses.value = response.data;
+        } else {
+          console.error('Error: API response is not an array.', response.data);
+          statuses.value = []; // Default to an empty array to prevent further errors
+          error.value = 'Received unexpected data format from server.';
         }
-      ]
+      } catch (err) {
+        console.error('Error fetching statuses:', err);
+        statuses.value = []; // Default to an empty array on error
+        if (err.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          error.value = `Error ${err.response.status}: ${err.response.data?.message || err.message}`;
+        } else if (err.request) {
+          // The request was made but no response was received
+          error.value = 'Network error: Could not connect to the server.';
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          error.value = `Error: ${err.message}`;
+        }
+      } finally {
+        loading.value = false;
+      }
+    };
+
+    const formatDate = (dateString) => {
+      if (!dateString) return 'N/A';
+      try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) {
+            return 'Invalid Date';
+        }
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return date.toLocaleDateString(undefined, options);
+      } catch (e) {
+        console.error("Error formatting date:", dateString, e);
+        return 'Invalid Date';
+      }
+    };
+
+    const filteredStatuses = computed(() => {
+      if (!Array.isArray(statuses.value)) return [];
+
+      const query = searchQuery.value.toLowerCase().trim();
+      const status = statusFilter.value;
+
+      return statuses.value.filter(app => {
+        // Check status filter
+        if (status && app.status !== status) return false;
+        
+        // Check search query
+        if (!query) return true;
+        
+        return (
+          (app.clientEmail?.toLowerCase().includes(query)) ||
+          (app.clientName?.toLowerCase().includes(query)) ||
+          (app.freelancerEmail?.toLowerCase().includes(query)) ||
+          (app.freelancerName?.toLowerCase().includes(query)) ||
+          (app.gigName?.toLowerCase().includes(query))
+        );
+      });
+    });
+
+    onMounted(fetchStatuses);
+
+    return {
+      statuses,
+      loading,
+      error, // Expose error ref
+      searchQuery,
+      statusFilter,
+      filteredStatuses,
+      formatDate
     };
   }
 };
 </script>
 
 <style scoped>
-.user-head {
-  padding: 16px;
-  font-size: 24px;
-  font-weight: bold;
+.admin-statuses {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.filter-by {
-  margin: 12px 0;
-  font-weight: 500;
-  color: #4b5563;
+.controls {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
 }
 
-.approval-table {
+.search-input, .status-filter {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.search-input {
+  flex: 1;
+  max-width: 400px;
+}
+
+.statuses-table {
   width: 100%;
   border-collapse: collapse;
-  font-family: Arial, sans-serif;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  border-radius: 6px;
-  overflow: hidden;
+  font-size: 14px;
 }
 
-.approval-table th,
-.approval-table td {
+.statuses-table th,
+.statuses-table td {
+  padding: 12px 15px;
   text-align: left;
-  padding: 12px 16px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.approval-table thead {
-  background-color: #f9fafb;
-  color: #374151;
+.statuses-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
 }
 
-.approval-table tbody tr:hover {
-  background-color: #f3f4f6;
+.status-approved {
+  color: #28a745;
+  font-weight: 500;
 }
 
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 6px;
-  object-fit: cover;
+.status-pending {
+  color: #ffc107;
+  font-weight: 500;
+}
+
+.status-rejected {
+  color: #dc3545;
+  font-weight: 500;
+}
+
+small {
+  color: #666;
+  font-size: 0.85em;
 }
 </style>

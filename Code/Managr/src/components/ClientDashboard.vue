@@ -6,6 +6,7 @@
     <nav>
       <button class="post-btn">Post Project</button>
       <button class="messages-btn">Messages</button>
+      <button class=""></button>
       <section class="profile-picture">
         <img src="../assets/noprofile.jpg" alt="Profile Picture" />
       </section>

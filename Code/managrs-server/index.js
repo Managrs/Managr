@@ -210,7 +210,6 @@ app.get("/jobRequests/:email", async (req, res) => {
 
   try {
     const applicationsRaw = await Application.find({ receiverId: email });
-
     const senderIds = [...new Set(applicationsRaw.map(msg => msg.senderId))];
     const users = await User.find({ email: { $in: senderIds } });
     const userMap = {};
@@ -337,6 +336,7 @@ app.get('/allusers', async (req, res) => {
   }
 });
 
+
 app.post('/newMessage', async (req, res) => {
   const { senderId, receiverId, content } = req.body;
   try {
@@ -348,15 +348,19 @@ app.post('/newMessage', async (req, res) => {
   }
 });
 
-app.delete('/deleteUser/:email', async (req, res) => {
-  const userId = req.params.email;
+app.delete('/deleteUser', async (req, res) => {
+  const { email } = req.body;
+  if (!email){
+     return res.status(400).json({ error: 'Email is required' });
+  }
 
   try {
-    const deletedUser = await User.findOneAndDelete(userId);
+    const deletedUser = await User.findOneAndDelete({email: email});
     if (!deletedUser) {
       return res.status(404).json({ error: 'User not found' });
     }
     res.status(200).json({ message: 'User deleted successfully' });
+    
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -464,6 +468,48 @@ app.put('/setmilestone', async (req, res) => {
     res.json({ message: 'Amount updated', application: updatedApp });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/admin/reports', async (req, res) => {
+  try {
+    const { status, category } = req.query;
+    const filter = {};
+    
+    if (status) filter.status = status;
+    if (category) filter.category = category;
+
+    const reports = await Report.find(filter)
+      .sort({ createdAt: -1 });
+    res.json(reports);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.patch('/admin/reports/:id', async (req, res) => {
+  try {
+    const update = {
+      status: req.body.status,
+      ...(req.body.status === 'resolved' && { resolvedAt: new Date() }),
+      ...(req.body.comment && { 
+        $push: { 
+          adminComments: {
+            comment: req.body.comment,
+            adminId: req.user._id // From auth middleware
+          }
+        }
+      })
+    };
+
+    const report = await Report.findByIdAndUpdate(
+      req.params.id,
+      update,
+      { new: true }
+    );
+    res.json(report);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 
