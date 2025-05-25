@@ -1,68 +1,73 @@
-# Daily Scrum Report - Authentication & Dashboards  
+# Scrum 4
 
-##  Objectives & Progress  
+## Objectives
 
-###  **Login Authentication**  
-- **Status:** Partially Implemented  
-- **Progress:**  
-  - Auth0 integration complete  
-  - JWT tokens with role claims working  
-  - Basic post-login redirect functional  
-- **Blockers:**  
-  - Role-based redirection inconsistent  
-  - Need to verify token claims and `appState` flow  
+1. Implement login authentication
+2. Develop Freelancer, Admin, and Client dashboards
+3. Identify and resolve blockers
 
-###  **Freelancer Dashboard**  
-- **Status:** Functional  
-- **Progress:**  
-  - UI fully implemented  
-  - Fixed crash-on-load issue  
-- **Next Steps:**  
-  - Finalize API integrations 
+## Implement Login Authentication
 
-### **Admin Dashboard**  
-- **Status:** In Development (70%)  
-- **Progress:**  
-  - Core UI components built  
-  - Basic admin features implemented  
-- **Blockers:**  
-  - Needs final API integrations  
-  - Not yet pushed to main repo  
+Login authentication was partially implemented using Auth0.
 
-###  **Client Dashboard**  
-- **Status:** In Development (60%)  
-- **Progress:**  
-  - Main UI framework complete  
-  - Basic client features working 
-##  Key Issues  
+### Progress:
+- Auth0 integration completed
+- JWT tokens with role claims are working
+- Basic post-login redirect is functional
 
-1. **Auth0 Routing**  
-   - Users authenticated but not correctly redirected  
-   - Action Items:  
-     - Verify token role claims  
-     - Debug `loginWithRedirect` state handling  
+### Blockers:
+- Role-based redirection is inconsistent
+- Need to verify token claims and `appState` flow
 
-2. **Dashboard Stability**  
-   - Fixed freelancer dashboard crashes  
-   - Added error boundaries  
+## Develop Freelancer Dashboard
 
-3. **Code Deployment**  
-   - Admin/Client dashboards pending merge  
-   - Testing pipeline established  
+The Freelancer dashboard is fully functional.
 
-**Priority Focus:**  
-1. Resolve Auth0 routing issues  
-2. Finalize and merge pending dashboards  
-3. Enhance test coverage  
+### Progress:
+- UI completed
+- Crash-on-load issue fixed
 
----
+### Next Steps:
+- Finalize API integrations
 
-##  Blockers Needing Resolution  
-- Clarify Auth0 role-mapping rules  
-- Confirm backend API stability  
+## Develop Admin Dashboard
 
-**Overall Status:**  On Track (Minor Blockers)
+The Admin dashboard is in development (70% done).
+
+### Progress:
+- Core UI components implemented
+- Basic admin features are working
+
+### Blockers:
+- Needs API integration
+- Not yet merged to the main repo
+
+## Develop Client Dashboard
+
+The Client dashboard is in development (60% done).
+
+### Progress:
+- Main UI structure completed
+- Basic features working
+
+## Blockers Needing Resolution
+
+- Role-based redirection issue using Auth0
+   - Action: Verify token role claims and fix `loginWithRedirect` state handling
+- API integrations for Admin and Client dashboards
+- Clarify Auth0 role-mapping logic
+- Confirm backend API stability
+
+## Priority Focus
+
+- Fix Auth0 routing issues
+- Finalize and merge dashboards
+- Improve test coverage
+
+## Overall Status
+
+On Track – Minor Blockers
 
 ## Evidence
-![evidence](s14.jpg)
 
+![evidence](s14.jpg)
