@@ -51,39 +51,6 @@ app.get('/', (req, res) => {
   res.send('Node server is live!');
 });
 
-// Socket.IO Connection
-io.on('connection', (socket) => {
-  console.log('A user connected:', socket.id);
-
-  // Join a room
-  socket.on('joinRoom', ({ roomId }) => {
-    socket.join(roomId);
-    console.log(`User ${socket.id} joined room ${roomId}`);
-  });
-
-  // Leave a room
-  socket.on('leaveRoom', ({ roomId }) => {
-    socket.leave(roomId);
-    console.log(`User ${socket.id} left room ${roomId}`);
-  });
-
-  // Handle sending messages
-  socket.on('sendMessage', async ({ roomId, senderId, receiverId, content }) => {
-    const message = new Application({ senderId, receiverId, content });
-    await message.save();
-
-    io.to(roomId).emit('receiveMessage', {
-      senderId,
-      receiverId,
-      content,
-      timestamp: message.timestamp
-    });
-  });
-
-  socket.on('disconnect', () => {
-    console.log('User disconnected:', socket.id);
-  });
-});
 
 app.post('/newUser', async (req, res) => {
   try {
@@ -174,10 +141,10 @@ app.get('/allgigs', async (req, res) => {
     const users = await User.find();
     const userMap = {};
     users.forEach(user => {
-      userMap[user.fullName] = user;
+      userMap[user.email] = user;
     });
     const mapped = gigs.map((gig, index) => {
-      const user = userMap[gig.clientName];
+      const user = userMap[gig.clientEmail];
       return {
         id: index + 1,
         image: user.avatar,
@@ -466,6 +433,64 @@ app.put('/setmilestone', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+app.get('/allreports', async (req, res) => {
+  try {
+    const reports = await Report.find();
+    const users = await User.find();
+    const userMap = {};
+    users.forEach(user => {
+      userMap[user.email] = user;
+    });
+    const mapped = reports.map((report, index) => {
+      const user = userMap[report.clientEmail];
+      return {
+        id: index + 1,
+        image: user?.avatar || '',
+        name: report.clientName,
+        mail: report.clientEmail,
+        title: report.reportTitle,
+        description: report.reportDescription,
+      };
+    });
+    res.json(mapped);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+app.get("/approvedApplications", async (req, res) => {
+  try {
+    const applicationsRaw = await Application.find({ status: "Approved" });
+
+    const receiverIds = [...new Set(applicationsRaw.map(app => app.receiverId))];
+
+    const users = await User.find({ email: { $in: receiverIds } });
+
+    const userMap = {};
+    users.forEach(user => {
+      userMap[user.email] = user;
+    });
+
+    const applications = applicationsRaw.map(app => {
+      const user = userMap[app.receiverId];
+      return {
+        id: app._id.toString(),
+        sender: app.senderId,
+        receiver: app.receiverId,
+        avatar: user?.avatar,
+        jobTitle: app.jobTitle,
+        jobBudget: app.jobBudget,
+      };
+    });
+
+    res.json(applications);
+  } catch (err) {
+    console.error("Error fetching approved applications:", err);
+    res.status(400).json({ error: err.message });
+  }
+});
+
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

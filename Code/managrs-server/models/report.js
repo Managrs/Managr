@@ -6,6 +6,10 @@ const reportSchema =  new mongoose.Schema({
         type:String,
         required: true
     },
+    clientEmail:{
+        type:String,
+        required: true
+    },
     reportTitle:{
         type:String,
         required: true

@@ -86,7 +86,6 @@
           }
   
           const data = await response.json();
-          console.log("Gig posted successfully:", data);
           alert("Gig posted successfully!");
   
           this.gig = {

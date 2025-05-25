@@ -23,6 +23,7 @@
     "debug": "^4.4.0",
     "dotenv": "^16.5.0",
     "express": "^4.21.2",
+    "express-validator": "^7.2.1",
     "mongoose": "^8.14.1",
     "mongoose-id-autoincrement": "^1.0.5",
     "node": "^22.15.0",

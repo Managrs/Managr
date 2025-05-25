@@ -10,6 +10,9 @@
       <input type="text" placeholder="Write your user name" id="clientName" v-model="report.clientName" required
         readonly><br>
 
+        <label for="clientEmail">Client Email</label><br>
+        <input type="text" id="clientEmail" v-model="report.clientEmail" required readonly><br>
+
       <label for="reportTitle">Report Title</label><br>
       <input type="text" placeholder="What are you reporting" id="reportTitle" v-model="report.reportTitle"
         required><br>
@@ -35,6 +38,7 @@ export default {
     return {
       report: {
         clientName: "",
+        clientEmail: "",
         reportTitle: "",
         reportDescription: "",
       }
@@ -43,6 +47,7 @@ export default {
   mounted() {
     const userStore = useUserStore();
     this.report.clientName = userStore.name;
+    this.report.clientEmail = userStore.email;
   },
   methods: {
     goBack() {

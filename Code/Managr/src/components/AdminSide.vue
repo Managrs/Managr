@@ -11,11 +11,8 @@
         />
       </figure>
   
-      <!-- Navigation Links -->
       <section class="admin-section">
         <ul class="nav-links">
-          <li><router-link to="/Adashboard" class="nav-link">Dashboard</router-link></li>
-          <li><router-link to="/Aauditlogs" class="nav-link">Audit Logs</router-link></li>
           <li><router-link to="/Ausers" class="nav-link">Users</router-link></li>
           <li><router-link to="/Areports" class="nav-link">Reports</router-link></li>
           <li><router-link to="/Aproducts" class="nav-link">Products</router-link></li>
