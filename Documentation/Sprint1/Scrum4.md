@@ -52,17 +52,17 @@ The Client dashboard is in development (60% done).
 
 ## Blockers Needing Resolution
 
-1. Role-based redirection issue using Auth0
+- Role-based redirection issue using Auth0
    - Action: Verify token role claims and fix `loginWithRedirect` state handling
-2. API integrations for Admin and Client dashboards
-3. Clarify Auth0 role-mapping logic
-4. Confirm backend API stability
+- API integrations for Admin and Client dashboards
+- Clarify Auth0 role-mapping logic
+- Confirm backend API stability
 
 ## Priority Focus
 
-1. Fix Auth0 routing issues
-2. Finalize and merge dashboards
-3. Improve test coverage
+- Fix Auth0 routing issues
+-  Finalize and merge dashboards
+- Improve test coverage
 
 ## Overall Status
 
