@@ -150,8 +150,8 @@ Tests are located in the `/test` directory and mirror the structure of the `/src
 You can access the live version of the app here:
 🔗 [https://jolly-bush-0f6975910.6.azurestaticapps.net/](https://jolly-bush-0f6975910.6.azurestaticapps.net/)
 
-> 🖥️ **Backend Hosting**: [Render](https://render.com/)
-> 🎨 **Frontend Hosting**: [Azure Static Web Apps](https://azure.microsoft.com/en-us/products/app-service/static/)
+> 🖥️ **Backend Hosting**: [Render](https://managr-1o34.onrender.com)
+> 🎨 **Frontend Hosting**: [Azure Static Web Apps]([https://jolly-bush-0f6975910.6.azurestaticapps.net/](https://portal.azure.com/#@wits.ac.za/resource/subscriptions/929ae1f5-7157-47ff-bd79-bc4f629c4423/resourceGroups/Managr_group/providers/Microsoft.Web/staticSites/Managr/staticsite/)
 > 🗄️ **Database**: Hosted on **Azure**
 
 > ⚠️ **Note on Backend Performance**
