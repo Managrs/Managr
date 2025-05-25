@@ -30,6 +30,14 @@ npm run dev
 
 The backend will start on [http://localhost:8080](http://localhost:8080).
 
+> 🌐 **Production Hosting**:
+> The backend is hosted on **[Render](https://render.com/)**.
+
+> ⚠️ **Note on Backend Performance**
+> The backend server is deployed on **Render’s free tier**, which goes to sleep after periods of inactivity.
+> As a result, the **first API request may take a few seconds to respond** if the server is waking up. Subsequent requests should be fast.
+> This is expected behavior with free-tier hosting.
+
 ---
 
 ## 🎨 Frontend: `Managr` (Vite + Vue)
@@ -54,6 +62,9 @@ npm run dev
 
 Vite will start on [http://localhost:5173](http://localhost:5173).
 
+> 🌐 **Production Hosting**:
+> The frontend is hosted on **[Azure Static Web Apps](https://azure.microsoft.com/en-us/products/app-service/static/)**.
+
 ---
 
 ## 🧪 Running Both Projects
@@ -69,7 +80,21 @@ Example:
    npm run dev
    ```
 
-2. In another terminal:
+   or
+
+   ```bash
+   cd Code\managr-server
+   npm run start
+   ```
+
+   or
+
+   ```bash
+   cd Code\managr-server
+   node index,js
+   ```
+
+1. In another terminal:
 
    ```bash
    cd Code\Managr
@@ -125,12 +150,21 @@ Tests are located in the `/test` directory and mirror the structure of the `/src
 You can access the live version of the app here:
 🔗 [https://jolly-bush-0f6975910.6.azurestaticapps.net/](https://jolly-bush-0f6975910.6.azurestaticapps.net/)
 
+> 🖥️ **Backend Hosting**: [Render](https://render.com/)
+> 🎨 **Frontend Hosting**: [Azure Static Web Apps](https://azure.microsoft.com/en-us/products/app-service/static/)
+> 🗄️ **Database**: Hosted on **Azure**
+
+> ⚠️ **Note on Backend Performance**
+> The backend API may take a few seconds to respond after long periods of inactivity. This is due to the backend being hosted on **Render's free plan**, which puts the server to sleep when idle.
+> This is normal behavior — once the server wakes up, response times will return to normal.
+
+---
+
 ## 📊 Code Coverage
 
 [![Codecov](https://codecov.io/gh/Managrs/Managr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Managrs/Managr)
 
-You can view the detailed code coverage reports here:  
+You can view the detailed code coverage reports here:
 🔗 [https://app.codecov.io/gh/Managrs/Managr](https://app.codecov.io/gh/Managrs/Managr)
 
 ---
-
