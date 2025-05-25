@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 //import { useAuth0 } from '@auth0/auth0-vue';
 
+
 import LandingPage from '../components/LandingPage.vue';
 import DashboardLayout from '../views/DashboardLayout.vue';
 import dashboardadmin from '../views/dashboardadmin.vue';
@@ -9,8 +10,6 @@ import AdminDashboard from '../components/AdminSide.vue';
 import loginPage from '../views/loggings/loginPage.vue';
 import signupPage from '../views/loggings/signupPage.vue';
 import display from '../views/loggings/displayTester.vue';
-import freelanceTrack from '../views/tracking/freelanceTracking.vue';
-import clientTrack from '../views/tracking/clientTracking.vue';
 
 import freelanceprogress from '../views/tracking/freelanceprogress.vue';
 import clientprogress from '../views/tracking/clientprogress.vue';
@@ -32,6 +31,8 @@ import profileSettings from '../views/profileSettings/profileSettings.vue';
 import Viewgigs from '../views/freelance/viewgigs.vue';
 import EditProfile from '../views/editProfile.vue';
 
+
+
 const routes = [
   {path: '/', name: 'LandingPage', component: LandingPage },
   {path: '/Dashboardclient' , name: 'Dashboardclient' , component: Dashboardclient},
@@ -45,9 +46,6 @@ const routes = [
   {path: '/profileSettings', name: 'profileSettings', component:profileSettings},
   {path: '/freelanceprogress', name: 'freelanceprogress', component:freelanceprogress},
   {path: '/clientprogress', name: 'clientprogress', component:clientprogress},
-
-  {path: '/freelanceTrack', name: 'freelanceTrack', component:freelanceTrack},
-  {path: '/clientTrack', name: 'clientTrack', component:clientTrack},
 
 
   {
@@ -67,7 +65,8 @@ const routes = [
   {path: '/viewgigs',name: 'viewgigs', component: Viewgigs},
   {path: '/applypost', name: 'applypost', component: ApplyPost},
   {path: '/chatsystem', name:'chatsystem', component:Chatbox},
-  {path: '/editprofile', name:'editprofile', component:EditProfile}
+  {path: '/editprofile', name:'editprofile', component:EditProfile},
+  
   /*
   {
     path: '/client',

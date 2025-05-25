@@ -177,7 +177,6 @@ app.get("/jobRequests/:email", async (req, res) => {
 
   try {
     const applicationsRaw = await Application.find({ receiverId: email });
-
     const senderIds = [...new Set(applicationsRaw.map(msg => msg.senderId))];
     const users = await User.find({ email: { $in: senderIds } });
     const userMap = {};
@@ -304,6 +303,7 @@ app.get('/allusers', async (req, res) => {
   }
 });
 
+
 app.post('/newMessage', async (req, res) => {
   const { senderId, receiverId, content } = req.body;
   try {
@@ -315,15 +315,19 @@ app.post('/newMessage', async (req, res) => {
   }
 });
 
-app.delete('/deleteUser/:email', async (req, res) => {
-  const userId = req.params.email;
+app.delete('/deleteUser', async (req, res) => {
+  const { email } = req.body;
+  if (!email){
+     return res.status(400).json({ error: 'Email is required' });
+  }
 
   try {
-    const deletedUser = await User.findOneAndDelete(userId);
+    const deletedUser = await User.findOneAndDelete({email: email});
     if (!deletedUser) {
       return res.status(404).json({ error: 'User not found' });
     }
     res.status(200).json({ message: 'User deleted successfully' });
+    
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
