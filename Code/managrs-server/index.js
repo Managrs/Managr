@@ -3,8 +3,6 @@ const cors = require('cors');
 const http = require('http');
 const mongoose = require("mongoose");
 
-const { Server } = require('socket.io');
-
 const connectToDB = require('./db/connect');
 const User = require('./models/user'); 
 const Gig = require('./models/gigs'); 
@@ -18,12 +16,6 @@ const app = express();
 connectToDB();
 
 const server = http.createServer(app);
-const io = new Server (server,  {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"]
-  }
-});
 
 app.use(express.json( {limit: '10mb'} ));
 
@@ -323,8 +315,18 @@ app.delete('/deleteUser', async (req, res) => {
 
   try {
     const deletedUser = await User.findOneAndDelete({email: email});
+<<<<<<< HEAD
     if (!deletedUser) {
       return res.status(404).json({ error: 'User not found' });
+=======
+    if (deletedUser) {
+       await Gig.deleteMany({ clientEmail: email });
+       await Message.deleteMany({ clientEmail: email }); 
+       await Report.deleteMany({ clientEmail: email });
+       await  Application.deleteMany({ clientEmail: email });
+    } else {
+      console.log('User not found');
+>>>>>>> main
     }
     res.status(200).json({ message: 'User deleted successfully' });
     

@@ -1,6 +1,5 @@
 <template>
     <aside class="sidebar">
-      <!-- Logo -->
       <figure class="project-logo">
         <img
           src="/brandlogo.png"
@@ -33,9 +32,6 @@
     </section>
     </aside>
     <UserSidebar v-if="isOpen" @close="toggleSidebar" />
-    <!--<main class="main-view">-->
-      <!--<router-view />-->
-    <!--</main>-->
   </template>
   
   <script lang="ts">

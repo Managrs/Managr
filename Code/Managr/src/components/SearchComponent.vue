@@ -2,7 +2,7 @@
 <template>
   <section class="search-container">
     <h2>Find Trusted Freelancers for Your Everyday Needs</h2>
-    <div class="search-wrapper">
+    <section class="search-wrapper">
       <input
         v-model="searchTerm"
         type="text"
@@ -11,7 +11,7 @@
         @input="emitSearch"
       />
       <button class="search-icon" aria-label="Search"></button>
-    </div>
+    </section>
   </section>
 </template>
 

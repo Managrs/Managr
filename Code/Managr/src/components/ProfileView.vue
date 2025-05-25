@@ -1,9 +1,9 @@
 <template>
   <section class="profile-page">
-    <div class="sticky-header">
+    <section class="sticky-header">
       <SearchComponent @search="handleSearch" />
       <h2 class="section-title">Featured Professionals</h2>
-    </div>
+    </section>
 
     <section class="scrollable-profiles">
       <section class="profiles-container">

@@ -1,8 +1,8 @@
 # Daily Scrum Report - Authentication & Dashboards  
 
-## 🎯 Objectives & Progress  
+##  Objectives & Progress  
 
-### 🔐 **Login Authentication**  
+###  **Login Authentication**  
 - **Status:** Partially Implemented  
 - **Progress:**  
   - Auth0 integration complete  
@@ -12,7 +12,7 @@
   - Role-based redirection inconsistent  
   - Need to verify token claims and `appState` flow  
 
-### 👨‍💻 **Freelancer Dashboard**  
+###  **Freelancer Dashboard**  
 - **Status:** Functional  
 - **Progress:**  
   - UI fully implemented  
@@ -20,7 +20,7 @@
 - **Next Steps:**  
   - Finalize API integrations 
 
-### 👔 **Admin Dashboard**  
+### **Admin Dashboard**  
 - **Status:** In Development (70%)  
 - **Progress:**  
   - Core UI components built  
@@ -29,12 +29,12 @@
   - Needs final API integrations  
   - Not yet pushed to main repo  
 
-### 👔 **Client Dashboard**  
+###  **Client Dashboard**  
 - **Status:** In Development (60%)  
 - **Progress:**  
   - Main UI framework complete  
   - Basic client features working 
-## 🔍 Key Issues  
+##  Key Issues  
 
 1. **Auth0 Routing**  
    - Users authenticated but not correctly redirected  
@@ -57,8 +57,8 @@
 
 ---
 
-## ❓ Blockers Needing Resolution  
+##  Blockers Needing Resolution  
 - Clarify Auth0 role-mapping rules  
 - Confirm backend API stability  
 
-**Overall Status:** 🟡 On Track (Minor Blockers)
+**Overall Status:**  On Track (Minor Blockers)

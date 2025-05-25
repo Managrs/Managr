@@ -1,11 +1,11 @@
 <!-- Popup.vue -->
 <template>
-  <div v-if="visible" class="popup-overlay">
-    <div class="popup-content">
+  <section v-if="visible" class="popup-overlay">
+    <section class="popup-content">
       <slot />
       <button @click="closePopup"> OK </button>
-    </div>
-  </div>
+    </section>
+  </section>
 </template>
 
 <script>

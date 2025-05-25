@@ -1,110 +1,116 @@
-🧾 Sprint 2 - Scrum 3
-🎯 Objectives
+# Sprint 2 - Scrum 3
 
-Mid-sprint check-in on development status
+## Objectives
 
-Resolve current blockers and integration issues
+1. Mid-sprint check-in on development status  
+2. Resolve current blockers and integration issues  
+3. Begin merging working features into main repo  
+4. Ensure database and APIs are in sync for testing  
 
-Begin merging working features into main repo
+---
 
-Ensure database and APIs are in sync for testing
+## Team Stand-Up Summary
 
-📝 Team Stand-Up Summary
+### Lebo – Job Posting & Jest Testing
 
-🔨 Lebo – Job Posting & Jest Testing
+**Progress:**
 
-Progress:
+- Create and delete job features fully working and merged  
+- "Mark as Tracked" now persists in database  
+- Basic unit tests written and passing locally  
 
-Create and delete job features fully working and merged
+**Next:**
 
-"Mark as Tracked" now persists in database
+- Expand test coverage to edge cases  
 
-Basic unit tests written and passing locally
+**Blockers:**
 
-Next:
+- CI integration with Jest still pending  
 
-Expand test coverage to edge cases
+---
 
-Blockers:
+### Lemohang – WhatsApp Message Button
 
-CI integration with Jest still pending
+**Progress:**
 
-💬 Lemohang – WhatsApp Message Button
+- Fixed mobile redirection using custom URI scheme  
+- Fallback logic implemented for non-supported browsers  
 
-Progress:
+**Blockers:**
 
-Fixed mobile redirection using custom URI scheme
+- Minor formatting issue with phone number in some test profiles  
 
-Fallback logic implemented for non-supported browsers
+---
 
-Blockers:
+### Bhavan – Search Bar & Price Filter
 
-Minor formatting issue with phone number in some test profiles
+**Progress:**
 
-🔍 Bhavan – Search Bar & Price Filter
+- Responsive layout fixed  
+- Added placeholder filter logic for experience level (for future)  
 
-Progress:
+**Next:**
 
-Responsive layout fixed
+- Polish UI and error states  
 
-Added placeholder filter logic for experience level (for future)
+**Blockers:**
 
-Next:
+- Some edge cases in filtering still bypassing logic  
 
-Polish UI and error states
+---
 
-Blockers:
+### Kagiso – API Integration
 
-Some edge cases in filtering still bypassing logic
+**Progress:**
 
-⚙️ Kagiso – API Integration
+- Job posting APIs now live and accepting data from frontend  
+- Search API added and responding correctly  
 
-Progress:
+**Next:**
 
-Job posting APIs now live and accepting data from frontend
+- Add DELETE route and apply middleware for auth  
 
-Search API added and responding correctly
+**Blockers:**
 
-Next:
+- Needs confirmation on Auth0 token validation structure  
 
-Add DELETE route and apply middleware for auth
+---
 
-Blockers:
+### Kgaugelo – UML Finalization
 
-Needs confirmation on Auth0 token validation structure
+**Progress:**
 
-📊 Kgaugelo – UML Finalization
+- Class diagram completed and uploaded  
+- Full diagram set submitted to shared design folder  
 
-Progress:
+**Next:**
 
-Class diagram completed and uploaded
+- Work on syncing diagrams with README documentation  
 
-Full diagram set submitted to shared design folder
+---
 
-Next:
+### Dimpho – Database Integration
 
-Work on syncing diagrams with README documentation
+**Progress:**
 
-🗃️ Dimpho – Database Integration
+- Frontend successfully posting to MongoDB  
+- Job post schema finalized  
 
-Progress:
+**Next:**
 
-Frontend successfully posting to MongoDB
+- Help Kagiso test role-based data fetching  
 
-Job post schema finalized
+---
 
-Next:
+## Summary & Action Points
 
-Help Kagiso test role-based data fetching
+- Most core features working or in final polish phase  
+- Internal testing ramping up, CI/CD still pending configuration  
+- Data flow between frontend → API → DB is now functional  
+- Minor bugs flagged for price filter, phone formatting, and post status syncing  
 
-🔍 Summary & Action Points
+---
 
-Most core features working or in final polish phase
+## Status
 
-Internal testing ramping up, CI/CD still pending configuration
-
-Data flow between frontend → API → DB is now functional
-
-Minor bugs flagged for price filter, phone formatting, and post status syncing
-
-📍 Status: 🟡 On Track — Focus now on polishing and merging into production
+**On Track — Focus now on polishing and merging into production**
