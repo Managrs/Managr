@@ -36,68 +36,30 @@
 </template>
   
 <script setup lang="ts">
-// import { useAuth0 } from '@auth0/auth0-vue';
-// import { onMounted } from 'vue';
-// import { useUserStore } from '../stores/userStore';
 import { RouterLink } from 'vue-router';
 import router from '../router';
-
-// const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
-// const userStore = useUserStore();
 
 const handleLogin = () => {
   router.push("/login");
 };
-/*
-onMounted(async () => {
-  if (isAuthenticated.value && user.value && !userStore.name) {
-    const backendUrl = import.meta.env.VITE_API_URL;
-
-    const payload = {
-      fullName: user.value.name,
-      email: user.value.email,
-      avatar: user.value.picture,
-      role:  user.value.user_metadata?.role || "client",
-    };
-
-    try {
-      const res = await fetch(`${backendUrl}/auth/registerOrUpdateUser`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${await getAccessTokenSilently()}`
-        },
-        body: JSON.stringify(payload)
-      });
-
-      const data = await res.json();
-      console.log("User synced and saved:", data);
-    } catch (error) {
-      console.error("User sync failed", error);
-    }
-  }
-});
-*/
 
 </script>
   
 <style scoped>  
-  /* Header Styling */
   .header {
     display: flex;
     margin: auto;
-    justify-content: center; /* Centers the content */
+    justify-content: center;
     align-items: center;
     position: relative;
     z-index: 10;
     background-color: white;
-    height: 80px; /* Increased height for better spacing */
-    padding: 0 30px; /* Increased padding */
+    height: 80px; 
+    padding: 0 30px;
     background: white;
     border-bottom: 1px solid var(--color-border);
   }
   
-  /* Navigation Container */
   .navigation {
     position: fixed;
     top: 0;
@@ -121,16 +83,14 @@ onMounted(async () => {
     max-width: 100%;
   }
 
-  /* Left Side - Logo */
   .logo {
-    font-size: 24px; /* Increased font size for better visibility */
+    font-size: 24px; 
     font-weight: 700;
     color: var(--color-dark-gray);
     text-decoration: none;
-    flex-shrink: 0; /* Prevent shrinking */
+    flex-shrink: 0;
   }
   
-  /* Right Side - Navigation Links */
   .nav-links {
     display: flex;
     gap: 20px;

@@ -11,6 +11,9 @@ import loginPage from '../views/loggings/loginPage.vue';
 import signupPage from '../views/loggings/signupPage.vue';
 import display from '../views/loggings/displayTester.vue';
 
+import freelanceprogress from '../views/tracking/freelanceprogress.vue';
+import clientprogress from '../views/tracking/clientprogress.vue';
+
 //admin routers
 import Aauditlogs from '../views/Admin/Aauditlogs.vue';
 import Adashboard from '../views/Admin/Adashboard.vue';
@@ -30,12 +33,6 @@ import profileSettings from '../views/profileSettings/profileSettings.vue';
 import Viewgigs from '../views/freelance/viewgigs.vue';
 import EditProfile from '../views/editProfile.vue';
 
-//Client router
-import Contractform from '../views/client/Contractform.vue';
-import feedbackModel from '../views/freelance/FeedbackModal.vue';
-
-//Payment router
-import Paymentbutton from '../views/Paymentbutton.vue';
 
 
 const routes = [
@@ -49,6 +46,8 @@ const routes = [
   {path: '/signup', name: 'signupPage', component:signupPage},
   {path: '/display', name: 'display', component:display},
   {path: '/profileSettings', name: 'profileSettings', component:profileSettings},
+  {path: '/freelanceprogress', name: 'freelanceprogress', component:freelanceprogress},
+  {path: '/clientprogress', name: 'clientprogress', component:clientprogress},
 
 
   {
@@ -72,10 +71,7 @@ const routes = [
   {path: '/applypost', name: 'applypost', component: ApplyPost},
   {path: '/chatsystem', name:'chatsystem', component:Chatbox},
   {path: '/editprofile', name:'editprofile', component:EditProfile},
-  {path: '/contractform', name:'contractform', component:Contractform},
-  {path: '/feedbackmodel', name:'feedbackmodel', component:feedbackModel},
-  {path: '/paymentbutton', name:'paymentbutton', component:Paymentbutton}
-
+  
   /*
   {
     path: '/client',

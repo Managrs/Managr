@@ -20,10 +20,6 @@ import { useUserStore } from '../stores/userStore';
         <!-- Right Side - Navigation Links -->
         <ul class="nav-links">
           <li>
-            <router-link to="/todo" class="nav-link">Earnings</router-link>
-          </li>
-          
-          <li>
             <router-link to="/viewgigs" class="nav-link">View Gigs</router-link>
           </li>
           <li>
