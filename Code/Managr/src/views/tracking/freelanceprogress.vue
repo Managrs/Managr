@@ -118,296 +118,198 @@ export default {
     },
 
     exportToPDF() {
-      try {
-        // Prepare data with fallbacks
-        const reportData = {
-          title: this.title || 'Untitled Project',
-          clientName: this.clientName || 'Unknown Client',
-          description: this.description || 'No description provided',
-          totalPrice: this.totalPrice || 0,
-          amountDue: this.Amountdue || 0,
-          paidAmount: (this.totalPrice - this.Amountdue) || 0,
-          progress: this.progress || 0,
-          projectId: this.id || 'N/A'
-        };
+  try {
+    const reportData = {
+      title: this.title || 'Untitled Project',
+      clientName: this.clientName || 'Unknown Client',
+      description: this.description || 'No description provided',
+      totalPrice: this.totalPrice || 0,
+      amountDue: this.Amountdue || 0,
+      paidAmount: (this.totalPrice - this.Amountdue) || 0,
+      progress: this.progress || 0,
+      projectId: this.id || 'N/A'
+    };
 
-        const html = `
+    const html = `
       <!DOCTYPE html>
-      <html>
+      <html lang="en">
         <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <title>${reportData.title} - Project Report</title>
-          <meta charset="UTF-8">
           <style>
-            * {
-              margin: 0;
-              padding: 0;
-              box-sizing: border-box;
-            }
-            
             body {
-              font-family: 'Arial', sans-serif;
+              font-family: Arial, sans-serif;
               padding: 2rem;
               color: #1a1a1a;
               background: #fff;
               max-width: 800px;
-              margin: 0 auto;
+              margin: auto;
               line-height: 1.6;
             }
-            
-            .header {
-              text-align: center;
+            header, section, footer {
               margin-bottom: 2rem;
-              padding-bottom: 1rem;
-              border-bottom: 3px solid #2c3e50;
             }
-            
-            .header h1 {
-              color: #2c3e50;
+            header h1 {
               font-size: 2rem;
+              color: #2c3e50;
+            }
+            header p.subtitle {
+              color: #666;
+            }
+            article {
+              border: 1px solid #ccc;
+              padding: 1.5rem;
+              border-radius: 10px;
+              background: #f9f9f9;
+            }
+            h2 {
+              border-bottom: 2px solid #ddd;
+              padding-bottom: 0.5rem;
+              margin-bottom: 1rem;
+              color: #2c3e50;
+            }
+            dl {
+              display: grid;
+              grid-template-columns: max-content 1fr;
+              gap: 0.5rem 1rem;
+            }
+            dt {
+              font-weight: bold;
+              color: #333;
+            }
+            dd {
+              margin: 0;
+            }
+            .progress-container {
+              margin-top: 1rem;
+            }
+            .progress-bar {
+              width: 100%;
+              background: #ddd;
+              border-radius: 5px;
+              overflow: hidden;
+              height: 24px;
               margin-bottom: 0.5rem;
             }
-            
-            .header .subtitle {
-              color: #666;
-              font-size: 1rem;
-            }
-            
-            .section {
-              margin: 2rem 0;
-              padding: 1.5rem;
-              border: 1px solid #dee2e6;
-              border-radius: 8px;
-              background: #f8f9fa;
-            }
-            
-            .section h3 {
-              color: #2c3e50;
-              margin-bottom: 1rem;
-              padding-bottom: 0.5rem;
-              border-bottom: 1px solid #dee2e6;
-            }
-            
-            .info-grid {
-              display: grid;
-              gap: 0.75rem;
-            }
-            
-            .info-item {
-              display: flex;
-              justify-content: space-between;
-              padding: 0.5rem 0;
-              border-bottom: 1px dotted #ccc;
-            }
-            
-            .info-item:last-child {
-              border-bottom: none;
-            }
-            
-            .info-label {
-              font-weight: 600;
-              color: #2c3e50;
-            }
-            
-            .info-value {
-              font-weight: 500;
-            }
-            
-            .price {
-              color: #2c3e50;
-              font-weight: bold;
-            }
-            
-            .paid-amount {
-              color: #27ae60;
-              font-weight: bold;
-            }
-            
-            .remaining-amount {
-              color: #e67e22;
-              font-weight: bold;
-            }
-            
-            .progress-section {
-              background: #e8f4fd;
-              border: 1px solid #2c3e50;
-            }
-            
-            .progress-container {
-              margin: 1rem 0;
-            }
-            
-            .progress-bar-visual {
-              width: 100%;
-              height: 25px;
-              background: #dee2e6;
-              border-radius: 12px;
-              overflow: hidden;
-              margin: 0.5rem 0;
-            }
-            
             .progress-fill {
               height: 100%;
-              background: linear-gradient(90deg, #e67e22, #f39c12);
-              border-radius: 12px;
               width: ${reportData.progress}%;
+              background: linear-gradient(90deg, #e67e22, #f39c12);
               transition: width 0.3s ease;
             }
-            
-            .progress-text {
-              text-align: center;
-              font-weight: bold;
-              color: #e67e22;
-              font-size: 1.1rem;
-              margin-top: 0.5rem;
-            }
-            
             .highlight {
-              color: #e67e22;
               font-weight: bold;
+              color: #e67e22;
             }
-            
-            .footer {
-              margin-top: 3rem;
+            aside {
+              background: #f4f4f4;
+              padding: 1rem;
+              border-left: 4px solid #ccc;
+              margin-top: 2rem;
+            }
+            footer {
               text-align: center;
-              color: #666;
               font-size: 0.9rem;
+              color: #666;
               border-top: 2px solid #2c3e50;
               padding-top: 1rem;
             }
-            
-            .generated-info {
-              background: #f8f9fa;
-              padding: 1rem;
-              border-radius: 6px;
-              margin-top: 1rem;
-            }
-            
             @media print {
-              body { 
-                padding: 1rem; 
-                font-size: 12pt;
+              body {
+                padding: 1rem;
               }
-              .section {
+              article {
                 break-inside: avoid;
               }
             }
           </style>
         </head>
         <body>
-          <div class="header">
+          <header>
             <h1>${reportData.title}</h1>
             <p class="subtitle">Project Status Report</p>
-          </div>
-          
-          <div class="section">
-            <h3>📋 Project Information</h3>
-            <div class="info-grid">
-              <div class="info-item">
-                <span class="info-label">Client:</span>
-                <span class="info-value">${reportData.clientName}</span>
+          </header>
+
+          <article>
+            <section>
+              <h2>Project Information</h2>
+              <dl>
+                <dt>Client:</dt>
+                <dd>${reportData.clientName}</dd>
+                <dt>Description:</dt>
+                <dd>${reportData.description}</dd>
+              </dl>
+            </section>
+
+            <section>
+              <h2>Financial Summary</h2>
+              <dl>
+                <dt>Total Project Value:</dt>
+                <dd>$${reportData.totalPrice.toFixed(2)}</dd>
+                <dt>Amount Paid:</dt>
+                <dd>$${reportData.paidAmount.toFixed(2)}</dd>
+                <dt>Amount Remaining:</dt>
+                <dd>$${reportData.amountDue.toFixed(2)}</dd>
+                <dt>Payment Progress:</dt>
+                <dd class="highlight">${((reportData.paidAmount / reportData.totalPrice) * 100).toFixed(1)}% Paid</dd>
+              </dl>
+            </section>
+            <section>
+              <h2>Project Progress</h2>
+              <div class="progress-container">
+                <div class="progress-bar">
+                  <div class="progress-fill"></div>
+                </div>
+                <p><strong>${reportData.progress}% Complete</strong></p>
+                <p>Status: <span class="highlight">${
+                  reportData.progress >= 90 ? 'Nearly Complete' :
+                  reportData.progress >= 70 ? 'Well Underway' :
+                  reportData.progress >= 40 ? 'In Progress' :
+                  reportData.progress >= 10 ? 'Getting Started' : 'Just Started'
+                }</span></p>
               </div>
-              <div class="info-item">
-                <span class="info-label">Project ID:</span>
-                <span class="info-value">${reportData.projectId}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Description:</span>
-                <span class="info-value">${reportData.description}</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="section">
-            <h3>💰 Financial Summary</h3>
-            <div class="info-grid">
-              <div class="info-item">
-                <span class="info-label">Total Project Value:</span>
-                <span class="info-value price">$${reportData.totalPrice.toFixed(2)}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Amount Paid:</span>
-                <span class="info-value paid-amount">$${reportData.paidAmount.toFixed(2)}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Amount Remaining:</span>
-                <span class="info-value remaining-amount">$${reportData.amountDue.toFixed(2)}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Payment Progress:</span>
-                <span class="info-value highlight">${((reportData.paidAmount / reportData.totalPrice) * 100).toFixed(1)}% Paid</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="section progress-section">
-            <h3>📈 Project Progress</h3>
-            <div class="progress-container">
-              <div class="progress-bar-visual">
-                <div class="progress-fill"></div>
-              </div>
-              <div class="progress-text">${reportData.progress}% Complete</div>
-              <div style="text-align: center; margin-top: 1rem;">
-                <strong>Status:</strong> 
-                <span class="highlight">
-                  ${reportData.progress >= 90 ? 'Nearly Complete' :
-            reportData.progress >= 70 ? 'Well Underway' :
-              reportData.progress >= 40 ? 'In Progress' :
-                reportData.progress >= 10 ? 'Getting Started' : 'Just Started'}
-                </span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="footer">
-            <div class="generated-info">
-              <p><strong>Report Generated:</strong> ${new Date().toLocaleDateString('en-US', {
-                  weekday: 'long',
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}</p>
-              <p><strong>Time:</strong> ${new Date().toLocaleTimeString()}</p>
-              <p><strong>Generated by:</strong> Freelance Project Management System</p>
-            </div>
-          </div>
+            </section>
+          </article>
+          <aside>
+            <p><strong>Generated:</strong> ${new Date().toLocaleDateString('en-US', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}</p>
+            <p><strong>Time:</strong> ${new Date().toLocaleTimeString()}</p>
+          </aside>
+          <footer>
+            Report generated by Freelance Project Management System
+          </footer>
         </body>
       </html>
     `;
 
-        // Create and open the print window
-        const printWindow = window.open('', '_blank', 'width=800,height=600');
+    const printWindow = window.open('', '_blank', 'width=800,height=600');
 
-        if (printWindow) {
-          printWindow.document.write(html);
-          printWindow.document.close();
-          printWindow.focus();
+    if (printWindow) {
+      printWindow.document.write(html);
+      printWindow.document.close();
+      printWindow.focus();
+      setTimeout(() => printWindow.print(), 750);
+    } else {
+      throw new Error('Popup blocked');
+    }
+  } catch (error) {
+    console.error('PDF Export Error:', error);
+    alert(`Unable to export PDF due to popup blockers.
 
-          // Wait for content to load, then trigger print
-          setTimeout(() => {
-            printWindow.print();
-
-            // Optional: Close window after printing (uncomment if desired)
-            // printWindow.onafterprint = () => printWindow.close();
-          }, 750);
-
-        } else {
-          // Handle popup blocker
-          throw new Error('Popup blocked');
-        }
-
-      } catch (error) {
-        console.error('PDF Export Error:', error);
-
-        // Fallback alert with instructions
-        alert(`Unable to export PDF. This might be due to popup blockers.    
-            Please try:
-            1. Allow popups for this site
-            2. Use Ctrl+P (Cmd+P on Mac) to print this page
-            3. Try again with popups enabled
+      Please try:
+      1. Allow popups for this site
+      2. Use Ctrl+P (Cmd+P on Mac) to print
+      3. Try again
 
 Error: ${error.message}`);
-      }
-    }
+  }
+}
+
   },
 
   mounted() {
